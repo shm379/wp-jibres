@@ -1,2 +1,2 @@
 # jibpress
-Jibress Plugin For Wordpress
+Jibres Plugin For Wordpress
