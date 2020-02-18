@@ -1,7 +1,7 @@
 <?php
 /**
  * @package           jibres
- * @author            Ali Shahbazi
+ * @author            jibres.com
  * @copyright         2020 Jibres
  * @license           GPL-2.0-or-later
  *
