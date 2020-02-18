@@ -56,7 +56,7 @@ function send_product($data)
     $appkey = '';
     $ch = curl_init();
 
-    $headers =  array('appkey: '.$appkey, 'apikey: '.$apikey);
+    $headers =  array('Content-Type: application/json', 'appkey: '.$appkey, 'apikey: '.$apikey);
     
     curl_setopt($ch, CURLOPT_URL, "https://jibres.com/fa/api/v1/".$store."/product/add");
     curl_setopt($ch, CURLOPT_HEADER, $headers);
