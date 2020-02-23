@@ -75,9 +75,9 @@ function create_csv($data)
 
 function send_product($data)
 {
-    $store = 'y8rk';
-    $apikey = 'e9caa1c163292a50c1bdb7f0bcb60885';
-    $appkey = 'a1b446c54082277f1b9f304f498d3c2f';
+    $store = '';
+    $apikey = '';
+    $appkey = '';
 
     $ch = curl_init();
 
