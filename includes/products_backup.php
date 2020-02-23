@@ -137,7 +137,6 @@ function get_product_data()
 	}
 
     printf("ok<br><br>");
-	printf('<a href="?page=jibres"><button>back</button></a>');
 }
 
 function ch_jib_table()
