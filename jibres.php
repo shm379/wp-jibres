@@ -154,7 +154,107 @@ function arr_sort($arr)
     create_csv($ch);
 }
 
+function insert_in_jib($id)
+{
+	global $wpdb;
 
+	$table_name = $wpdb->prefix . 'jibres_check';
+	
+	$wpdb->insert( 
+		$table_name, 
+		array( 
+			'product_id' => $id
+		) 
+	);
+}
+
+function get_data()
+{
+	global $wpdb;
+
+	$results = $wpdb->get_results("SELECT ID FROM $wpdb->posts WHERE post_type = 'product'");
+
+    $arr_results = array();
+    $ids = array();
+	foreach ($results as $key => $value) 
+	{
+		foreach ($value as $key => $val) 
+	    {
+            if ($key == "ID") 
+            {
+            	array_push($ids, $val);
+            }
+	    }
+
+	}
+
+	foreach ($ids as $value) 
+	{
+		$check_ex = $wpdb->get_results("SELECT * FROM {$wpdb->prefix}jibres_check WHERE product_id = $value AND backuped = 1");
+       	if (empty($check_ex)) 
+       	{
+       		insert_in_jib($value);
+       		$post_results = $wpdb->get_results("SELECT * FROM $wpdb->posts WHERE ID = $value");
+       		foreach ($post_results as $key => $val) 
+       		{
+       			foreach ($val as $key2 => $val2) 
+       			{
+       				$arr_results[$key2] = $val2;
+       			}
+       		}
+
+       		$meta_results = $wpdb->get_results("SELECT * FROM {$wpdb->prefix}wc_product_meta_lookup WHERE product_id = $value");
+       		foreach ($meta_results as $key => $val) 
+       		{
+       			foreach ($val as $key2 => $val2) 
+       			{
+       				$arr_results[$key2] = $val2;
+       			}
+       		}
+
+    		arr_sort($arr_results);
+       	}
+	}
+
+    printf("ok<br><br>");
+	printf('<a href="?page=jibres"><button>back</button></a>');
+}
+
+function ch_jib_table()
+{
+    global $wpdb;
+ 		
+ 	$table_name = $wpdb->prefix . 'jibres_check';	
+
+    $query = $wpdb->prepare( 'SHOW TABLES LIKE %s', $wpdb->esc_like( $table_name ) );
+ 
+    if ( $wpdb->get_var( $query ) == $table_name ) 
+    {
+        get_data();
+    }
+ 	else
+ 	{
+ 		$charset_collate = $wpdb->get_charset_collate();
+
+		$create_ddl = "CREATE TABLE $table_name (
+		  id int(11) NOT NULL AUTO_INCREMENT,
+		  time datetime DEFAULT NOW() NOT NULL,
+		  product_id int(11) NOT NULL,
+		  backuped int(11) DEFAULT 1 NOT NULL,
+		  PRIMARY KEY  (id)
+		) $charset_collate;";
+
+ 		// Didn't find it try to create it..
+    	$wpdb->query( $create_ddl );
+ 
+    	// We cannot directly tell that whether this succeeded!
+    	if ( $wpdb->get_var( $query ) == $table_name ) 
+    	{
+    	    get_data();
+    	}
+    	// dbDelta( $create_ddl );
+ 	}
+}
 
 function admin_jib() 
 {
@@ -165,30 +265,7 @@ function admin_jib()
     	printf('<div class="jibres">');
     	if ($_GET['jibres'] == 'backup') 
     	{
-	    	$results = $wpdb->get_results($wpdb->prepare("SELECT * FROM $wpdb->posts WHERE post_type = 'product'"));
-            $arr_results = array();
-	    	foreach ($results as $key => $value) 
-	    	{
-	    		foreach ($value as $key => $val) 
-	    		{
-                    if ($key == "ID") 
-                    {
-                        $results2 = $wpdb->get_results($wpdb->prepare("SELECT * FROM {$wpdb->prefix}wc_product_meta_lookup WHERE product_id = $val"));
-                        foreach ($results2 as $key2 => $value2) 
-                        {
-                            foreach ($value2 as $key3 => $val2) 
-                            {
-                                $arr_results[$key3] = $val2;
-                            }
-                        }
-                    }
-                    $arr_results[$key] = $val;
-	    		}
-                arr_sort($arr_results);
-	    		// printf("<br><br>");
-	    	}
-            printf("ok<br><br>");
-	    	printf('<a href="?page=jibres"><button>back</button></a>');
+	    	ch_jib_table();
     	}
     	else
     	{
