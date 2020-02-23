@@ -1,0 +1,3 @@
+title,slug,desc,barcode,barcode2,buyprice,price,discount,vat,sku,infinite,gallery,weight,weightunit,seotitle,type,seodesc,saleonline,saletelegram,saleapp,company,scalecode,status,minsale,maxsale,salestep,oversale,unit,category,tag
+"First Product",,"the first product for test",,,1750.00,1750.00,,,,,,,,,product,,,,,,,available,,,,,,,
+"Second Product",,"the second product for test",,,140000.00,140000.00,,,,,,,,,product,,,,,,,available,,,,,,,
