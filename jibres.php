@@ -59,7 +59,7 @@ function admin_jib()
     	if ($_GET['jibres'] == 'backup_products') 
     	{
     		require_once dirname( __FILE__ ) . '/includes/products_backup.php';
-	    	// ch_jib_table();
+	    	ch_jib_table();
     	}
     	elseif ($_GET['jibres'] == 'backup_orders') 
     	{

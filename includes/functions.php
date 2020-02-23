@@ -4,7 +4,7 @@ function create_jibres_table($tname, $strc)
 {
     global $wpdb;
  		
- 	$table_name = $wpdb->prefix . $tname;	
+ 	$table_name = $tname;	
 
     $query = $wpdb->prepare( 'SHOW TABLES LIKE %s', $wpdb->esc_like( $table_name ) );
  
@@ -82,8 +82,8 @@ function send_data_jibres($where, $data)
 
 function create_csv($cat, $data)
 {
-    $f = pathinfo(__FILE__);
-    $fname = $f['dirname'] . '/backup/' . $cat . '.csv';
+
+    $fname = dirname( __DIR__ ) . '/backup/' . $cat . '.csv';
 
     if (file_exists($fname)) 
     {

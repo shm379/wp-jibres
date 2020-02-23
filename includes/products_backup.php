@@ -59,10 +59,10 @@ function arr_sort($arr)
 function insert_in_jib($id)
 {
 	$data = array('product_id' => $id);
-	insert_in_jibres('jibres_check', $data);
+	insert_in_jibres('jibres_product_check', $data);
 }
 
-function get_data()
+function get_product_data()
 {
 	global $wpdb;
 
@@ -70,7 +70,6 @@ function get_data()
 
     $arr_results = array();
     $ids = array();
-    $price = array();
 
 	foreach ($results as $key => $value) 
 	{
@@ -86,7 +85,7 @@ function get_data()
 
 	foreach ($ids as $value) 
 	{
-		$check_ex = $wpdb->get_results("SELECT * FROM {$wpdb->prefix}jibres_check WHERE product_id = $value AND backuped = 1");
+		$check_ex = $wpdb->get_results("SELECT * FROM {$wpdb->prefix}jibres_product_check WHERE product_id = $value AND backuped = 1");
        	if (empty($check_ex)) 
        	{
        		insert_in_jib($value);
@@ -143,8 +142,9 @@ function get_data()
 
 function ch_jib_table()
 {
+	global $wpdb;
 
-
+	$table_name = $wpdb->prefix . 'jibres_product_check';
 	$create_ddl = "CREATE TABLE $table_name (
 				   id int(11) NOT NULL AUTO_INCREMENT,
 				   time datetime DEFAULT NOW() NOT NULL,
@@ -154,9 +154,9 @@ function ch_jib_table()
 				 ) $charset_collate;";
 
 	
- 	if (create_jibres_table('jibres_check', $create_ddl) === ture) 
+ 	if (create_jibres_table($table_name, $create_ddl) === true) 
  	{
- 		get_data();
+ 		get_product_data();
  	}
 
 }
