@@ -49,10 +49,10 @@ function jib_css() {
 add_action( 'admin_head', 'jib_css' );
 
 
-function create_csv($data)
+function create_csv($cat, $data)
 {
 	$f = pathinfo(__FILE__);
-	$fname = $f['dirname'] . '/backup/' . date("Y-m-d") . '.csv';
+	$fname = $f['dirname'] . '/backup/' . $cat . '.csv';
 
 	if (file_exists($fname)) 
 	{
@@ -114,8 +114,8 @@ function arr_sort($arr)
 				'desc'         => 'post_content',
 				'barcode'      => '',
 				'barcode2'     => '',
-				'buyprice'     => 'max_price',
-				'price'        => 'min_price',
+				'buyprice'     => 'regular_price',
+				'price'        => 'sale_price',
 				'discount'     => '',
 				'vat'          => '',
 				'sku'          => 'sku',
@@ -151,7 +151,7 @@ function arr_sort($arr)
             $ch[$key] = $arr[$value];
         }
     }
-    create_csv($ch);
+    create_csv('products', $ch);
 }
 
 function insert_in_jib($id)
@@ -176,6 +176,8 @@ function get_data()
 
     $arr_results = array();
     $ids = array();
+    $price = array();
+
 	foreach ($results as $key => $value) 
 	{
 		foreach ($value as $key => $val) 
@@ -212,8 +214,33 @@ function get_data()
        			}
        		}
 
+       		$post_mata_results = $wpdb->get_results("SELECT * FROM $wpdb->postmeta WHERE post_id = $value AND meta_key = '_regular_price'");
+       		foreach ($post_mata_results as $key => $val) 
+       		{
+       			foreach ($val as $key2 => $val2) 
+       			{
+       				if ($key2 == "meta_value") 
+       				{
+	       				$arr_results["regular_price"] = $val2;
+       				}
+       			}	
+       		}
+
+       		$post_mata_results = $wpdb->get_results("SELECT * FROM $wpdb->postmeta WHERE post_id = $value AND meta_key = '_price'");
+       		foreach ($post_mata_results as $key => $val) 
+       		{
+       			foreach ($val as $key2 => $val2) 
+       			{
+       				if ($key2 == "meta_value") 
+       				{
+	       				$arr_results["sale_price"] = $val2;
+       				}
+       			}	
+       		}
+
     		arr_sort($arr_results);
        	}
+
 	}
 
     printf("ok<br><br>");
