@@ -1,7 +1,5 @@
 <?php
 
-require_once(dirname( __FILE__ ) . '/functions.php');
-
 function send_order($data)
 {
 	send_data_jibres("/cart/add", $data);
@@ -9,7 +7,7 @@ function send_order($data)
 
 
 
-function arr_sort($arr)
+function order_arr_sort($arr)
 {
 	$ch = array('product' => 'order_item_id',
 				'count'   => 'order_id'
@@ -19,7 +17,7 @@ function arr_sort($arr)
     create_csv('orders', $changed);
 }
 
-function insert_in_jib($id)
+function insert_order_in_jib($id)
 {
 	$data = array('item_id' => $id, 'type' => 'order');
 	insert_in_jibres($data);
@@ -51,7 +49,7 @@ function get_order_data()
     	foreach ($ids as $value) 
 		{
        	
-       		insert_in_jib($value);
+       		insert_order_in_jib($value);
        		$post_results = $wpdb->get_results("SELECT * FROM {$wpdb->prefix}woocommerce_order_items WHERE order_item_id = $value");
        		foreach ($post_results as $key => $val) 
        		{
@@ -61,7 +59,7 @@ function get_order_data()
        			}
        		}
 
-    		arr_sort($arr_results);
+    		order_arr_sort($arr_results);
 
 		}
 

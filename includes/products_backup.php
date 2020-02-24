@@ -1,7 +1,5 @@
 <?php
 
-require_once(dirname( __FILE__ ) . '/functions.php');
-
 function send_product($data)
 {
 	send_data_jibres("/product/add", $data);
@@ -9,7 +7,7 @@ function send_product($data)
 
 
 
-function arr_sort($arr)
+function product_arr_sort($arr)
 {
 	$ch = array('title'        => 'post_title',
         		'slug'         => '',
@@ -54,9 +52,10 @@ function arr_sort($arr)
 
     $changed = sort_arr($ch, $arr);
     create_csv('products', $changed);
+    // send_product($changed);
 }
 
-function insert_in_jib($id)
+function insert_product_in_jib($id)
 {
 	$data = array('item_id' => $id, 'type' => 'product');
 	insert_in_jibres($data);
@@ -88,7 +87,7 @@ function get_product_data()
     	foreach ($ids as $value) 
 		{
        	
-       		insert_in_jib($value);
+       		insert_product_in_jib($value);
        		$post_results = $wpdb->get_results("SELECT * FROM $wpdb->posts WHERE ID = $value");
        		foreach ($post_results as $key => $val) 
        		{
@@ -131,7 +130,7 @@ function get_product_data()
        			}	
        		}
 
-    		arr_sort($arr_results);
+    		product_arr_sort($arr_results);
 
 		}
 

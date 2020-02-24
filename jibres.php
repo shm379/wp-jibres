@@ -55,37 +55,35 @@ function admin_jib()
     
 	if ($_GET['page'] == 'jibres') 
     {
+    	require_once(dirname( __FILE__ ) . '/includes/functions.php');
     	printf('<div class="jibres"><br>');
-    	if ($_GET['jibres'] == 'backup_products') 
+    	if ($_GET['jibres'] and $_GET['jibres'] == 'backup_all') 
     	{
     		require_once dirname( __FILE__ ) . '/includes/products_backup.php';
-	    	products_b();
-            printf('<a href="?page=jibres"><button>back</button></a>');
-    	}
-    	elseif ($_GET['jibres'] == 'backup_orders') 
-    	{
     		require_once dirname( __FILE__ ) . '/includes/orders_backup.php';
-            orders_b();
-            printf('<a href="?page=jibres"><button>back</button></a>');
+    		require_once dirname( __FILE__ ) . '/includes/posts_backup.php';
+    		require_once dirname( __FILE__ ) . '/includes/comments_backup.php';
+    		products_b();
+    		orders_b();
+    		posts_b();
+    		comments_b();
+    		printf('<a href="?page=jibres"><button>Back</button></a>');
     	}
-        elseif ($_GET['jibres'] == 'backup_posts') 
-        {
-            require_once dirname( __FILE__ ) . '/includes/posts_backup.php';
-            posts_b();
-            printf('<a href="?page=jibres"><button>back</button></a>');
-        }
-        elseif ($_GET['jibres'] == 'backup_comments') 
-        {
-            require_once dirname( __FILE__ ) . '/includes/comments_backup.php';
-            comments_b();
-            printf('<a href="?page=jibres"><button>back</button></a>');
-        }
+    	elseif ($_GET['jibres']) 
+    	{
+    		require_once dirname( __FILE__ ) . '/includes/'.$_GET['jibres'].'.php';
+    		$get_func = explode("_", $_GET['jibres']);
+    		$open_func = $get_func[0]."_b";
+    		$open_func();
+    		printf('<a href="?page=jibres"><button>Back</button></a>');
+    	}
     	else
     	{
-    		printf('<a href="?page=jibres&jibres=backup_products"><button>Backup Your Products</button></a><br><br>');
-    		printf('<a href="?page=jibres&jibres=backup_orders"><button>Backup Your Orders</button></a><br><br>');
-            printf('<a href="?page=jibres&jibres=backup_posts"><button>Backup Your Posts</button></a><br><br>');
-            printf('<a href="?page=jibres&jibres=backup_comments"><button>Backup Your Comments</button></a>');
+    		printf('<a href="?page=jibres&jibres=products_backup"><button>Backup Your Products</button></a><br><br>');
+    		printf('<a href="?page=jibres&jibres=orders_backup"><button>Backup Your Orders</button></a><br><br>');
+            printf('<a href="?page=jibres&jibres=posts_backup"><button>Backup Your Posts</button></a><br><br>');
+            printf('<a href="?page=jibres&jibres=comments_backup"><button>Backup Your Comments</button></a><br><br>');
+            printf('<a href="?page=jibres&jibres=backup_all"><button>Backup All Data</button></a>');
     	}
     	printf('</div>');
     	

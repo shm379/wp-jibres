@@ -1,15 +1,13 @@
 <?php
 
-require_once(dirname( __FILE__ ) . '/functions.php');
-
-function send_post($data)
+function send_comment($data)
 {
 	send_data_jibres("/comment/add", $data);
 }
 
 
 
-function arr_sort($arr)
+function comment_arr_sort($arr)
 {
 	$ch = array('post'         => 'comment_post_ID',
 				'author'       => 'comment_author',
@@ -23,7 +21,7 @@ function arr_sort($arr)
     create_csv('comments', $changed);
 }
 
-function insert_in_jib($id)
+function insert_comment_in_jib($id)
 {
 	$data = array('item_id' => $id, 'type' => 'comment');
 	insert_in_jibres($data);
@@ -55,7 +53,7 @@ function get_comment_data()
     	foreach ($ids as $value) 
 		{
        	
-       		insert_in_jib($value);
+       		insert_comment_in_jib($value);
        		$post_results = $wpdb->get_results("SELECT * FROM $wpdb->comments WHERE comment_ID = $value");
        		foreach ($post_results as $key => $val) 
        		{
@@ -65,7 +63,7 @@ function get_comment_data()
        			}
        		}
 
-    		arr_sort($arr_results);
+    		comment_arr_sort($arr_results);
 
 		}
 
