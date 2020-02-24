@@ -58,15 +58,15 @@ function arr_sort($arr)
 
 function insert_in_jib($id)
 {
-	$data = array('product_id' => $id);
-	insert_in_jibres('jibres_product_check', $data);
+	$data = array('item_id' => $id, 'type' => 'product');
+	insert_in_jibres($data);
 }
 
 function get_product_data()
 {
 	global $wpdb;
 
-	$results = $wpdb->get_results("SELECT ID FROM $wpdb->posts WHERE post_type = 'product' AND ID NOT IN (SELECT product_id FROM {$wpdb->prefix}jibres_product_check WHERE backuped = 1)");
+	$results = $wpdb->get_results("SELECT ID FROM $wpdb->posts WHERE post_type = 'product' AND ID NOT IN (SELECT item_id FROM {$wpdb->prefix}jibres_check WHERE type = 'product' AND backuped = 1)");
 
     $arr_results = array();
     $ids = array();
@@ -146,19 +146,8 @@ function get_product_data()
 
 function products_b()
 {
-	global $wpdb;
-
-	$table_name = $wpdb->prefix . 'jibres_product_check';
-	$create_ddl = "CREATE TABLE $table_name (
-				   id int(11) NOT NULL AUTO_INCREMENT,
-				   time datetime DEFAULT NOW() NOT NULL,
-				   product_id int(11) NOT NULL,
-				   backuped int(11) DEFAULT 1 NOT NULL,
-				   PRIMARY KEY  (id)
-				 ) $charset_collate;";
-
 	
- 	if (create_jibres_table($table_name, $create_ddl) === true) 
+ 	if (create_jibres_table() === true) 
  	{
  		get_product_data();
  	}

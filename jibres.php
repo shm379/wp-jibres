@@ -3,7 +3,7 @@
  * @package           jibres
  * @author            Shahb2
  * @copyright         2020 Jibres
- * @license           GPL-2.0-or-later
+ * @license           GPL-3.0-or-later
  *
  * @wordpress-plugin
  * Plugin Name:       jibres
@@ -74,11 +74,18 @@ function admin_jib()
             posts_b();
             printf('<a href="?page=jibres"><button>back</button></a>');
         }
+        elseif ($_GET['jibres'] == 'backup_comments') 
+        {
+            require_once dirname( __FILE__ ) . '/includes/comments_backup.php';
+            comments_b();
+            printf('<a href="?page=jibres"><button>back</button></a>');
+        }
     	else
     	{
-    		 printf('<a href="?page=jibres&jibres=backup_products"><button>Backup Your Products</button></a><br><br>');
-    		 printf('<a href="?page=jibres&jibres=backup_orders"><button>Backup Your Orders</button></a><br><br>');
-             printf('<a href="?page=jibres&jibres=backup_posts"><button>Backup Your Posts</button></a>');
+    		printf('<a href="?page=jibres&jibres=backup_products"><button>Backup Your Products</button></a><br><br>');
+    		printf('<a href="?page=jibres&jibres=backup_orders"><button>Backup Your Orders</button></a><br><br>');
+            printf('<a href="?page=jibres&jibres=backup_posts"><button>Backup Your Posts</button></a><br><br>');
+            printf('<a href="?page=jibres&jibres=backup_comments"><button>Backup Your Comments</button></a>');
     	}
     	printf('</div>');
     	

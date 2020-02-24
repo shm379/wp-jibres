@@ -21,15 +21,15 @@ function arr_sort($arr)
 
 function insert_in_jib($id)
 {
-	$data = array('order_item_id' => $id);
-	insert_in_jibres('jibres_order_check', $data);
+	$data = array('item_id' => $id, 'type' => 'order');
+	insert_in_jibres($data);
 }
 
 function get_order_data()
 {
 	global $wpdb;
 
-	$results = $wpdb->get_results("SELECT order_item_id FROM {$wpdb->prefix}woocommerce_order_items WHERE order_item_id NOT IN (SELECT order_item_id FROM {$wpdb->prefix}jibres_order_check WHERE backuped = 1)");
+	$results = $wpdb->get_results("SELECT order_item_id FROM {$wpdb->prefix}woocommerce_order_items WHERE order_item_id NOT IN (SELECT item_id FROM {$wpdb->prefix}jibres_check WHERE type = 'order' AND backuped = 1)");
 
     $arr_results = array();
     $ids = array();
@@ -77,19 +77,8 @@ function get_order_data()
 
 function orders_b()
 {
-	global $wpdb;
 
-	$table_name = $wpdb->prefix . 'jibres_order_check';
-	$create_ddl = "CREATE TABLE $table_name (
-				   id int(11) NOT NULL AUTO_INCREMENT,
-				   time datetime DEFAULT NOW() NOT NULL,
-				   order_item_id int(11) NOT NULL,
-				   backuped int(11) DEFAULT 1 NOT NULL,
-				   PRIMARY KEY  (id)
-				 ) $charset_collate;";
-
-	
- 	if (create_jibres_table($table_name, $create_ddl) === true) 
+ 	if (create_jibres_table() === true) 
  	{
  		get_order_data();
  	}

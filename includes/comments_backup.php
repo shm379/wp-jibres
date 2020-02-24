@@ -4,39 +4,36 @@ require_once(dirname( __FILE__ ) . '/functions.php');
 
 function send_post($data)
 {
-	send_data_jibres("/post/add", $data);
+	send_data_jibres("/comment/add", $data);
 }
 
 
 
 function arr_sort($arr)
 {
-	$ch = array('title'       => 'post_title',
-				'seotitle'    => '',
-				'slug'        => '',
-				'excerpt'     => 'post_excerpt',
-				'subtitle'    => '',
-				'content'     => 'post_content',
-				'status'      => 'post_status',
-				'publishdate' => 'post_modified',
-				'datecreated' => 'post_date'
+	$ch = array('post'         => 'comment_post_ID',
+				'author'       => 'comment_author',
+				'author_email' => 'comment_author_email',
+				'date'         => 'comment_date',
+				'content'      => 'comment_content',
+				'approved'     => 'comment_approved'
                 );
     
     $changed = sort_arr($ch, $arr);
-    create_csv('posts', $changed);
+    create_csv('comments', $changed);
 }
 
 function insert_in_jib($id)
 {
-	$data = array('item_id' => $id, 'type' => 'post');
+	$data = array('item_id' => $id, 'type' => 'comment');
 	insert_in_jibres($data);
 }
 
-function get_post_data()
+function get_comment_data()
 {
 	global $wpdb;
 
-	$results = $wpdb->get_results("SELECT ID FROM $wpdb->posts WHERE post_type = 'post' AND ID NOT IN (SELECT item_id FROM {$wpdb->prefix}jibres_check WHERE type = 'post' AND backuped = 1)");
+	$results = $wpdb->get_results("SELECT comment_ID FROM $wpdb->comments WHERE comment_ID NOT IN (SELECT item_id FROM {$wpdb->prefix}jibres_check WHERE type = 'comment' AND backuped = 1)");
 
     $arr_results = array();
     $ids = array();
@@ -45,7 +42,7 @@ function get_post_data()
 	{
 		foreach ($value as $key => $val) 
 	    {
-            if ($key == "ID") 
+            if ($key == "comment_ID") 
             {
             	array_push($ids, $val);
             }
@@ -59,7 +56,7 @@ function get_post_data()
 		{
        	
        		insert_in_jib($value);
-       		$post_results = $wpdb->get_results("SELECT * FROM $wpdb->posts WHERE ID = $value");
+       		$post_results = $wpdb->get_results("SELECT * FROM $wpdb->comments WHERE comment_ID = $value");
        		foreach ($post_results as $key => $val) 
        		{
        			foreach ($val as $key2 => $val2) 
@@ -76,18 +73,18 @@ function get_post_data()
     }
     else
     {
-       	printf("All posts are backuped<br><br>");
+       	printf("All comments are backuped<br><br>");
     }
 
 }
 
 
-function posts_b()
+function comments_b()
 {
 	
  	if (create_jibres_table() === true) 
  	{
- 		get_post_data();
+ 		get_comment_data();
  	}
 
 }

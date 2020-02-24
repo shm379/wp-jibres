@@ -1,10 +1,19 @@
 <?php 
 
-function create_jibres_table($tname, $strc)
+function create_jibres_table()
 {
     global $wpdb;
  		
- 	$table_name = $tname;	
+ 	$table_name = $wpdb->prefix . 'jibres_check';
+	$create_ddl = "CREATE TABLE $table_name (
+				   id int(11) NOT NULL AUTO_INCREMENT,
+				   time datetime DEFAULT NOW() NOT NULL,
+				   item_id int(11) NOT NULL,
+				   type varchar(50) NOT NULL,
+				   backuped int(11) DEFAULT 1 NOT NULL,
+				   PRIMARY KEY  (id)
+				 ) $charset_collate;";
+	
 
     $query = $wpdb->prepare( 'SHOW TABLES LIKE %s', $wpdb->esc_like( $table_name ) );
  
@@ -17,7 +26,7 @@ function create_jibres_table($tname, $strc)
  		$charset_collate = $wpdb->get_charset_collate();
 
  		// Didn't find it try to create it..
-    	$wpdb->query( $strc );
+    	$wpdb->query( $create_ddl );
  
     	// We cannot directly tell that whether this succeeded!
     	if ( $wpdb->get_var( $query ) == $table_name ) 
@@ -33,11 +42,11 @@ function create_jibres_table($tname, $strc)
 }
 
 
-function insert_in_jibres($tname, $data = array())
+function insert_in_jibres($data = array())
 {
 	global $wpdb;
 
-	$table_name = $wpdb->prefix . $tname;
+	$table_name = $wpdb->prefix . 'jibres_check';
 	
 	$wpdb->insert( 
 		$table_name, 
