@@ -66,7 +66,7 @@ function get_product_data()
 {
 	global $wpdb;
 
-	$results = $wpdb->get_results("SELECT ID FROM $wpdb->posts WHERE post_type = 'product'");
+	$results = $wpdb->get_results("SELECT ID FROM $wpdb->posts WHERE post_type = 'product' AND ID NOT IN (SELECT product_id FROM {$wpdb->prefix}jibres_product_check WHERE backuped = 1)");
 
     $arr_results = array();
     $ids = array();
@@ -83,12 +83,11 @@ function get_product_data()
 
 	}
 
-	foreach ($ids as $value) 
-	{
-		$check_ex = $wpdb->get_results("SELECT * FROM {$wpdb->prefix}jibres_product_check WHERE product_id = $value AND backuped = 1");
-       	if (empty($check_ex)) 
-       	{
-       		$backup = 'ok';
+	if (!empty($results)) 
+    {
+    	foreach ($ids as $value) 
+		{
+       	
        		insert_in_jib($value);
        		$post_results = $wpdb->get_results("SELECT * FROM $wpdb->posts WHERE ID = $value");
        		foreach ($post_results as $key => $val) 
@@ -133,24 +132,19 @@ function get_product_data()
        		}
 
     		arr_sort($arr_results);
-       	}
-       	else
-       	{
-       		$backup = 'full';
-       	}
 
-	}
-	if ($backup == 'full') 
-	{
-       	printf("All products are backuped<br><br>");
-	}
-	elseif ($backup == 'ok') 
-	{
+		}
+
 		printf("ok<br><br>");
-	}
+    }
+    else
+    {
+       	printf("All products are backuped<br><br>");
+    }
+
 }
 
-function ch_jib_table()
+function products_b()
 {
 	global $wpdb;
 

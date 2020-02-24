@@ -71,7 +71,7 @@ function send_data_jibres($where, $data)
     }
     else
     {
-        printf('OK');
+        return true;
     }
     
     curl_close($ch);
