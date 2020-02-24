@@ -68,10 +68,17 @@ function admin_jib()
             orders_b();
             printf('<a href="?page=jibres"><button>back</button></a>');
     	}
+        elseif ($_GET['jibres'] == 'backup_posts') 
+        {
+            require_once dirname( __FILE__ ) . '/includes/posts_backup.php';
+            posts_b();
+            printf('<a href="?page=jibres"><button>back</button></a>');
+        }
     	else
     	{
     		 printf('<a href="?page=jibres&jibres=backup_products"><button>Backup Your Products</button></a><br><br>');
-    		 printf('<a href="?page=jibres&jibres=backup_orders"><button>Backup Your Orders</button></a>');
+    		 printf('<a href="?page=jibres&jibres=backup_orders"><button>Backup Your Orders</button></a><br><br>');
+             printf('<a href="?page=jibres&jibres=backup_posts"><button>Backup Your Posts</button></a>');
     	}
     	printf('</div>');
     	

@@ -2,34 +2,41 @@
 
 require_once(dirname( __FILE__ ) . '/functions.php');
 
-function send_order($data)
+function send_post($data)
 {
-	send_data_jibres("/cart/add", $data);
+	send_data_jibres("/post/add", $data);
 }
 
 
 
 function arr_sort($arr)
 {
-	$ch = array('product' => 'order_item_id',
-				'count'   => 'order_id'
+	$ch = array('title'       => 'post_title',
+				'seotitle'    => '',
+				'slug'        => '',
+				'excerpt'     => 'post_excerpt',
+				'subtitle'    => '',
+				'content'     => 'post_content',
+				'status'      => 'post_status',
+				'publishdate' => 'post_modified',
+				'datecreated' => 'post_date'
                 );
     
     $changed = sort_arr($ch, $arr);
-    create_csv('orders', $changed);
+    create_csv('posts', $changed);
 }
 
 function insert_in_jib($id)
 {
-	$data = array('order_item_id' => $id);
-	insert_in_jibres('jibres_order_check', $data);
+	$data = array('post_id' => $id);
+	insert_in_jibres('jibres_post_check', $data);
 }
 
-function get_order_data()
+function get_post_data()
 {
 	global $wpdb;
 
-	$results = $wpdb->get_results("SELECT order_item_id FROM {$wpdb->prefix}woocommerce_order_items WHERE order_item_id NOT IN (SELECT order_item_id FROM {$wpdb->prefix}jibres_order_check WHERE backuped = 1)");
+	$results = $wpdb->get_results("SELECT ID FROM $wpdb->posts WHERE post_type = 'post' AND ID NOT IN (SELECT post_id FROM {$wpdb->prefix}jibres_post_check WHERE backuped = 1)");
 
     $arr_results = array();
     $ids = array();
@@ -38,7 +45,7 @@ function get_order_data()
 	{
 		foreach ($value as $key => $val) 
 	    {
-            if ($key == "order_item_id") 
+            if ($key == "ID") 
             {
             	array_push($ids, $val);
             }
@@ -52,7 +59,7 @@ function get_order_data()
 		{
        	
        		insert_in_jib($value);
-       		$post_results = $wpdb->get_results("SELECT * FROM {$wpdb->prefix}woocommerce_order_items WHERE order_item_id = $value");
+       		$post_results = $wpdb->get_results("SELECT * FROM $wpdb->posts WHERE ID = $value");
        		foreach ($post_results as $key => $val) 
        		{
        			foreach ($val as $key2 => $val2) 
@@ -69,21 +76,21 @@ function get_order_data()
     }
     else
     {
-       	printf("All orders are backuped<br><br>");
+       	printf("All posts are backuped<br><br>");
     }
 
 }
 
 
-function orders_b()
+function posts_b()
 {
 	global $wpdb;
 
-	$table_name = $wpdb->prefix . 'jibres_order_check';
+	$table_name = $wpdb->prefix . 'jibres_post_check';
 	$create_ddl = "CREATE TABLE $table_name (
 				   id int(11) NOT NULL AUTO_INCREMENT,
 				   time datetime DEFAULT NOW() NOT NULL,
-				   order_item_id int(11) NOT NULL,
+				   post_id int(11) NOT NULL,
 				   backuped int(11) DEFAULT 1 NOT NULL,
 				   PRIMARY KEY  (id)
 				 ) $charset_collate;";
@@ -91,7 +98,7 @@ function orders_b()
 	
  	if (create_jibres_table($table_name, $create_ddl) === true) 
  	{
- 		get_order_data();
+ 		get_post_data();
  	}
 
 }
