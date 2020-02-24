@@ -16,7 +16,7 @@ add_action( 'admin_menu', 'menus' );
 function menus() 
 {
     add_menu_page(
-        'JIBRES',
+        'Jibres',
         'Jibres',
         'manage_options',
         'jibres',
