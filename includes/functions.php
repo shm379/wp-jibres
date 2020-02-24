@@ -101,6 +101,17 @@ function create_csv($cat, $data)
     }
     
     fclose($fp);
+
+}
+
+function sort_arr($ch = array(), $data = array())
+{
+    foreach ($ch as $key => $value) 
+    {
+        $ch[$key] = $data[$value];
+    }
+
+    return $ch;
 }
 
 

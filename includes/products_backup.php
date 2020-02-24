@@ -1,6 +1,6 @@
 <?php
-require_once(dirname( __FILE__ ) . '/functions.php');
 
+require_once(dirname( __FILE__ ) . '/functions.php');
 
 function send_product($data)
 {
@@ -33,7 +33,7 @@ function arr_sort($arr)
 				'saleapp'      => '',
 				'company'      => '',
 				'scalecode'    => '',
-				'status'       => '',
+				'status'       => 'onsale',
 				'minsale'      => '',
 				'maxsale'      => '',
 				'salestep'     => '',
@@ -42,18 +42,18 @@ function arr_sort($arr)
 				'category'     => '',
 				'tag'          => ''
                 );
-    foreach ($ch as $key => $value) 
+    
+    if ($arr["onsale"] == "1") 
     {
-        if ($key == 'status' and $arr["onsale"] == "1") 
-        {
-            $ch[$key] = 'available';
-        }
-        else
-        {
-            $ch[$key] = $arr[$value];
-        }
+    	$arr["onsale"] = 'available';
     }
-    create_csv('products', $ch);
+    else
+    {
+    	$arr["onsale"] = 'unavailable';
+    }
+
+    $changed = sort_arr($ch, $arr);
+    create_csv('products', $changed);
 }
 
 function insert_in_jib($id)
@@ -88,6 +88,7 @@ function get_product_data()
 		$check_ex = $wpdb->get_results("SELECT * FROM {$wpdb->prefix}jibres_product_check WHERE product_id = $value AND backuped = 1");
        	if (empty($check_ex)) 
        	{
+       		$backup = 'ok';
        		insert_in_jib($value);
        		$post_results = $wpdb->get_results("SELECT * FROM $wpdb->posts WHERE ID = $value");
        		foreach ($post_results as $key => $val) 
@@ -133,10 +134,20 @@ function get_product_data()
 
     		arr_sort($arr_results);
        	}
+       	else
+       	{
+       		$backup = 'full';
+       	}
 
 	}
-
-    printf("ok<br><br>");
+	if ($backup == 'full') 
+	{
+       	printf("All products are backuped<br><br>");
+	}
+	elseif ($backup == 'ok') 
+	{
+		printf("ok<br><br>");
+	}
 }
 
 function ch_jib_table()
