@@ -11,8 +11,8 @@ function send_product($data)
 
 function arr_sort($arr)
 {
-	$ch = array('product' 	   => 'order_item_id',
-				'count'         => 'order_id'
+	$ch = array('product' => 'order_item_id',
+				'count'   => 'order_id'
                 );
     
     $changed = sort_arr($ch, $arr);
@@ -38,7 +38,7 @@ function get_order_data()
 	{
 		foreach ($value as $key => $val) 
 	    {
-            if ($key == "ID") 
+            if ($key == "order_item_id") 
             {
             	array_push($ids, $val);
             }
