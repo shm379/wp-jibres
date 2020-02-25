@@ -31,7 +31,10 @@ function get_comment_data()
 {
 	global $wpdb;
 
-	$results = $wpdb->get_results("SELECT comment_ID FROM $wpdb->comments WHERE comment_ID NOT IN (SELECT item_id FROM {$wpdb->prefix}jibres_check WHERE type = 'comment' AND backuped = 1)");
+	$results = $wpdb->get_results("SELECT comment_ID FROM $wpdb->comments WHERE 
+                              		comment_ID NOT IN 
+                              		(SELECT item_id FROM {$wpdb->prefix}jibres_check 
+                              		WHERE type = 'comment' AND backuped = 1)");
 
     $arr_results = array();
     $ids = array();

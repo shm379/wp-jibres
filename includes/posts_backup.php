@@ -34,7 +34,10 @@ function get_post_data()
 {
 	global $wpdb;
 
-	$results = $wpdb->get_results("SELECT ID FROM $wpdb->posts WHERE post_type = 'post' AND ID NOT IN (SELECT item_id FROM {$wpdb->prefix}jibres_check WHERE type = 'post' AND backuped = 1)");
+	$results = $wpdb->get_results("SELECT ID FROM $wpdb->posts WHERE 
+                                	post_type = 'post' AND ID NOT IN 
+                                	(SELECT item_id FROM {$wpdb->prefix}jibres_check 
+                                	WHERE type = 'post' AND backuped = 1)");
 
     $arr_results = array();
     $ids = array();

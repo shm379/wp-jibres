@@ -27,7 +27,10 @@ function get_order_data()
 {
 	global $wpdb;
 
-	$results = $wpdb->get_results("SELECT order_item_id FROM {$wpdb->prefix}woocommerce_order_items WHERE order_item_id NOT IN (SELECT item_id FROM {$wpdb->prefix}jibres_check WHERE type = 'order' AND backuped = 1)");
+	$results = $wpdb->get_results("SELECT order_item_id FROM {$wpdb->prefix}woocommerce_order_items 
+    								WHERE order_item_id NOT IN 
+    								(SELECT item_id FROM {$wpdb->prefix}jibres_check 
+    								WHERE type = 'order' AND backuped = 1)");
 
     $arr_results = array();
     $ids = array();
@@ -50,7 +53,8 @@ function get_order_data()
 		{
        	
        		insert_order_in_jib($value);
-       		$post_results = $wpdb->get_results("SELECT * FROM {$wpdb->prefix}woocommerce_order_items WHERE order_item_id = $value");
+       		$post_results = $wpdb->get_results("SELECT * FROM {$wpdb->prefix}woocommerce_order_items 
+       											WHERE order_item_id = $value");
        		foreach ($post_results as $key => $val) 
        		{
        			foreach ($val as $key2 => $val2) 

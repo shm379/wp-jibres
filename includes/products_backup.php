@@ -65,7 +65,10 @@ function get_product_data()
 {
 	global $wpdb;
 
-	$results = $wpdb->get_results("SELECT ID FROM $wpdb->posts WHERE post_type = 'product' AND ID NOT IN (SELECT item_id FROM {$wpdb->prefix}jibres_check WHERE type = 'product' AND backuped = 1)");
+	$results = $wpdb->get_results("SELECT ID FROM $wpdb->posts WHERE 
+									post_type = 'product' AND ID NOT IN 
+									(SELECT item_id FROM {$wpdb->prefix}jibres_check 
+									WHERE type = 'product' AND backuped = 1)");
 
     $arr_results = array();
     $ids = array();
@@ -97,7 +100,8 @@ function get_product_data()
        			}
        		}
 
-       		$meta_results = $wpdb->get_results("SELECT * FROM {$wpdb->prefix}wc_product_meta_lookup WHERE product_id = $value");
+       		$meta_results = $wpdb->get_results("SELECT * FROM {$wpdb->prefix}wc_product_meta_lookup 
+       											WHERE product_id = $value");
        		foreach ($meta_results as $key => $val) 
        		{
        			foreach ($val as $key2 => $val2) 
@@ -106,7 +110,8 @@ function get_product_data()
        			}
        		}
 
-       		$post_mata_results = $wpdb->get_results("SELECT * FROM $wpdb->postmeta WHERE post_id = $value AND meta_key = '_regular_price'");
+       		$post_mata_results = $wpdb->get_results("SELECT * FROM $wpdb->postmeta WHERE 
+       												post_id = $value AND meta_key = '_regular_price'");
        		foreach ($post_mata_results as $key => $val) 
        		{
        			foreach ($val as $key2 => $val2) 
@@ -118,7 +123,8 @@ function get_product_data()
        			}	
        		}
 
-       		$post_mata_results = $wpdb->get_results("SELECT * FROM $wpdb->postmeta WHERE post_id = $value AND meta_key = '_price'");
+       		$post_mata_results = $wpdb->get_results("SELECT * FROM $wpdb->postmeta WHERE 
+       												post_id = $value AND meta_key = '_price'");
        		foreach ($post_mata_results as $key => $val) 
        		{
        			foreach ($val as $key2 => $val2) 
