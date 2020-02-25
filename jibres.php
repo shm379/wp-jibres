@@ -26,15 +26,6 @@ function menus()
     );
 }
 
-function not()
-{
-    if ($_GET['page'] == 'jibres') 
-    {
-        echo "<h1>Jibres</h1>";
-    }
-}
-add_action( 'admin_notices', 'not' );
-
 
 function jib_css() {
 	echo "
@@ -55,6 +46,8 @@ function admin_jib()
     
 	if ($_GET['page'] == 'jibres') 
     {
+        printf("<h1>Jibres</h1>");
+
     	require_once(dirname( __FILE__ ) . '/includes/functions.php');
     	printf('<div class="jibres"><br>');
     	if ($_GET['jibres'] and $_GET['jibres'] == 'backup_all') 
