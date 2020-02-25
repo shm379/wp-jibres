@@ -59,14 +59,13 @@ function admin_jib()
     	printf('<div class="jibres"><br>');
     	if ($_GET['jibres'] and $_GET['jibres'] == 'backup_all') 
     	{
-    		require_once dirname( __FILE__ ) . '/includes/products_backup.php';
-    		require_once dirname( __FILE__ ) . '/includes/orders_backup.php';
-    		require_once dirname( __FILE__ ) . '/includes/posts_backup.php';
-    		require_once dirname( __FILE__ ) . '/includes/comments_backup.php';
-    		products_b();
-    		orders_b();
-    		posts_b();
-    		comments_b();
+    		$packs = array('products', 'orders', 'posts', 'comments');
+    		foreach ($packs as $value) 
+    		{
+    			require_once dirname( __FILE__ ) . '/includes/'.$value.'_backup.php';
+    			$open_func = $value.'_b';
+    			$open_func();
+    		}
     		printf('<a href="?page=jibres"><button>Back</button></a>');
     	}
     	elseif ($_GET['jibres']) 
