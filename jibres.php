@@ -98,7 +98,7 @@ function admin_jib()
 			}
 			else
 			{
-				printf('<p>The official Jibres plugin for worpress</p>');
+				printf('<p>Welcome to the official Jibres plugin for worpress</p>');
 				printf('<p>For backup your data like products, orders, posts, comments and categories into your store in Jibres use this plugin</p>');
 				printf('<p>Create your store in Jibres Sell & Enjoy...</p>');
 				printf('<p>More informations in <a href="https://jibres.com" target="_blank" style="font-weight: bold;">Jibres</a></p>');
