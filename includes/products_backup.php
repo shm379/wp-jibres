@@ -68,7 +68,7 @@ function get_product_data()
 	$results = $wpdb->get_results("SELECT ID FROM $wpdb->posts WHERE 
 									post_type = 'product' AND ID NOT IN 
 									(SELECT item_id FROM {$wpdb->prefix}jibres_check 
-									WHERE type = 'product' AND backuped = 1) LIMIT 100");
+									WHERE type = 'product' AND backuped = 1)");
 
 	$arr_results = array();
 	$ids = array();
