@@ -68,11 +68,11 @@ function get_category_data()
 
 		}
 
-		printf("ok<br><br>");
+		printf("OK Your Categories Bacuped<br><br>");
 	}
 	else
 	{
-		printf("All categories are backuped<br><br>");
+		printf("All Categories Are Backuped<br><br>");
 	}
 
 }

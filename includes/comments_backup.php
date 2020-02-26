@@ -70,11 +70,11 @@ function get_comment_data()
 
 		}
 
-		printf("ok<br><br>");
+		printf("OK Your Comments Backuped<br><br>");
 	}
 	else
 	{
-		printf("All comments are backuped<br><br>");
+		printf("All Comments Are Backuped<br><br>");
 	}
 
 }

@@ -73,11 +73,11 @@ function get_post_data()
 
 		}
 
-		printf("ok<br><br>");
+		printf("OK Your Posts Backuped<br><br>");
 	}
 	else
 	{
-		printf("All posts are backuped<br><br>");
+		printf("All Posts Are Backuped<br><br>");
 	}
 
 }

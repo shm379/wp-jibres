@@ -131,11 +131,11 @@ function get_product_data()
 
 		}
 
-		printf("ok<br><br>");
+		printf("OK Your Products Backuped<br><br>");
 	}
 	else
 	{
-		printf("All products are backuped<br><br>");
+		printf("All Products Are Backuped<br><br>");
 	}
 
 }

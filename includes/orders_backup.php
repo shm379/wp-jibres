@@ -88,11 +88,11 @@ function get_order_data()
 
 		}
 
-		printf("ok<br><br>");
+		printf("OK Your Orders Backuped<br><br>");
 	}
 	else
 	{
-		printf("All orders are backuped<br><br>");
+		printf("All Orders Are Backuped<br><br>");
 	}
 
 }
