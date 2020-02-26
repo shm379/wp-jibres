@@ -98,8 +98,13 @@ function admin_jib()
 			}
 			else
 			{
+				printf('<p>The official Jibres plugin for worpress</p>');
+				printf('<p>For backup your data like products, orders, posts, comments and categories into your store in Jibres use this plugin</p>');
+				printf('<p>Create your store in Jibres Sell & Enjoy...</p>');
+				printf('<p>More informations in <a href="https://jibres.com" target="_blank" style="font-weight: bold;">Jibres</a></p>');
+				printf('<p>For connect to Jibres api fill out the following information</p>');
 				printf('<form action method="post">
-						<label>Please Insert Your Jibres Informations: </label><br><br>
+						<label style="font-weight: bold;">Please Insert Your Jibres Informations: </label><br><br>
 						<input type="text" name="store" placeholder="store"><br><br>
 						<input type="text" name="apikey" placeholder="apikey"><br><br>
 						<input type="text" name="appkey" placeholder="appkey"><br><br>
