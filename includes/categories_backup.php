@@ -56,6 +56,7 @@ function get_category_data()
 		foreach ($ids as $value) 
 		{
 			
+			$i++;
 			insert_category_in_jib($value);
 			$cat_results = $wpdb->get_results("SELECT * FROM $wpdb->terms WHERE term_id = $value");
 			foreach ($cat_results as $key => $val) 
@@ -70,7 +71,6 @@ function get_category_data()
 					 document.getElementById("pprog").value = '.$i.';
 					</script>');
 			category_arr_sort($arr_results);
-			$i++;
 
 		}
 

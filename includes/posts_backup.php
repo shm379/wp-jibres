@@ -61,6 +61,7 @@ function get_post_data()
 		foreach ($ids as $value) 
 		{
 				
+			$i++;
 			insert_post_in_jib($value);
 			$post_results = $wpdb->get_results("SELECT * FROM $wpdb->posts WHERE ID = $value");
 			foreach ($post_results as $key => $val) 
@@ -74,7 +75,6 @@ function get_post_data()
 					 document.getElementById("pprog").value = '.$i.';
 					</script>');
 			post_arr_sort($arr_results);
-			$i++;
 
 		}
 

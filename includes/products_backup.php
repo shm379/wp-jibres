@@ -92,6 +92,7 @@ function get_product_data()
 		foreach ($ids as $value) 
 		{
 			
+			$i++;
 			insert_product_in_jib($value);
 			$post_results = $wpdb->get_results("SELECT * FROM $wpdb->posts WHERE ID = $value");
 			foreach ($post_results as $key => $val) 
@@ -132,7 +133,6 @@ function get_product_data()
 					 document.getElementById("pprog").value = '.$i.';
 					</script>');
 			product_arr_sort($arr_results);
-			$i++;
 
 		}
 

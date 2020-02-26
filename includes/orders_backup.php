@@ -57,6 +57,7 @@ function get_order_data()
 		foreach ($ids as $value) 
 		{
 			
+			$i++;
 			insert_order_in_jib($value);
 			$order_results = $wpdb->get_results("SELECT * FROM $wpdb->posts 
 												 WHERE ID = $value");
@@ -89,7 +90,6 @@ function get_order_data()
 					 document.getElementById("pprog").value = '.$i.';
 					</script>');
 			order_arr_sort($arr_results);
-			$i++;
 
 		}
 
