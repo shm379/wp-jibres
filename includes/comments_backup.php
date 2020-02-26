@@ -53,6 +53,8 @@ function get_comment_data()
 
 	if (!empty($results)) 
 	{
+		$i = 0;
+		printf('<progress id="pprog" value="0" max="'.count($ids).'" style="height: 3px;"></progress><br><br>');
 		foreach ($ids as $value) 
 		{
 				
@@ -66,7 +68,11 @@ function get_comment_data()
 				}
 			}
 
+			printf('<script>
+					 document.getElementById("pprog").value = '.$i.';
+					</script>');
 			comment_arr_sort($arr_results);
+			$i++;
 
 		}
 

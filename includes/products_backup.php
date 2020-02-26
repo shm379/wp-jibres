@@ -87,6 +87,8 @@ function get_product_data()
 
 	if (!empty($results)) 
 	{
+		$i = 0;
+		printf('<progress id="pprog" value="0" max="'.count($ids).'" style="height: 3px;"></progress><br><br>');
 		foreach ($ids as $value) 
 		{
 			
@@ -126,8 +128,11 @@ function get_product_data()
 					}
 				}	
 			}
-
+			printf('<script>
+					 document.getElementById("pprog").value = '.$i.';
+					</script>');
 			product_arr_sort($arr_results);
+			$i++;
 
 		}
 
@@ -142,12 +147,10 @@ function get_product_data()
 
 function products_b()
 {
-	
 	if (create_jibres_table() === true) 
 	{
 		get_product_data();
 	}
-
 }
 
 ?>

@@ -56,7 +56,9 @@ function get_post_data()
 
 	if (!empty($results)) 
 	{
-			foreach ($ids as $value) 
+		$i = 0;
+		printf('<progress id="pprog" value="0" max="'.count($ids).'" style="height: 3px;"></progress><br><br>');
+		foreach ($ids as $value) 
 		{
 				
 			insert_post_in_jib($value);
@@ -68,8 +70,11 @@ function get_post_data()
 					$arr_results[$key2] = $val2;
 				}
 			}
-
+			printf('<script>
+					 document.getElementById("pprog").value = '.$i.';
+					</script>');
 			post_arr_sort($arr_results);
+			$i++;
 
 		}
 
