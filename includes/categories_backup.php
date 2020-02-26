@@ -2,7 +2,7 @@
 
 function send_category($data)
 {
-	send_data_jibres("/cat/add", $data);
+	send_data_jibres("/category/add", $data);
 }
 
 

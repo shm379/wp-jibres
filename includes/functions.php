@@ -1,19 +1,25 @@
 <?php 
 
-function create_jibres_table()
+function create_jibres_table($tname = 'jibres_check', $tstrc = null)
 {
 	global $wpdb;
 		
-	$table_name = $wpdb->prefix . 'jibres_check';
-	$create_ddl = "CREATE TABLE $table_name (
-				   id int(11) NOT NULL AUTO_INCREMENT,
-				   time datetime DEFAULT NOW() NOT NULL,
-				   item_id int(11) NOT NULL,
-				   type varchar(50) NOT NULL,
-				   backuped int(11) DEFAULT 1 NOT NULL,
-				   PRIMARY KEY  (id)
-				 ) $charset_collate;";
-	
+	$table_name = $wpdb->prefix . $tname;
+	if ($tstrc == null) 
+	{
+		$create_ddl = "CREATE TABLE $table_name (
+					   id int(11) NOT NULL AUTO_INCREMENT,
+					   time datetime DEFAULT NOW() NOT NULL,
+					   item_id int(11) NOT NULL,
+					   type varchar(50) NOT NULL,
+					   backuped int(11) DEFAULT 1 NOT NULL,
+					   PRIMARY KEY  (id)
+					 ) $charset_collate;";
+	}
+	else
+	{
+		$create_ddl = $tstrc;
+	}
 
 	$query = $wpdb->prepare( 'SHOW TABLES LIKE %s', $wpdb->esc_like( $table_name ) );
  
@@ -42,11 +48,11 @@ function create_jibres_table()
 }
 
 
-function insert_in_jibres($data = array())
+function insert_in_jibres($tname = 'jibres_check', $data = array())
 {
 	global $wpdb;
 
-	$table_name = $wpdb->prefix . 'jibres_check';
+	$table_name = $wpdb->prefix . $tname;
 	
 	$wpdb->insert( 
 		$table_name, 
@@ -58,9 +64,20 @@ function insert_in_jibres($data = array())
 
 function send_data_jibres($where, $data)
 {
-	$store = '';
-	$apikey = '';
-	$appkey = '';
+	global $wpdb;
+	
+	$results = $wpdb->get_results("SELECT * FROM {$wpdb->prefix}jibres");
+	$arr_results = array();
+	foreach ($results as $key => $val) 
+	{
+		foreach ($val as $key2 => $val2) 
+		{
+			$arr_results[$key2] = $val2;
+		}
+	}
+	$store = $arr_results['store'];
+	$apikey = $arr_results['apikey'];
+	$appkey = $arr_results['appkey'];
 
 	$ch = curl_init();
 
