@@ -47,7 +47,7 @@ function admin_jib()
 		printf('<div class="jibres"><br>');
 		if ($_GET['jibres'] and $_GET['jibres'] == 'backup_all') 
 		{
-			$packs = array('products', 'orders', 'posts', 'comments');
+			$packs = array('products', 'orders', 'posts', 'comments', 'categories');
 			foreach ($packs as $value) 
 			{
 				require_once dirname( __FILE__ ) . '/includes/'.$value.'_backup.php';
@@ -70,6 +70,7 @@ function admin_jib()
 			printf('<a href="?page=jibres&jibres=orders_backup"><button class="bt">Backup Your Orders</button></a><br><br>');
 			printf('<a href="?page=jibres&jibres=posts_backup"><button class="bt">Backup Your Posts</button></a><br><br>');
 			printf('<a href="?page=jibres&jibres=comments_backup"><button class="bt">Backup Your Comments</button></a><br><br>');
+			printf('<a href="?page=jibres&jibres=categories_backup"><button class="bt">Backup Your Categories</button></a><br><br>');
 			printf('<a href="?page=jibres&jibres=backup_all"><button class="bt">Backup All Data</button></a>');
 		}
 		printf('</div>');

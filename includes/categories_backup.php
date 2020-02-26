@@ -1,0 +1,90 @@
+<?php
+
+function send_category($data)
+{
+	send_data_jibres("/cat/add", $data);
+}
+
+
+
+function category_arr_sort($arr)
+{
+	$ch = array('name'  => 'name',
+				'slug'  => 'slug',
+				'group' => 'term_group'
+				);
+
+	$changed = sort_arr($ch, $arr);
+	create_csv('categories', $changed);
+	// send_category($changed);
+}
+
+function insert_category_in_jib($id)
+{
+	$data = array('item_id' => $id, 'type' => 'cat');
+	insert_in_jibres($data);
+}
+
+function get_category_data()
+{
+	global $wpdb;
+
+	$results = $wpdb->get_results("SELECT term_id FROM $wpdb->term_taxonomy WHERE 
+									taxonomy = 'product_cat' AND term_id NOT IN 
+									(SELECT item_id FROM {$wpdb->prefix}jibres_check 
+									WHERE type = 'cat' AND backuped = 1)");
+
+	$arr_results = array();
+	$ids = array();
+
+	foreach ($results as $key => $value) 
+	{
+		foreach ($value as $key => $val) 
+		{
+			if ($key == "term_id") 
+			{
+				array_push($ids, $val);
+			}
+		}
+
+	}
+
+	if (!empty($results)) 
+	{
+		foreach ($ids as $value) 
+		{
+			
+			insert_category_in_jib($value);
+			$cat_results = $wpdb->get_results("SELECT * FROM $wpdb->terms WHERE term_id = $value");
+			foreach ($cat_results as $key => $val) 
+			{
+				foreach ($val as $key2 => $val2) 
+				{
+					$arr_results[$key2] = $val2;
+				}
+			}
+
+			category_arr_sort($arr_results);
+
+		}
+
+		printf("ok<br><br>");
+	}
+	else
+	{
+		printf("All categories are backuped<br><br>");
+	}
+
+}
+
+function categories_b()
+{
+	
+	if (create_jibres_table() === true) 
+	{
+		get_category_data();
+	}
+
+}
+
+?>
