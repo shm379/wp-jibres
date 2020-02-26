@@ -57,7 +57,7 @@ function get_post_data()
 	if (!empty($results)) 
 	{
 		$i = 0;
-		printf('<progress id="pprog" value="0" max="'.count($ids).'" style="height: 3px;"></progress><br><br>');
+		printf('<progress id="sprog" value="0" max="'.count($ids).'" style="height: 3px;"></progress><br><br>');
 		foreach ($ids as $value) 
 		{
 				
@@ -72,10 +72,11 @@ function get_post_data()
 				}
 			}
 			printf('<script>
-					 document.getElementById("pprog").value = '.$i.';
+					 document.getElementById("sprog").value = '.$i.';
 					</script>');
 			post_arr_sort($arr_results);
-
+			ob_flush();
+			flush();
 		}
 
 		printf("OK Your Posts Backuped<br><br>");

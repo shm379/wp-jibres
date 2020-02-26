@@ -68,7 +68,7 @@ function get_product_data()
 	$results = $wpdb->get_results("SELECT ID FROM $wpdb->posts WHERE 
 									post_type = 'product' AND ID NOT IN 
 									(SELECT item_id FROM {$wpdb->prefix}jibres_check 
-									WHERE type = 'product' AND backuped = 1)");
+									WHERE type = 'product' AND backuped = 1) LIMIT 100");
 
 	$arr_results = array();
 	$ids = array();
@@ -133,6 +133,8 @@ function get_product_data()
 					 document.getElementById("pprog").value = '.$i.';
 					</script>');
 			product_arr_sort($arr_results);
+			ob_flush();
+			flush();
 
 		}
 
