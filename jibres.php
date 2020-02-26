@@ -50,7 +50,7 @@ function admin_jib()
 		if ($_POST['store']) 
 		{
 			$data_posted = array('store' => $_POST['store'], 'apikey' => $_POST['apikey'], 'appkey' => $_POST['appkey']);
-			insert_in_jibres('jibres', $data_posted);
+			insert_in_jibres($data_posted, 'jibres');
 		}
 
 		$table_name = $wpdb->prefix . 'jibres';
@@ -62,7 +62,7 @@ function admin_jib()
 				  appkey varchar(32) NOT NULL,
 				  PRIMARY KEY  (id)
 				) $charset_collate;";
-		if (create_jibres_table('jibres', $strc) === true) 
+		if (create_jibres_table($strc, 'jibres') === true) 
 		{
 			$check_jib = $wpdb->get_results("SELECT * FROM {$wpdb->prefix}jibres");
 			if (!empty($check_jib)) 

@@ -1,6 +1,6 @@
 <?php 
 
-function create_jibres_table($tname = 'jibres_check', $tstrc = null)
+function create_jibres_table($tstrc = null, $tname = 'jibres_check')
 {
 	global $wpdb;
 		
@@ -48,7 +48,7 @@ function create_jibres_table($tname = 'jibres_check', $tstrc = null)
 }
 
 
-function insert_in_jibres($tname = 'jibres_check', $data = array())
+function insert_in_jibres($data = array(), $tname = 'jibres_check')
 {
 	global $wpdb;
 
