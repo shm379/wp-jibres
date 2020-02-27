@@ -1,12 +1,5 @@
 <?php
 
-function send_comment($data)
-{
-	send_data_jibres("/comment/add", $data);
-}
-
-
-
 function comment_arr_sort($arr)
 {
 	$ch = array('post'         => 'comment_post_ID',
@@ -18,7 +11,15 @@ function comment_arr_sort($arr)
 				);
 		
 	$changed = sort_arr($ch, $arr);
-	create_csv('comments', $changed);
+
+	if (wis() == 'csv') 
+	{
+		wis('comments', $changed);
+	}
+	elseif (wis() == 'api') 
+	{
+		wis('/comment/add', $changed);
+	}
 }
 
 function insert_comment_in_jib($id)

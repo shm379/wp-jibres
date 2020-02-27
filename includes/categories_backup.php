@@ -1,12 +1,5 @@
 <?php
 
-function send_category($data)
-{
-	send_data_jibres("/category/add", $data);
-}
-
-
-
 function category_arr_sort($arr)
 {
 	$ch = array('name'  => 'name',
@@ -15,8 +8,15 @@ function category_arr_sort($arr)
 				);
 
 	$changed = sort_arr($ch, $arr);
-	create_csv('categories', $changed);
-	// send_category($changed);
+
+	if (wis() == 'csv') 
+	{
+		wis('categories', $changed);
+	}
+	elseif (wis() == 'api') 
+	{
+		wis('/category/add', $changed);
+	}
 }
 
 function insert_category_in_jib($id)

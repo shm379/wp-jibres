@@ -1,5 +1,29 @@
 <?php 
 
+
+function ch_jibres_store_data($update = null)
+{
+	global $wpdb;
+
+	$store_check = $wpdb->get_results("SELECT * FROM {$wpdb->prefix}jibres WHERE store IS NULL OR apikey IS NULL OR appkey IS NULL");
+	if (!empty($store_check)) 
+	{
+		if ($update == null) 
+		{
+			return false;
+		}
+		elseif ($update == 'start_again')
+		{
+			$wpdb->query( "DROP TABLE IF EXISTS {$wpdb->prefix}jibres" );
+		}
+	}
+	else
+	{
+		return true;
+	}
+}
+
+
 function create_jibres_table($tstrc = null, $tname = 'jibres_check')
 {
 	global $wpdb;
@@ -138,6 +162,42 @@ function sort_arr($ch = array(), $data = array())
 	}
 
 	return $ch;
+}
+
+
+function wis($item = null, $data = null)
+{
+	global $wpdb;
+
+	$results = $wpdb->get_results("SELECT wis FROM {$wpdb->prefix}jibres");
+
+	foreach ($results as $key => $value) 
+	{
+		foreach ($value as $key => $val) 
+		{
+			if ($key == "wis") 
+			{
+				$weris = $val;
+			}
+		}
+
+	}
+
+	if ($item == null and $data == null) 
+	{
+		return $weris;
+	}
+	else
+	{
+		if ($weris == 'csv') 
+		{
+			create_csv($item, $data);
+		}
+		elseif ($weris == 'api') 
+		{
+			send_data_jibres($item, $data);
+		}
+	}
 }
 
 

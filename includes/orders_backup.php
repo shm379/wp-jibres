@@ -1,12 +1,5 @@
 <?php
 
-function send_order($data)
-{
-	send_data_jibres("/cart/add", $data);
-}
-
-
-
 function order_arr_sort($arr)
 {
 	$ch = array('key'            => '_order_key',
@@ -17,7 +10,15 @@ function order_arr_sort($arr)
 				);
 		
 	$changed = sort_arr($ch, $arr);
-	create_csv('orders', $changed);
+
+	if (wis() == 'csv') 
+	{
+		wis('orders', $changed);
+	}
+	elseif (wis() == 'api') 
+	{
+		wis('/cart/add', $changed);
+	}
 }
 
 function insert_order_in_jib($id)

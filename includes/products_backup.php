@@ -1,12 +1,5 @@
 <?php
 
-function send_product($data)
-{
-	send_data_jibres("/product/add", $data);
-}
-
-
-
 function product_arr_sort($arr)
 {
 	$ch = array('title'        => 'post_title',
@@ -51,8 +44,15 @@ function product_arr_sort($arr)
 	}
 
 	$changed = sort_arr($ch, $arr);
-	create_csv('products', $changed);
-	// send_product($changed);
+	
+	if (wis() == 'csv') 
+	{
+		wis('products', $changed);
+	}
+	elseif (wis() == 'api') 
+	{
+		wis('/product/add', $changed);
+	}
 }
 
 function insert_product_in_jib($id)

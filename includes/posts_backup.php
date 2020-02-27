@@ -1,12 +1,5 @@
 <?php
 
-function send_post($data)
-{
-	send_data_jibres("/post/add", $data);
-}
-
-
-
 function post_arr_sort($arr)
 {
 	$ch = array('title'       => 'post_title',
@@ -21,7 +14,15 @@ function post_arr_sort($arr)
 								);
 		
 	$changed = sort_arr($ch, $arr);
-	create_csv('posts', $changed);
+
+	if (wis() == 'csv') 
+	{
+		wis('posts', $changed);
+	}
+	elseif (wis() == 'api') 
+	{
+		wis('/post/add', $changed);
+	}
 }
 
 function insert_post_in_jib($id)
