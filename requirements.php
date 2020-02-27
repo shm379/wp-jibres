@@ -8,7 +8,7 @@ function menus()
 		'manage_options',
 		'jibres',
 		'jibres',
-		plugin_dir_url(__FILE__) . 'admin/images/Jibres-Logo-icon.svg',
+		plugin_dir_url(__FILE__) . 'admin/images/logo-black.svg',
 		30
 	);
 }
