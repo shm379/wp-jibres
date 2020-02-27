@@ -4,12 +4,14 @@
  * @author            Shahb2
  * @copyright         2020 Jibres
  * @license           GPL-3.0-or-later
- * @version 		  1.0
  *
  * @wordpress-plugin
  * Plugin Name:       wp-jibres
- * Plugin URI:        https://jibres.com
+ * Plugin URI:        https://github.com/jibres/wp-jibres
  * Description:       Backup of your data on jibres.
+ * Version: 		  1.0
+ * Author:            Jibres
+ * Author URI:        https://jibres.com
  */
 
 
