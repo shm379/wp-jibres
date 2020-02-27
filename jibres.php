@@ -14,7 +14,6 @@
  * Author URI:        https://jibres.com
  */
 
-
 function menus() 
 {
 	add_menu_page(
@@ -27,16 +26,13 @@ function menus()
 		30
 	);
 }
-
 add_action( 'admin_menu', 'menus' );
 
 function jib_css() 
 {
 	require_once(dirname( __FILE__ ) . '/admin/css/style.php');
 }
-
 add_action( 'admin_head', 'jib_css' );
-
 
 function admin_jib() 
 {
@@ -47,7 +43,6 @@ function admin_jib()
 
 		require_once(dirname( __FILE__ ) . '/includes/functions.php');
 		require_once(dirname( __FILE__ ) . '/header.php');
-		
 
 		printf('<div class="jibres"><br>');
 
@@ -57,13 +52,12 @@ function admin_jib()
 		}
 
 		require_once(dirname( __FILE__ ) . '/gets.php');
-		
 
 		printf('</div>');
 		
 		
 	}
 }
-
 add_action( 'admin_notices', 'admin_jib' );
+
 ?>

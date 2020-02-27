@@ -1,5 +1,6 @@
 === wp-jibres ===
 Donate link: https://jibres.com/
+Tags: Jibres, jibres, Backup, backup, api, jibres api, send to store, send to jibres
 Requires at least: 4.6
 Tested up to: 4.7
 Stable tag: 4.3
