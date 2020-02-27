@@ -8,7 +8,7 @@ function menus()
 		'manage_options',
 		'jibres',
 		'jibres',
-		plugin_dir_url(__FILE__) . 'admin/images/Jibres-Logo-icon-black-32.png',
+		plugin_dir_url(__FILE__) . 'admin/images/Jibres-Logo-icon.svg',
 		30
 	);
 }
@@ -16,7 +16,9 @@ add_action( 'admin_menu', 'menus' );
 
 function jib_css() 
 {
-	require_once(dirname( __FILE__ ) . '/admin/css/style.php');
+	printf('<style type="text/css">');
+	require_once(dirname( __FILE__ ) . '/admin/css/style.css');
+	printf('</style>');
 }
 add_action( 'admin_head', 'jib_css' );
 
