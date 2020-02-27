@@ -17,6 +17,14 @@ If you want to backup and save your data in your jibres store or csv files use t
 Or if you want to emigration to JIBRES (The first sales engineering system in the world) create your store in jibres and send all of your data to jibres with a click.
 Backup speedly and beautiful with jibres plugin...
 
+FEATURES:
+
+*   Powerful and easy to use
+*   Without setup required and force to set informations
+*   Small space and big work
+*   Works on any servers
+*	Backup part of your data
+
 == Installation ==
 
 1. Upload the plugin files to the `/wp-content/plugins/plugin-name` directory, or install the plugin through the WordPress plugins screen directly.
