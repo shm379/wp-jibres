@@ -1,12 +1,13 @@
 <?php
 /**
- * @package           jibres
+ * @package           wp-jibres
  * @author            Shahb2
  * @copyright         2020 Jibres
  * @license           GPL-3.0-or-later
+ * @version 		  1.0
  *
  * @wordpress-plugin
- * Plugin Name:       jibres
+ * Plugin Name:       wp-jibres
  * Plugin URI:        https://jibres.com
  * Description:       Backup of your data on jibres.
  */
@@ -61,8 +62,6 @@ function admin_jib()
 		
 	}
 }
-
-
 
 add_action( 'admin_notices', 'admin_jib' );
 ?>
