@@ -1,7 +1,7 @@
 <?php
 /**
  * @package           wp-jibres
- * @author            Shahb2
+ * @author            sarbazk
  * @copyright         2020 Jibres
  * @license           GPL-3.0-or-later
  *
