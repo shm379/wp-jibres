@@ -201,4 +201,71 @@ function wis($item = null, $data = null)
 }
 
 
+
+
+
+function informations_b($fdata, $sdata, $cat, $first = false)
+{
+	global $wpdb;
+
+	if ($first == false) 
+	{
+		$first = 'And';
+	}
+	else
+	{
+		$first = 'You';
+	}
+
+	if (!empty($fdata)) 
+	{
+		foreach ($fdata as $key => $value) 
+		{
+			foreach ($value as $key2 => $val) 
+			{
+				$all = $val;
+			}
+		}
+	
+		printf($first.' have '.$all.' '.$cat);
+		
+		if (!empty($sdata)) 
+		{
+			foreach ($sdata as $key => $value) 
+			{
+				foreach ($value as $key2 => $val) 
+				{
+					$not_b = $val;
+				}
+			}
+			if ($not_b == '0') 
+			{
+				printf(' and <a style="font-weight: bold; color: green;">all of your '.$cat.' backuped</a>');
+			}
+			else
+			{
+				printf(' and <a style="font-weight: bold; color: red;">'.$not_b.' '.$cat.' not backuped</a>');
+			}
+		}
+		else
+		{
+			if (create_jibres_table() === false) 
+			{
+				printf(' and <a style="font-weight: bold; color: red;">all of your '.$cat.' not backuped</a>');
+				header("Refresh:0");
+			}
+			else
+			{
+				printf(' and <a style="font-weight: bold; color: green;">all of your '.$cat.' backuped</a>');
+				header("Refresh:0");
+			}
+		}
+		
+	}
+	else
+	{
+		printf($first.' have not any '.$cat);
+	}
+}
+
 ?>
