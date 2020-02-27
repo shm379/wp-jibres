@@ -53,6 +53,7 @@ function get_order_data()
 	if (!empty($results)) 
 	{
 		$i = 0;
+		printf('<p>Backuping orders...</p>');
 		printf('<progress id="oprog" value="0" max="'.count($ids).'" style="height: 3px;"></progress><br><br>');
 		foreach ($ids as $value) 
 		{

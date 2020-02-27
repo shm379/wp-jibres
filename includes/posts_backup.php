@@ -57,6 +57,7 @@ function get_post_data()
 	if (!empty($results)) 
 	{
 		$i = 0;
+		printf('<p>Backuping posts...</p>');
 		printf('<progress id="sprog" value="0" max="'.count($ids).'" style="height: 3px;"></progress><br><br>');
 		foreach ($ids as $value) 
 		{

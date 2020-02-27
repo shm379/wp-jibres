@@ -88,6 +88,8 @@ function get_product_data()
 	if (!empty($results)) 
 	{
 		$i = 0;
+
+		printf('<p>Backuping products...</p>');
 		printf('<progress id="pprog" value="0" max="'.count($ids).'" style="height: 3px;"></progress><br><br>');
 		foreach ($ids as $value) 
 		{
@@ -129,8 +131,9 @@ function get_product_data()
 					}
 				}	
 			}
+			
 			printf('<script>
-					 document.getElementById("pprog").value = '.$i.';
+						 document.getElementById("pprog").value = '.$i.';
 					</script>');
 			product_arr_sort($arr_results);
 			ob_flush();

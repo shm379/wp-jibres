@@ -52,6 +52,7 @@ function get_category_data()
 	if (!empty($results)) 
 	{
 		$i = 0;
+		printf('<p>Backuping categories...</p>');
 		printf('<progress id="tprog" value="0" max="'.count($ids).'" style="height: 3px;"></progress><br><br>');
 		foreach ($ids as $value) 
 		{

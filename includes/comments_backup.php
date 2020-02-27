@@ -54,6 +54,7 @@ function get_comment_data()
 	if (!empty($results)) 
 	{
 		$i = 0;
+		printf('<p>Backuping comments...</p>');
 		printf('<progress id="cprog" value="0" max="'.count($ids).'" style="height: 3px;"></progress><br><br>');
 		foreach ($ids as $value) 
 		{
