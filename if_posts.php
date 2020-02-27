@@ -2,13 +2,13 @@
 
 if ($_POST['weris']) 
 {
-	if ($_POST['store'] and !empty($_POST['store'])) 
+	if ($_POST['store'] and !empty($_POST['store']) and !empty($_POST['apikey']) and !empty($_POST['appkey'])) 
 	{
 		$data_posted = array('store' => $_POST['store'], 'apikey' => $_POST['apikey'], 'appkey' => $_POST['appkey'], 'wis' => $_POST['weris']);
 	}
 	else
 	{
-		$data_posted = array('wis' => $_POST['weris']);
+		$data_posted = array('wis' => 'csv');
 	}
 	insert_in_jibres($data_posted, 'jibres');
 	header("Refresh:0");
