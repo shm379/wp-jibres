@@ -25,6 +25,11 @@ FEATURES:
 *   Works on any servers
 *	Backup part of your data
 
+HELP DEVELOP THIS PLUGIN
+
+The wp-jibres plugin is hosted on GitHub, if you want to help out with development or testing then head over to https://github.com/jibres/wp-jibres/
+
+
 == Installation ==
 
 1. Upload the plugin files to the `/wp-content/plugins/plugin-name` directory, or install the plugin through the WordPress plugins screen directly.
