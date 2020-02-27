@@ -1,6 +1,7 @@
 === wp-jibres ===
+Contributors: jibres, sarbazk
 Donate link: https://jibres.com/
-Tags: Jibres, jibres, Backup, backup, api, jibres api, send to store, send to jibres, csv
+Tags: jibres, backup, back up, csv, api, jibres api, send to store, send to jibres
 Requires at least: 4.6
 Tested up to: 4.7
 Stable tag: 4.3
@@ -17,7 +18,7 @@ If you want to backup and save your data in your jibres store or csv files use t
 Or if you want to emigration to JIBRES (The first sales engineering system in the world) create your store in jibres and send all of your data to jibres with a click.
 Backup speedly and beautiful with jibres plugin...
 
-FEATURES:
+= Features =
 
 *   Powerful and easy to use
 *   Without setup required and force to set informations
@@ -25,7 +26,8 @@ FEATURES:
 *   Works on any servers
 *	Backup part of your data
 
-HELP DEVELOP THIS PLUGIN
+
+= Help develop this plugin =
 
 The wp-jibres plugin is hosted on GitHub, if you want to help out with development or testing then head over to https://github.com/jibres/wp-jibres/
 
