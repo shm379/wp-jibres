@@ -209,17 +209,17 @@ function wis($item = null, $data = null)
 
 
 
-function informations_b($item, $table, $cat, $where = array(), $first = false)
+function informations_b($item, $table, $cat, $wb, $where = array(), $first = false)
 {
 	global $wpdb;
 
-	if (wis() == 'csv') 
+	if ($wb == 'csv') 
 	{
-		$wers = 'on csv file';
+		$wers = 'to csv file';
 	}
-	elseif (wis() == 'api') 
+	elseif ($wb== 'api') 
 	{
-		$wers = 'on your jibres store';
+		$wers = 'to your jibres store';
 	}
 
 	$table = $wpdb->$table;
@@ -237,13 +237,13 @@ function informations_b($item, $table, $cat, $where = array(), $first = false)
 		}
 		$fdata = $wpdb->get_results("SELECT COUNT($item) FROM $table WHERE $clm = '$rw'");
 		$sdata = $wpdb->get_results("SELECT COUNT($item) FROM $table WHERE $clm = '$rw' AND $item NOT IN 
-									(SELECT item_id FROM {$wpdb->prefix}jibres_check WHERE type = '$cat' AND backuped = 1)");
+									(SELECT item_id FROM {$wpdb->prefix}jibres_check WHERE type = '$cat' AND backuped = 1 AND wers = '$wb')");
 	}
 	else
 	{
 		$fdata = $wpdb->get_results("SELECT COUNT($item) FROM $table");
 		$sdata = $wpdb->get_results("SELECT COUNT($item) FROM $table WHERE $item NOT IN 
-									(SELECT item_id FROM {$wpdb->prefix}jibres_check WHERE type = '$cat' AND backuped = 1)");
+									(SELECT item_id FROM {$wpdb->prefix}jibres_check WHERE type = '$cat' AND backuped = 1 AND wers = '$wb')");
 	}
 
 
@@ -283,14 +283,14 @@ function informations_b($item, $table, $cat, $where = array(), $first = false)
 			}
 			else
 			{
-				printf(' and <a style="font-weight: bold; color: red;">'.$not_b.' '.$cat.' not backuped '.$wers.'</a>');
+				printf(' and <a style="font-weight: bold; color: #c80a5a;">'.$not_b.' '.$cat.' not backuped '.$wers.'</a>');
 			}
 		}
 		else
 		{
 			if (create_jibres_table() === false) 
 			{
-				printf(' and <a style="font-weight: bold; color: red;">all of your '.$cat.' not backuped '.$wers.'</a>');
+				printf(' and <a style="font-weight: bold; color: #c80a5a;">all of your '.$cat.' not backuped '.$wers.'</a>');
 				header("Refresh:0");
 			}
 			else
