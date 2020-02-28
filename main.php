@@ -34,13 +34,12 @@ printf('<br><br>');
 
 if (wis() == 'csv') 
 {
-	print_infos(wis());
+	print_infos('csv');
 }
-
-
-if (wis() == 'api') 
+else
 {
-	print_infos(wis());
+	print_infos('api');
 }
+
 
 ?>
