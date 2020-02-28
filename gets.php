@@ -20,7 +20,7 @@ if (create_jibres_table($strc, 'jibres') === true)
 			$packs = array('products', 'orders', 'posts', 'comments', 'categories');
 			foreach ($packs as $value) 
 			{
-				require_once dirname( __FILE__ ) . '/includes/'.$value.'_backup.php';
+				require_once JIBRES_DIR . 'includes/'.$value.'_backup.php';
 				$open_func = $value.'_b';
 				$open_func();
 			}
@@ -28,7 +28,7 @@ if (create_jibres_table($strc, 'jibres') === true)
 		}
 		elseif ($_GET['jibres']) 
 		{
-			require_once dirname( __FILE__ ) . '/includes/'.$_GET['jibres'].'.php';
+			require_once JIBRES_DIR . 'includes/'.$_GET['jibres'].'.php';
 			$get_func = explode("_", $_GET['jibres']);
 			$open_func = $get_func[0]."_b";
 			$open_func();
@@ -36,12 +36,12 @@ if (create_jibres_table($strc, 'jibres') === true)
 		}
 		else
 		{
-			require_once(dirname( __FILE__ ) . '/main.php');
+			require_once(JIBRES_DIR . 'main.php');
 		}
 	}
 	else
 	{
-		require_once(dirname( __FILE__ ) . '/first_jibres.php');
+		require_once(JIBRES_DIR . 'first_jibres.php');
 	}
 }
 
