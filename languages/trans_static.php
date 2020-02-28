@@ -3,7 +3,7 @@ class TransStatic
 {
  private function trans_static()
  {
-	echo __("Jibres");
+	echo __("Jibres", 'jibres');
  }
 }
 ?>
