@@ -204,9 +204,34 @@ function wis($item = null, $data = null)
 
 
 
-function informations_b($fdata, $sdata, $cat, $first = false)
+function informations_b($item, $table, $cat, $where = array(), $first = false)
 {
 	global $wpdb;
+
+	$table = $wpdb->$table;
+	if (!empty($where)) 
+	{
+		$i = 0;
+		foreach ($where as $key => $value) 
+		{
+			if ($i == 0) 
+			{
+				$clm = $key;
+				$rw = $value;
+			}
+			$i++;
+		}
+		$fdata = $wpdb->get_results("SELECT COUNT($item) FROM $table WHERE $clm = '$rw'");
+		$sdata = $wpdb->get_results("SELECT COUNT($item) FROM $table WHERE $clm = '$rw' AND $item NOT IN 
+									(SELECT item_id FROM {$wpdb->prefix}jibres_check WHERE type = '$cat' AND backuped = 1)");
+	}
+	else
+	{
+		$fdata = $wpdb->get_results("SELECT COUNT($item) FROM $table");
+		$sdata = $wpdb->get_results("SELECT COUNT($item) FROM $table WHERE AND $item NOT IN 
+									(SELECT item_id FROM {$wpdb->prefix}jibres_check WHERE type = '$cat' AND backuped = 1)");
+	}
+
 
 	if ($first == false) 
 	{

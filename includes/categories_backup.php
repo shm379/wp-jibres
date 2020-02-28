@@ -21,7 +21,7 @@ function category_arr_sort($arr)
 
 function insert_category_in_jib($id)
 {
-	$data = array('item_id' => $id, 'type' => 'cat');
+	$data = array('item_id' => $id, 'type' => 'category');
 	insert_in_jibres($data);
 }
 
@@ -32,7 +32,7 @@ function get_category_data()
 	$results = $wpdb->get_results("SELECT term_id FROM $wpdb->term_taxonomy WHERE 
 									taxonomy = 'product_cat' AND term_id NOT IN 
 									(SELECT item_id FROM {$wpdb->prefix}jibres_check 
-									WHERE type = 'cat' AND backuped = 1)");
+									WHERE type = 'category' AND backuped = 1)");
 
 	$arr_results = array();
 	$ids = array();
