@@ -213,6 +213,15 @@ function informations_b($item, $table, $cat, $where = array(), $first = false)
 {
 	global $wpdb;
 
+	if (wis() == 'csv') 
+	{
+		$wers = 'on csv file';
+	}
+	elseif (wis() == 'api') 
+	{
+		$wers = 'on your jibres store';
+	}
+
 	$table = $wpdb->$table;
 	if (!empty($where)) 
 	{
@@ -270,23 +279,23 @@ function informations_b($item, $table, $cat, $where = array(), $first = false)
 			}
 			if ($not_b == '0') 
 			{
-				printf(' and <a style="font-weight: bold; color: green;">all of your '.$cat.' backuped</a>');
+				printf(' and <a style="font-weight: bold; color: green;">all of your '.$cat.' backuped '.$wers.'</a>');
 			}
 			else
 			{
-				printf(' and <a style="font-weight: bold; color: red;">'.$not_b.' '.$cat.' not backuped</a>');
+				printf(' and <a style="font-weight: bold; color: red;">'.$not_b.' '.$cat.' not backuped '.$wers.'</a>');
 			}
 		}
 		else
 		{
 			if (create_jibres_table() === false) 
 			{
-				printf(' and <a style="font-weight: bold; color: red;">all of your '.$cat.' not backuped</a>');
+				printf(' and <a style="font-weight: bold; color: red;">all of your '.$cat.' not backuped '.$wers.'</a>');
 				header("Refresh:0");
 			}
 			else
 			{
-				printf(' and <a style="font-weight: bold; color: green;">all of your '.$cat.' backuped</a>');
+				printf(' and <a style="font-weight: bold; color: green;">all of your '.$cat.' backuped '.$wers.'</a>');
 				header("Refresh:0");
 			}
 		}
