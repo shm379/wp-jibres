@@ -36,6 +36,7 @@ function create_jibres_table($tstrc = null, $tname = 'jibres_check')
 					   time datetime DEFAULT NOW() NOT NULL,
 					   item_id int(11) NOT NULL,
 					   type varchar(50) NOT NULL,
+					   wers varchar(55) NOT NULL,
 					   backuped int(11) DEFAULT 1 NOT NULL,
 					   PRIMARY KEY  (id)
 					 ) $charset_collate;";
@@ -77,6 +78,10 @@ function insert_in_jibres($data = array(), $tname = 'jibres_check')
 	global $wpdb;
 
 	$table_name = $wpdb->prefix . $tname;
+	if ($tname == 'jibres_check') 
+	{
+		$data['wers'] = wis();
+	}
 	
 	$wpdb->insert( 
 		$table_name, 

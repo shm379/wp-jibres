@@ -24,3 +24,11 @@
 #adminmenu .wp-menu-image img {
 	padding: 0 !important;
 }
+
+.infos {
+	border: 1px solid #ddd;
+	border-radius: 12px;
+	max-width: 30%;
+	padding: 2em;
+	box-shadow: 0em 0em 2em #ddd;
+}
