@@ -26,13 +26,13 @@ if (defined('WP_INSTALLING') && WP_INSTALLING)
 	return;
 }
 
-function jibres_two_instance_notice()
-{
-	echo '<div class="error"><p>' . __( 'You are using two instances of Jibres plugin at same time! Please deactive one of them.', 'jibres' ) . '</p></div>';
-}
 // check whether another instance of Master Slider is activated or not
 if(defined('JIBRES_VERSION'))
 {
+	function jibres_two_instance_notice()
+	{
+		echo '<div class="error"><p>' . __( 'You are using two instances of Jibres plugin at same time! Please deactive one of them.', 'jibres' ) . '</p></div>';
+	}
 	add_action( 'admin_notices', 'jibres_two_instance_notice' );
 	return;
 }
@@ -40,13 +40,12 @@ if(defined('JIBRES_VERSION'))
 // Make sure we don't expose any info if called directly
 if ( !function_exists( 'add_action' ) )
 {
-	echo "Hi there! I'm just a plugin, not much I can do when called directly.";
-	exit;
+	die("Hi there! I'm just a plugin, not much I can do when called directly.");
 }
 
-
+// define basic variables
 define('JIBRES_DIR', dirname(__FILE__). DIRECTORY_SEPARATOR);
-define('JIBRES_VERSION', '1.1');
+require_once(JIBRES_DIR. 'includes/define.php');
 
 
 require_once(JIBRES_DIR. 'requirements.php');
