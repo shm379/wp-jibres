@@ -228,7 +228,7 @@ function informations_b($item, $table, $cat, $where = array(), $first = false)
 	else
 	{
 		$fdata = $wpdb->get_results("SELECT COUNT($item) FROM $table");
-		$sdata = $wpdb->get_results("SELECT COUNT($item) FROM $table WHERE AND $item NOT IN 
+		$sdata = $wpdb->get_results("SELECT COUNT($item) FROM $table WHERE $item NOT IN 
 									(SELECT item_id FROM {$wpdb->prefix}jibres_check WHERE type = '$cat' AND backuped = 1)");
 	}
 
