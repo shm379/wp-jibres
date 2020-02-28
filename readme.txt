@@ -53,6 +53,7 @@ Jibres plugin help you to create your backup on your server by csv files. powerf
 == Screenshots ==
 
 1. Jibres plugin for wordpress
+2. Main page of jibres plugin
 
 == Changelog ==
 
