@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Jibres Wordpress Plugin\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-02-28 23:14+0330\n"
-"PO-Revision-Date: 2020-02-28 23:17+0330\n"
+"POT-Creation-Date: 2020-02-29 00:01+0330\n"
+"PO-Revision-Date: 2020-02-29 00:01+0330\n"
 "Last-Translator: Javad Adib <Mr.Javad.Adib@gmail.com>\n"
 "Language-Team: \n"
 "Language: fa_IR\n"
@@ -20,10 +20,14 @@ msgstr ""
 "X-Poedit-SearchPath-0: languages\n"
 "X-Poedit-SearchPath-1: .\n"
 
-#: jibres.php:31
+#: jibres.php:34
 msgid ""
 "You are using two instances of Jibres plugin at same time! Please deactive "
 "one of them."
 msgstr ""
 "شما دو نسخه از پلاگین جیبرس برای وردپرس را همزمان فعال کرده‌اید! لطا یکی از "
 "آن‌ها را غیرفعال کنید."
+
+#: languages/trans_static.php:6
+msgid "Jibres"
+msgstr "جیبرس"
