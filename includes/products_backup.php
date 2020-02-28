@@ -132,6 +132,7 @@ function get_product_data()
 				}	
 			}
 			
+			
 			printf('<script>
 						 document.getElementById("pprog").value = '.$i.';
 					</script>');
