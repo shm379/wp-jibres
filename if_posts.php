@@ -33,4 +33,11 @@ if ($_POST['usas'])
 	}
 }
 
+
+if ($_POST['changit']) 
+{
+	ch_jibres_store_data($_POST['changit']);
+	header("Refresh:0");
+}
+
 ?>

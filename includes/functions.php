@@ -5,21 +5,21 @@ function ch_jibres_store_data($update = null)
 {
 	global $wpdb;
 
-	$store_check = $wpdb->get_results("SELECT * FROM {$wpdb->prefix}jibres WHERE store IS NULL OR apikey IS NULL OR appkey IS NULL");
-	if (!empty($store_check)) 
+	if ($update == null) 
 	{
-		if ($update == null) 
+		$store_check = $wpdb->get_results("SELECT * FROM {$wpdb->prefix}jibres WHERE store IS NULL OR apikey IS NULL OR appkey IS NULL");
+		if (!empty($store_check)) 
 		{
 			return false;
 		}
-		elseif ($update == 'start_again')
+		else
 		{
-			$wpdb->query( "DROP TABLE IF EXISTS {$wpdb->prefix}jibres" );
+			return true;
 		}
 	}
-	else
+	elseif ($update == 'start_again') 
 	{
-		return true;
+		$wpdb->query( "DROP TABLE IF EXISTS {$wpdb->prefix}jibres" );
 	}
 }
 

@@ -21,6 +21,29 @@
 	border-color: #016087;
 	color: #016087;
 }
+
+.jbt {
+	padding: 4px 8px;
+	position: relative;
+	top: -3px;
+	text-decoration: none;
+	border: 1px solid #e00b65;
+	border-radius: 2px;
+	text-shadow: none;
+	font-weight: 600;
+	font-size: 13px;
+	line-height: normal;
+	color: #f3f5f6;
+	background: #e00b65;
+	cursor: pointer;
+}
+.jbt:hover {
+	background: #af094f;
+	border-color: #af094f;
+	color: #f1f1f1;
+}
+
+
 #adminmenu .wp-menu-image img {
 	padding: 0 !important;
 }

@@ -39,6 +39,11 @@ if (wis() == 'csv')
 else
 {
 	print_infos('api');
+	printf('<br><br>');
+	printf('<form onsubmit="return confirm(\'Do you really want to delete your jibres api informations?\');" action method="post">
+			<input type="hidden" name="changit" value="start_again">
+			<input type="submit" class="jbt" value="Change my jibres api informations">
+			</form>');
 }
 
 
