@@ -67,11 +67,11 @@ class jibres_categories
 		{
 			$i = 0;
 			printf('<p>Backuping categories...</p>');
-			printf('<progress id="pprog" value="0" max="'.count($ids).'" style="height: 3px;"></progress>  <a id="inof"></a><br><br>');
+			printf('<progress id="tprog" value="0" max="'.count($ids).'" style="height: 3px;"></progress>  <a id="tinof"></a><br><br>');
 			printf('<script>
-					function prsb(meq) {
-						document.getElementById("pprog").value = meq;
-						document.getElementById("inof").innerHTML = meq + " of '.count($ids).' backuped";
+					function trsb(meq) {
+						document.getElementById("tprog").value = meq;
+						document.getElementById("tinof").innerHTML = meq + " of '.count($ids).' backuped";
 					}
 					</script>');
 			foreach ($ids as $value) 
@@ -89,7 +89,7 @@ class jibres_categories
 				}
 	
 				printf('<script>
-							prsb('.$i.');
+							trsb('.$i.');
 						</script>');
 				$this->category_arr_sort($arr_results);
 				ob_flush();

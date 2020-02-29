@@ -70,11 +70,11 @@ class jibres_comments
 		{
 			$i = 0;
 			printf('<p>Backuping comments...</p>');
-			printf('<progress id="pprog" value="0" max="'.count($ids).'" style="height: 3px;"></progress>  <a id="inof"></a><br><br>');
+			printf('<progress id="cprog" value="0" max="'.count($ids).'" style="height: 3px;"></progress>  <a id="cinof"></a><br><br>');
 			printf('<script>
-					function prsb(meq) {
-						document.getElementById("pprog").value = meq;
-						document.getElementById("inof").innerHTML = meq + " of '.count($ids).' backuped";
+					function crsb(meq) {
+						document.getElementById("cprog").value = meq;
+						document.getElementById("cinof").innerHTML = meq + " of '.count($ids).' backuped";
 					}
 					</script>');
 			foreach ($ids as $value) 
@@ -92,7 +92,7 @@ class jibres_comments
 				}
 	
 				printf('<script>
-							prsb('.$i.');
+							crsb('.$i.');
 						</script>');
 				$this->comment_arr_sort($arr_results);
 				ob_flush();

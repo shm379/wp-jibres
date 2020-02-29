@@ -70,11 +70,11 @@ class jibres_posts
 		{
 			$i = 0;
 			printf('<p>Backuping posts...</p>');
-			printf('<progress id="pprog" value="0" max="'.count($ids).'" style="height: 3px;"></progress>  <a id="inof"></a><br><br>');
+			printf('<progress id="sprog" value="0" max="'.count($ids).'" style="height: 3px;"></progress>  <a id="sinof"></a><br><br>');
 			printf('<script>
-					function prsb(meq) {
-						document.getElementById("pprog").value = meq;
-						document.getElementById("inof").innerHTML = meq + " of '.count($ids).' backuped";
+					function srsb(meq) {
+						document.getElementById("sprog").value = meq;
+						document.getElementById("sinof").innerHTML = meq + " of '.count($ids).' backuped";
 					}
 					</script>');
 			foreach ($ids as $value) 
@@ -91,7 +91,7 @@ class jibres_posts
 					}
 				}
 				printf('<script>
-							prsb('.$i.');
+							srsb('.$i.');
 						</script>');
 				$this->post_arr_sort($arr_results);
 				ob_flush();

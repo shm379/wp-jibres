@@ -69,11 +69,11 @@ class jibres_orders
 		{
 			$i = 0;
 			printf('<p>Backuping orders...</p>');
-			printf('<progress id="pprog" value="0" max="'.count($ids).'" style="height: 3px;"></progress>  <a id="inof"></a><br><br>');
+			printf('<progress id="oprog" value="0" max="'.count($ids).'" style="height: 3px;"></progress>  <a id="oinof"></a><br><br>');
 			printf('<script>
-					function prsb(meq) {
-						document.getElementById("pprog").value = meq;
-						document.getElementById("inof").innerHTML = meq + " of '.count($ids).' backuped";
+					function orsb(meq) {
+						document.getElementById("oprog").value = meq;
+						document.getElementById("oinof").innerHTML = meq + " of '.count($ids).' backuped";
 					}
 					</script>');
 			foreach ($ids as $value) 
@@ -109,7 +109,7 @@ class jibres_orders
 				}
 	
 				printf('<script>
-							prsb('.$i.');
+							orsb('.$i.');
 						</script>');
 				$this->order_arr_sort($arr_results);
 				ob_flush();
