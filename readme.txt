@@ -9,7 +9,7 @@ Requires PHP: 5.2.4
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
-Backup of your data on Jibres.
+Backup of all of your wordpress data and woocommerce into Jibres. Anytime you want you can transfer to Jibres. #1 World Sales Engineering System. Sell & Enjoy
 
 == Description ==
 
