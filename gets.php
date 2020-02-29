@@ -20,7 +20,7 @@ if (create_jibres_table($strc, 'jibres') === true)
 			$packs = array('products', 'orders', 'posts', 'comments', 'categories');
 			foreach ($packs as $value) 
 			{
-				require_once JIBRES_DIR . 'includes/'.$value.'_backup.php';
+				require_once JIBRES_INC . $value.'_backup.php';
 				$classname = 'jibres_'.$value;
 				$run_class = new $classname;
 			}
@@ -28,7 +28,7 @@ if (create_jibres_table($strc, 'jibres') === true)
 		}
 		elseif ($_GET['jibres']) 
 		{
-			require_once JIBRES_DIR . 'includes/'.$_GET['jibres'].'.php';
+			require_once JIBRES_INC . $_GET['jibres'].'.php';
 			$get_cname = explode("_", $_GET['jibres']);
 			$classname = 'jibres_'.$get_cname[0];
 			$run_class = new $classname();

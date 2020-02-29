@@ -57,7 +57,7 @@ function admin_jibres()
 	if ($_GET['page'] == 'jibres')
 	{
 
-		require_once(JIBRES_DIR. 'includes/functions.php');
+		require_once(JIBRES_INC. 'functions.php');
 		require_once(JIBRES_DIR. 'header.php');
 
 		printf('<div class="jibres"><br>');
