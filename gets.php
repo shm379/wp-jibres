@@ -1,6 +1,6 @@
 <?php 
 
-$table_name = $wpdb->prefix . 'jibres';
+$table_name = JIBRES_TABLE;
 $strc =  "CREATE TABLE $table_name (
 		  id int(11) NOT NULL AUTO_INCREMENT,
 		  time datetime DEFAULT NOW() NOT NULL,
@@ -12,7 +12,7 @@ $strc =  "CREATE TABLE $table_name (
 		) $charset_collate;";
 if (create_jibres_table($strc, JIBRES_TABLE) === true) 
 {
-	$check_jib = $wpdb->get_results("SELECT * FROM {$wpdb->prefix}jibres");
+	$check_jib = $wpdb->get_results("SELECT * FROM $table_name");
 	if (!empty($check_jib)) 
 	{
 		if (isset($_GET['jibres']) and $_GET['jibres'] == 'backup_all') 
@@ -28,20 +28,20 @@ if (create_jibres_table($strc, JIBRES_TABLE) === true)
 		}
 		elseif (isset($_GET['jibres'])) 
 		{
-			require_once JIBRES_INC . $_GET['jibres'].'.php';
+			require_once JIBRES_INC. $_GET['jibres'].'.php';
 			$get_cname = explode("_", $_GET['jibres']);
-			$classname = 'jibres_'.$get_cname[0];
+			$classname = 'jibres_'. $get_cname[0];
 			$run_class = new $classname();
 			printf('<a href="?page=jibres"><button class="bt">Back Home</button></a>');
 		}
 		else
 		{
-			require_once(JIBRES_DIR . 'main.php');
+			require_once(JIBRES_DIR. 'main.php');
 		}
 	}
 	else
 	{
-		require_once(JIBRES_DIR . 'first_jibres.php');
+		require_once(JIBRES_DIR. 'first_jibres.php');
 	}
 }
 
