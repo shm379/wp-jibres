@@ -46,13 +46,26 @@ class jibres_posts
 	{
 		global $wpdb;
 	
-		$results = $wpdb->get_results("SELECT ID FROM $wpdb->posts WHERE 
-										post_type = 'post' AND ID NOT IN 
-										(SELECT item_id FROM {$wpdb->prefix}jibres_check 
-										WHERE type = 'post' AND backuped = 1)");
+		$table = $wpdb->posts;
+		$jibres_ctable = JIBRES_CTABLE;
+		$query = 
+		"
+			SELECT 
+				ID 
+			FROM 
+				$table 
+			WHERE 
+				post_type = 'post' AND 
+				ID NOT IN 
+				(
+					SELECT item_id FROM $jibres_ctable WHERE type = 'post' AND backuped = 1
+				)
+		";
 	
-		$arr_results = array();
-		$ids = array();
+		$results = $wpdb->get_results($query);
+		
+		$arr_results = [];
+		$ids = [];
 	
 		foreach ($results as $key => $value) 
 		{
@@ -82,7 +95,16 @@ class jibres_posts
 					
 				$i++;
 				$this->insert_post_in_jibres($value);
-				$post_results = $wpdb->get_results("SELECT * FROM $wpdb->posts WHERE ID = $value");
+				$query = 
+				"
+					SELECT 
+						* 
+					FROM 
+						$table 
+					WHERE 
+						ID = $value
+				";
+				$post_results = $wpdb->get_results($query);
 				foreach ($post_results as $key => $val) 
 				{
 					foreach ($val as $key2 => $val2) 

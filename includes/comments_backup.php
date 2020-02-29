@@ -7,13 +7,13 @@
 class jibres_comments
 {
 
-	public $jibres_stantard_comments_array = array( 'post'         => 'comment_post_ID',
-													'author'       => 'comment_author',
-													'author_email' => 'comment_author_email',
-													'date'         => 'comment_date',
-													'content'      => 'comment_content',
-													'approved'     => 'comment_approved'
-													);
+	public $jibres_stantard_comments_array = [  'post'         => 'comment_post_ID',
+												'author'       => 'comment_author',
+												'author_email' => 'comment_author_email',
+												'date'         => 'comment_date',
+												'content'      => 'comment_content',
+												'approved'     => 'comment_approved'
+												];
 	
 	private $where_backup;
 
@@ -46,13 +46,25 @@ class jibres_comments
 	{
 		global $wpdb;
 	
-		$results = $wpdb->get_results("SELECT comment_ID FROM $wpdb->comments WHERE 
-										comment_ID NOT IN 
-										(SELECT item_id FROM {$wpdb->prefix}jibres_check 
-										WHERE type = 'comment' AND backuped = 1)");
+
+		$table = $wpdb->comments;
+		$jibre_ctable = JIBRES_CTABLE;
+		$query = 
+		"
+			SELECT 
+				comment_ID 
+			FROM 
+				$table 
+			WHERE 
+				comment_ID NOT IN 
+				(
+					SELECT item_id FROM $jibre_ctable WHERE type = 'comment' AND backuped = 1
+				)
+		";
+		$results = $wpdb->get_results($query);
 	
-		$arr_results = array();
-		$ids = array();
+		$arr_results = [];
+		$ids = [];
 	
 		foreach ($results as $key => $value) 
 		{
@@ -82,7 +94,16 @@ class jibres_comments
 					
 				$i++;
 				$this->insert_comment_in_jibres($value);
-				$post_results = $wpdb->get_results("SELECT * FROM $wpdb->comments WHERE comment_ID = $value");
+				$query = 
+				"
+					SELECT 
+						* 
+					FROM 
+						$table 
+					WHERE 
+						comment_ID = $value
+				";
+				$post_results = $wpdb->get_results($query);
 				foreach ($post_results as $key => $val) 
 				{
 					foreach ($val as $key2 => $val2) 

@@ -7,10 +7,10 @@
 class jibres_categories
 {
 
-	public $jibres_stantard_category_array = array( 'name'  => 'name',
-													'slug'  => 'slug',
-													'group' => 'term_group'
-													);
+	public $jibres_stantard_category_array = [  'name'  => 'name',
+												'slug'  => 'slug',
+												'group' => 'term_group'
+												];
 	
 
 	private $where_backup;
@@ -43,13 +43,26 @@ class jibres_categories
 	{
 		global $wpdb;
 	
-		$results = $wpdb->get_results("SELECT term_id FROM $wpdb->term_taxonomy WHERE 
-										taxonomy = 'product_cat' AND term_id NOT IN 
-										(SELECT item_id FROM {$wpdb->prefix}jibres_check 
-										WHERE type = 'category' AND backuped = 1)");
+
+		$table = $wpdb->term_taxonomy;
+		$jibres_ctable = JIBRES_CTABLE;
+		$query = 
+		"
+			SELECT 
+				term_id 
+			FROM 
+				$table 
+			WHERE 
+				taxonomy = 'product_cat' AND 
+				term_id NOT IN 
+				(
+					SELECT item_id FROM $jibres_ctable WHERE type = 'category' AND backuped = 1
+				)
+		";
+		$results = $wpdb->get_results($query);
 	
-		$arr_results = array();
-		$ids = array();
+		$arr_results = [];
+		$ids = [];
 	
 		foreach ($results as $key => $value) 
 		{
@@ -79,7 +92,17 @@ class jibres_categories
 				
 				$i++;
 				$this->insert_category_in_jibres($value);
-				$cat_results = $wpdb->get_results("SELECT * FROM $wpdb->terms WHERE term_id = $value");
+				$table = $wpdb->terms;
+				$query = 
+				"
+					SELECT 
+						* 
+					FROM 
+						$table 
+					WHERE 
+						term_id = $value
+				";
+				$cat_results = $wpdb->get_results($query);
 				foreach ($cat_results as $key => $val) 
 				{
 					foreach ($val as $key2 => $val2) 

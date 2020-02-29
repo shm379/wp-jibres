@@ -7,12 +7,12 @@
 class jibres_orders
 {
 	
-	public $jibres_stantard_order_array = array('key'            => '_order_key',
-												'paid_date'      => '_paid_date',
-												'completed_date' => '_completed_date',
-												'currency'       => '_order_currency',
-												'customer'       => '_customer_user'
-												);
+	public $jibres_stantard_order_array = [ 'key'            => '_order_key',
+											'paid_date'      => '_paid_date',
+											'completed_date' => '_completed_date',
+											'currency'       => '_order_currency',
+											'customer'       => '_customer_user'
+											];
 
 	private $where_backup;
 
@@ -45,13 +45,27 @@ class jibres_orders
 	{
 		global $wpdb;
 	
-		$results = $wpdb->get_results("SELECT ID FROM $wpdb->posts 
-										WHERE post_type = 'shop_order' AND ID NOT IN 
-										(SELECT item_id FROM {$wpdb->prefix}jibres_check 
-										WHERE type = 'order' AND backuped = 1)");
+
+		$table = $wpdb->posts;
+		$jibres_ctable = JIBRES_CTABLE;
+		$query = 
+		"
+			SELECT 
+				ID 
+			FROM 
+				$table 
+			WHERE 
+				post_type = 'shop_order' AND 
+				ID NOT IN 
+				(
+					SELECT item_id FROM $jibres_ctable WHERE type = 'order' AND backuped = 1
+				)
+		";
+
+		$results = $wpdb->get_results($query);
 	
-			$arr_results = array();
-			$ids = array();
+		$arr_results = [];
+		$ids = [];
 	
 		foreach ($results as $key => $value) 
 		{
@@ -81,8 +95,16 @@ class jibres_orders
 				
 				$i++;
 				$this->insert_order_in_jibres($value);
-				$order_results = $wpdb->get_results("SELECT * FROM $wpdb->posts 
-													 WHERE ID = $value");
+				$query = 
+				"
+					SELECT 
+						* 
+					FROM 
+						$table 
+					WHERE 
+						ID = $value
+				";
+				$order_results = $wpdb->get_results($query);
 				foreach ($order_results as $key => $val) 
 				{
 					foreach ($val as $key2 => $val2) 
@@ -91,8 +113,17 @@ class jibres_orders
 					}
 				}
 	
-				$meta_order = $wpdb->get_results("SELECT * FROM $wpdb->postmeta 
-												  WHERE post_id = $value");
+				$table = $wpdb->postmeta;
+				$query = 
+				"
+					SELECT 
+						* 
+					FROM 
+						$table 
+					WHERE 
+						post_id = $value
+				";
+				$meta_order = $wpdb->get_results($query);
 				foreach ($meta_order as $key => $val) 
 				{
 					foreach ($val as $key2 => $val2) 
