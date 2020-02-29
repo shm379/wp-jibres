@@ -40,4 +40,12 @@ if (isset($_POST['changit']))
 	header("Refresh:0");
 }
 
+
+if (isset($_POST['csvdel'])) 
+{
+	$del_data = explode("_", $_POST['csvdel']);
+	$wpdb->delete( JIBRES_CTABLE, array( 'type' => $del_data[1], 'wers' => 'csv' ) );
+	unlink(JIBRES_DIR. 'backup/'. $del_data[0]. '.csv');
+}
+
 ?>

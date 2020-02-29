@@ -59,7 +59,7 @@ function admin_jibres()
 
 		require_once(JIBRES_INC. 'functions.php');
 		jibres_defines();
-		
+
 		require_once(JIBRES_DIR. 'header.php');
 
 		printf('<div class="jibres"><br>');

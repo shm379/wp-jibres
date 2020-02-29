@@ -28,16 +28,29 @@ function print_infos($jwb)
 	printf('</div>');
 }
 
+function csv_file_del($fname, $dname, $last = false)
+{
+	$last = ($last == false) ? '  |  ' : null;
+	printf('<form onsubmit="return confirm(\'Do you really want to delete csv file of '.$fname.' backup?\');" action method="post" style="display: inline;">
+			<input type="hidden" name="csvdel" value="'.$fname.'_'.$dname.'">
+			<input type="submit" class="dbt" value="Delete '.$fname.' csv file">
+			</form>'. $last);
+}
 
-
-printf('<br><br>');
 
 if (wis() == 'csv') 
 {
+	csv_file_del('products', 'product');
+	csv_file_del('orders', 'order');
+	csv_file_del('posts', 'post');
+	csv_file_del('comments', 'comment');
+	csv_file_del('categories', 'category', true);
+	printf('<br><br><hr><br><br>');
 	print_infos('csv');
 }
 else
 {
+	printf('<br><br>');
 	print_infos('api');
 	printf('<br><br>');
 	printf('<form onsubmit="return confirm(\'Do you really want to delete your jibres api informations?\');" action method="post">
