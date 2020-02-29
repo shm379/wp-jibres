@@ -213,14 +213,8 @@ function informations_b($item, $table, $cat, $wb, $where = array(), $first = fal
 {
 	global $wpdb;
 
-	if ($wb == 'csv') 
-	{
-		$wers = 'to csv file';
-	}
-	elseif ($wb== 'api') 
-	{
-		$wers = 'to your jibres store';
-	}
+
+	$wers = ($wb == 'csv') ? 'to csv file' : 'to your jibres store';
 
 	$table = $wpdb->$table;
 	if (!empty($where)) 
@@ -247,14 +241,7 @@ function informations_b($item, $table, $cat, $wb, $where = array(), $first = fal
 	}
 
 
-	if ($first == false) 
-	{
-		$first = 'And';
-	}
-	else
-	{
-		$first = 'You';
-	}
+	$first = ($first == false) ? 'And' : 'You';
 
 	if (!empty($fdata)) 
 	{
