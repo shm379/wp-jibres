@@ -1,6 +1,6 @@
 <?php 
 
-if ($_POST['weris']) 
+if (isset($_POST['weris'])) 
 {
 	if ($_POST['store'] and !empty($_POST['store']) and !empty($_POST['apikey']) and !empty($_POST['appkey'])) 
 	{
@@ -10,14 +10,14 @@ if ($_POST['weris'])
 	{
 		$data_posted = array('wis' => 'csv');
 	}
-	insert_in_jibres($data_posted, 'jibres');
+	insert_in_jibres($data_posted, JIBRES_TABLE);
 	header("Refresh:0");
 }
 
-if ($_POST['usas']) 
+if (isset($_POST['usas'])) 
 {
 		
-	if ($_POST['usas'] == 'api' and ch_jibres_store_data() == false) 
+	if (isset($_POST['usas']) and $_POST['usas'] == 'api' and ch_jibres_store_data() == false) 
 	{
 		ch_jibres_store_data('start_again');
 		header("Refresh:0");
@@ -34,7 +34,7 @@ if ($_POST['usas'])
 }
 
 
-if ($_POST['changit']) 
+if (isset($_POST['changit'])) 
 {
 	ch_jibres_store_data($_POST['changit']);
 	header("Refresh:0");

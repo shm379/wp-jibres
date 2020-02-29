@@ -6,16 +6,16 @@
 class jibres_posts
 {
 
-	public $jibres_stantard_post_array = array( 'title'       => 'post_title',
-												'seotitle'    => '',
-												'slug'        => '',
-												'excerpt'     => 'post_excerpt',
-												'subtitle'    => '',
-												'content'     => 'post_content',
-												'status'      => 'post_status',
-												'publishdate' => 'post_modified',
-												'datecreated' => 'post_date'
-												);
+	public $jibres_stantard_post_array = [  'title'       => 'post_title',
+											'seotitle'    => '',
+											'slug'        => '',
+											'excerpt'     => 'post_excerpt',
+											'subtitle'    => '',
+											'content'     => 'post_content',
+											'status'      => 'post_status',
+											'publishdate' => 'post_modified',
+											'datecreated' => 'post_date'
+											];
 
 	private $where_backup;
 	
@@ -38,7 +38,7 @@ class jibres_posts
 	
 	function insert_post_in_jibres($id)
 	{
-		$data = array('item_id' => $id, 'type' => 'post');
+		$data = ['item_id' => $id, 'type' => 'post'];
 		insert_in_jibres($data);
 	}
 	

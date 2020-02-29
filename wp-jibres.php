@@ -54,15 +54,16 @@ function admin_jibres()
 {
 	global $wpdb;
 
-	if ($_GET['page'] == 'jibres')
+	if (isset($_GET['page']) and $_GET['page'] == 'jibres')
 	{
 
 		require_once(JIBRES_INC. 'functions.php');
+		jibres_defines();
 		require_once(JIBRES_DIR. 'header.php');
 
 		printf('<div class="jibres"><br>');
 
-		if ($_POST)
+		if (isset($_POST))
 		{
 			require_once(JIBRES_DIR. 'if_posts.php');
 		}

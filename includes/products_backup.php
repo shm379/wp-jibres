@@ -6,37 +6,37 @@
 class jibres_products
 {
 
-	public $jibres_stantard_product_array = array(  'title'        => 'post_title',
-													'slug'         => '',
-													'desc'         => 'post_content',
-													'barcode'      => '',
-													'barcode2'     => '',
-													'buyprice'     => '_regular_price',
-													'price'        => '_price',
-													'discount'     => '',
-													'vat'          => '',
-													'sku'          => 'sku',
-													'infinite'     => '',
-													'gallery'      => '',
-													'weight'       => '',
-													'weightunit'   => '',
-													'seotitle'     => '',
-													'type'         => 'post_type',
-													'seodesc'      => '',
-													'saleonline'   => '',
-													'saletelegram' => '',
-													'saleapp'      => '',
-													'company'      => '',
-													'scalecode'    => '',
-													'status'       => 'onsale',
-													'minsale'      => '',
-													'maxsale'      => '',
-													'salestep'     => '',
-													'oversale'     => '',
-													'unit'         => '',
-													'category'     => '',
-													'tag'          => ''
-													);
+	public $jibres_stantard_product_array = [   'title'        => 'post_title',
+												'slug'         => '',
+												'desc'         => 'post_content',
+												'barcode'      => '',
+												'barcode2'     => '',
+												'buyprice'     => '_regular_price',
+												'price'        => '_price',
+												'discount'     => '',
+												'vat'          => '',
+												'sku'          => 'sku',
+												'infinite'     => '',
+												'gallery'      => '',
+												'weight'       => '',
+												'weightunit'   => '',
+												'seotitle'     => '',
+												'type'         => 'post_type',
+												'seodesc'      => '',
+												'saleonline'   => '',
+												'saletelegram' => '',
+												'saleapp'      => '',
+												'company'      => '',
+												'scalecode'    => '',
+												'status'       => 'onsale',
+												'minsale'      => '',
+												'maxsale'      => '',
+												'salestep'     => '',
+												'oversale'     => '',
+												'unit'         => '',
+												'category'     => '',
+												'tag'          => ''
+												];
 
 	private $where_backup;
 	
@@ -70,7 +70,7 @@ class jibres_products
 	
 	function insert_product_in_jibres($id)
 	{
-		$data = array('item_id' => $id, 'type' => 'product');
+		$data = ['item_id' => $id, 'type' => 'product'];
 		insert_in_jibres($data);
 	}
 	
@@ -78,13 +78,27 @@ class jibres_products
 	{
 		global $wpdb;
 	
-		$results = $wpdb->get_results("SELECT ID FROM $wpdb->posts WHERE 
-										post_type = 'product' AND ID NOT IN 
-										(SELECT item_id FROM {$wpdb->prefix}jibres_check 
-										WHERE type = 'product' AND backuped = 1)");
+
+		$table = $wpdb->posts;
+		$jibres_ctable = JIBRES_CTABLE;
+		$query = 
+		"
+			SELECT
+				ID
+			FROM
+				$table
+			WHERE
+				post_type = 'product' AND
+				ID NOT IN
+				(
+					SELECT item_id FROM $jibres_ctable WHERE type = 'product' AND backuped = 1
+				)
+		";
+
+		$results = $wpdb->get_results($query);
 	
-		$arr_results = array();
-		$ids = array();
+		$arr_results = [];
+		$ids = [];
 	
 		foreach ($results as $key => $value) 
 		{
@@ -115,7 +129,16 @@ class jibres_products
 				
 				$i++;
 				$this->insert_product_in_jibres($value);
-				$post_results = $wpdb->get_results("SELECT * FROM $wpdb->posts WHERE ID = $value");
+				$query = 
+				"
+					SELECT
+						*
+					FROM 
+						$table
+					WHERE
+						ID = $value
+				";
+				$post_results = $wpdb->get_results($query);
 				foreach ($post_results as $key => $val) 
 				{
 					foreach ($val as $key2 => $val2) 
@@ -124,8 +147,17 @@ class jibres_products
 					}
 				}
 	
-				$meta_results = $wpdb->get_results("SELECT * FROM {$wpdb->prefix}wc_product_meta_lookup 
-													WHERE product_id = $value");
+				$table = $wpdb->prefix. 'wc_product_meta_lookup';
+				$query = 
+				"
+					SELECT 
+						*
+					FROM 
+						$table
+					WHERE
+						product_id = $value
+				";
+				$meta_results = $wpdb->get_results($query);
 				foreach ($meta_results as $key => $val) 
 				{
 					foreach ($val as $key2 => $val2) 
@@ -134,8 +166,17 @@ class jibres_products
 					}
 				}
 	
-				$meta_post = $wpdb->get_results("SELECT * FROM $wpdb->postmeta 
-												  WHERE post_id = $value");
+				$table = $wpdb->prefix. 'postmeta';
+				$query = 
+				"
+					SELECT 
+						*
+					FROM 
+						$table
+					WHERE 
+						post_id = $value
+				";
+				$meta_post = $wpdb->get_results($query);
 				foreach ($meta_post as $key => $val) 
 				{
 					foreach ($val as $key2 => $val2) 

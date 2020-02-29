@@ -1,13 +1,33 @@
 <?php 
 
 
+function jibres_defines()
+{
+	global $wpdb;
+
+	define('JIBRES_TABLE', $wpdb->prefix. 'jibres');
+	define('JIBRES_CTABLE', $wpdb->prefix. 'jibres_check');
+}
+
 function ch_jibres_store_data($update = null)
 {
 	global $wpdb;
 
+	$jibres_table = JIBRES_TABLE;
 	if ($update == null) 
 	{
-		$store_check = $wpdb->get_results("SELECT * FROM {$wpdb->prefix}jibres WHERE store IS NULL OR apikey IS NULL OR appkey IS NULL");
+		$query = 
+		"
+			SELECT 
+				* 
+			FROM 
+				$jibres_table 
+			WHERE 
+				store IS NULL OR 
+				apikey IS NULL OR 
+				appkey IS NULL
+		";
+		$store_check = $wpdb->get_results($query);
 		if (!empty($store_check)) 
 		{
 			return false;
@@ -19,19 +39,18 @@ function ch_jibres_store_data($update = null)
 	}
 	elseif ($update == 'start_again') 
 	{
-		$wpdb->query( "DROP TABLE IF EXISTS {$wpdb->prefix}jibres" );
+		$wpdb->query( "DROP TABLE IF EXISTS $jibres_table" );
 	}
 }
 
 
-function create_jibres_table($tstrc = null, $tname = 'jibres_check')
+function create_jibres_table($tstrc = null, $tname = JIBRES_CTABLE)
 {
 	global $wpdb;
 		
-	$table_name = $wpdb->prefix . $tname;
 	if ($tstrc == null) 
 	{
-		$create_ddl = "CREATE TABLE $table_name (
+		$create_ddl = "CREATE TABLE $tname (
 					   id int(11) NOT NULL AUTO_INCREMENT,
 					   time datetime DEFAULT NOW() NOT NULL,
 					   item_id int(11) NOT NULL,
@@ -46,9 +65,9 @@ function create_jibres_table($tstrc = null, $tname = 'jibres_check')
 		$create_ddl = $tstrc;
 	}
 
-	$query = $wpdb->prepare( 'SHOW TABLES LIKE %s', $wpdb->esc_like( $table_name ) );
+	$query = $wpdb->prepare( 'SHOW TABLES LIKE %s', $wpdb->esc_like( $tname ) );
  
-	if ( $wpdb->get_var( $query ) == $table_name ) 
+	if ( $wpdb->get_var( $query ) == $tname ) 
 	{
 		return true;
 	}
@@ -60,7 +79,7 @@ function create_jibres_table($tstrc = null, $tname = 'jibres_check')
 		$wpdb->query( $create_ddl );
  
 		// We cannot directly tell that whether this succeeded!
-		if ( $wpdb->get_var( $query ) == $table_name ) 
+		if ( $wpdb->get_var( $query ) == $tname ) 
 		{
 			return true;
 		}
@@ -73,18 +92,17 @@ function create_jibres_table($tstrc = null, $tname = 'jibres_check')
 }
 
 
-function insert_in_jibres($data = array(), $tname = 'jibres_check')
+function insert_in_jibres($data = [], $tname = JIBRES_CTABLE)
 {
 	global $wpdb;
 
-	$table_name = $wpdb->prefix . $tname;
-	if ($tname == 'jibres_check') 
+	if ($tname == JIBRES_CTABLE) 
 	{
 		$data['wers'] = wis();
 	}
 	
 	$wpdb->insert( 
-		$table_name, 
+		$tname, 
 		$data
 	);
 }
@@ -95,8 +113,9 @@ function send_data_jibres($where, $data)
 {
 	global $wpdb;
 	
-	$results = $wpdb->get_results("SELECT * FROM {$wpdb->prefix}jibres");
-	$arr_results = array();
+	$jibres_table = JIBRES_TABLE;
+	$results = $wpdb->get_results("SELECT * FROM $jibres_table");
+	$arr_results = [];
 	foreach ($results as $key => $val) 
 	{
 		foreach ($val as $key2 => $val2) 
@@ -159,7 +178,7 @@ function create_csv($cat, $data)
 
 }
 
-function sort_arr($ch = array(), $data = array())
+function sort_arr($ch = [], $data = [])
 {
 	foreach ($ch as $key => $value) 
 	{
@@ -174,7 +193,8 @@ function wis($item = null, $data = null)
 {
 	global $wpdb;
 
-	$results = $wpdb->get_results("SELECT wis FROM {$wpdb->prefix}jibres");
+	$jibres_table = JIBRES_TABLE;
+	$results = $wpdb->get_results("SELECT wis FROM $jibres_table");
 
 	foreach ($results as $key => $value) 
 	{
@@ -209,12 +229,13 @@ function wis($item = null, $data = null)
 
 
 
-function informations_b($item, $table, $cat, $wb, $where = array(), $first = false)
+function informations_b($item, $table, $cat, $wb, $where = [], $first = false)
 {
 	global $wpdb;
 
 
 	$wers = ($wb == 'csv') ? 'to csv file' : 'to your jibres store';
+	$jibres_ctable = JIBRES_CTABLE;
 
 	$table = $wpdb->$table;
 	if (!empty($where)) 
@@ -230,14 +251,37 @@ function informations_b($item, $table, $cat, $wb, $where = array(), $first = fal
 			$i++;
 		}
 		$fdata = $wpdb->get_results("SELECT COUNT($item) FROM $table WHERE $clm = '$rw'");
-		$sdata = $wpdb->get_results("SELECT COUNT($item) FROM $table WHERE $clm = '$rw' AND $item NOT IN 
-									(SELECT item_id FROM {$wpdb->prefix}jibres_check WHERE type = '$cat' AND backuped = 1 AND wers = '$wb')");
+		$query = 
+		"
+			SELECT 
+				COUNT($item) 
+			FROM 
+				$table 
+			WHERE 
+				$clm = '$rw' AND 
+				$item NOT IN 
+				(
+					SELECT item_id FROM $jibres_ctable WHERE type = '$cat' AND backuped = 1 AND wers = '$wb'
+				)
+		";
+		$sdata = $wpdb->get_results($query);
 	}
 	else
 	{
 		$fdata = $wpdb->get_results("SELECT COUNT($item) FROM $table");
-		$sdata = $wpdb->get_results("SELECT COUNT($item) FROM $table WHERE $item NOT IN 
-									(SELECT item_id FROM {$wpdb->prefix}jibres_check WHERE type = '$cat' AND backuped = 1 AND wers = '$wb')");
+		$query = 
+		"
+			SELECT 
+				COUNT($item) 
+			FROM 
+				$table 
+			WHERE 
+				$item NOT IN 
+				(
+					SELECT item_id FROM $jibres_ctable WHERE type = '$cat' AND backuped = 1 AND wers = '$wb'
+				)
+		";
+		$sdata = $wpdb->get_results($query);
 	}
 
 
@@ -266,7 +310,7 @@ function informations_b($item, $table, $cat, $wb, $where = array(), $first = fal
 			}
 			if ($not_b == '0') 
 			{
-				printf(' and <a style="font-weight: bold; color: green;">all of your '.$cat.' backuped '.$wers.'</a>');
+				printf(' and <a style="font-weight: bold; color: green;">all of your '.$cat.'s backuped '.$wers.'</a>');
 			}
 			else
 			{
@@ -277,12 +321,12 @@ function informations_b($item, $table, $cat, $wb, $where = array(), $first = fal
 		{
 			if (create_jibres_table() === false) 
 			{
-				printf(' and <a style="font-weight: bold; color: #c80a5a;">all of your '.$cat.' not backuped '.$wers.'</a>');
+				printf(' and <a style="font-weight: bold; color: #c80a5a;">all of your '.$cat.'s not backuped '.$wers.'</a>');
 				header("Refresh:0");
 			}
 			else
 			{
-				printf(' and <a style="font-weight: bold; color: green;">all of your '.$cat.' backuped '.$wers.'</a>');
+				printf(' and <a style="font-weight: bold; color: green;">all of your '.$cat.'s backuped '.$wers.'</a>');
 				header("Refresh:0");
 			}
 		}

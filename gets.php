@@ -10,12 +10,12 @@ $strc =  "CREATE TABLE $table_name (
 		  wis varchar(55) NOT NULL,
 		  PRIMARY KEY  (id)
 		) $charset_collate;";
-if (create_jibres_table($strc, 'jibres') === true) 
+if (create_jibres_table($strc, JIBRES_TABLE) === true) 
 {
 	$check_jib = $wpdb->get_results("SELECT * FROM {$wpdb->prefix}jibres");
 	if (!empty($check_jib)) 
 	{
-		if ($_GET['jibres'] and $_GET['jibres'] == 'backup_all') 
+		if (isset($_GET['jibres']) and $_GET['jibres'] == 'backup_all') 
 		{
 			$packs = array('products', 'orders', 'posts', 'comments', 'categories');
 			foreach ($packs as $value) 
@@ -26,7 +26,7 @@ if (create_jibres_table($strc, 'jibres') === true)
 			}
 			printf('<a href="?page=jibres"><button class="bt">Back Home</button></a>');
 		}
-		elseif ($_GET['jibres']) 
+		elseif (isset($_GET['jibres'])) 
 		{
 			require_once JIBRES_INC . $_GET['jibres'].'.php';
 			$get_cname = explode("_", $_GET['jibres']);
