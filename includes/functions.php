@@ -138,7 +138,7 @@ function send_data_jibres($where, $data)
 function create_csv($cat, $data)
 {
 
-	$fname = dirname( __DIR__ ) . '/backup/' . $cat . '.csv';
+	$fname = JIBRES_DIR . 'backup/' . $cat . '.csv';
 
 	if (file_exists($fname)) 
 	{
