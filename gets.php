@@ -21,17 +21,17 @@ if (create_jibres_table($strc, 'jibres') === true)
 			foreach ($packs as $value) 
 			{
 				require_once JIBRES_DIR . 'includes/'.$value.'_backup.php';
-				$open_func = $value.'_b';
-				$open_func();
+				$classname = 'jibres_'.$value;
+				$run_class = new $classname;
 			}
 			printf('<a href="?page=jibres"><button class="bt">Back Home</button></a>');
 		}
 		elseif ($_GET['jibres']) 
 		{
 			require_once JIBRES_DIR . 'includes/'.$_GET['jibres'].'.php';
-			$get_func = explode("_", $_GET['jibres']);
-			$open_func = $get_func[0]."_b";
-			$open_func();
+			$get_cname = explode("_", $_GET['jibres']);
+			$classname = 'jibres_'.$get_cname[0];
+			$run_class = new $classname();
 			printf('<a href="?page=jibres"><button class="bt">Back Home</button></a>');
 		}
 		else

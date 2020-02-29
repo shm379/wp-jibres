@@ -1,108 +1,110 @@
 <?php
 
-function post_arr_sort($arr)
+/**
+ * posts backup class
+ */
+class jibres_posts
 {
-	$ch = array('title'       => 'post_title',
-				'seotitle'    => '',
-				'slug'        => '',
-				'excerpt'     => 'post_excerpt',
-				'subtitle'    => '',
-				'content'     => 'post_content',
-				'status'      => 'post_status',
-				'publishdate' => 'post_modified',
-				'datecreated' => 'post_date'
-								);
-		
-	$changed = sort_arr($ch, $arr);
 
-	if (wis() == 'csv') 
-	{
-		wis('posts', $changed);
-	}
-	elseif (wis() == 'api') 
-	{
-		wis('/post/add', $changed);
-	}
-}
+	public $jibres_stantard_post_array = array( 'title'       => 'post_title',
+												'seotitle'    => '',
+												'slug'        => '',
+												'excerpt'     => 'post_excerpt',
+												'subtitle'    => '',
+												'content'     => 'post_content',
+												'status'      => 'post_status',
+												'publishdate' => 'post_modified',
+												'datecreated' => 'post_date'
+												);
 
-function insert_post_in_jib($id)
-{
-	$data = array('item_id' => $id, 'type' => 'post');
-	insert_in_jibres($data);
-}
-
-function get_post_data()
-{
-	global $wpdb;
-
-	$results = $wpdb->get_results("SELECT ID FROM $wpdb->posts WHERE 
-									post_type = 'post' AND ID NOT IN 
-									(SELECT item_id FROM {$wpdb->prefix}jibres_check 
-									WHERE type = 'post' AND backuped = 1)");
-
-	$arr_results = array();
-	$ids = array();
-
-	foreach ($results as $key => $value) 
-	{
-		foreach ($value as $key => $val) 
-		{
-			if ($key == "ID") 
-			{
-				array_push($ids, $val);
-			}
-		}
-
-	}
-
-	if (!empty($results)) 
-	{
-		$i = 0;
-		printf('<p>Backuping posts...</p>');
-		printf('<progress id="pprog" value="0" max="'.count($ids).'" style="height: 3px;"></progress>  <a id="inof"></a><br><br>');
-		printf('<script>
-				function prsb(meq) {
-					document.getElementById("pprog").value = meq;
-					document.getElementById("inof").innerHTML = meq + " of '.count($ids).' backuped";
-				}
-				</script>');
-		foreach ($ids as $value) 
-		{
-				
-			$i++;
-			insert_post_in_jib($value);
-			$post_results = $wpdb->get_results("SELECT * FROM $wpdb->posts WHERE ID = $value");
-			foreach ($post_results as $key => $val) 
-			{
-				foreach ($val as $key2 => $val2) 
-				{
-					$arr_results[$key2] = $val2;
-				}
-			}
-			printf('<script>
-						prsb('.$i.');
-					</script>');
-			post_arr_sort($arr_results);
-			ob_flush();
-			flush();
-		}
-
-		printf("OK Your Posts Backuped<br><br>");
-	}
-	else
-	{
-		printf("All Posts Are Backuped<br><br>");
-	}
-
-}
-
-
-function posts_b()
-{
+	private $where_backup;
 	
-	if (create_jibres_table() === true) 
+	function __construct()
 	{
-		get_post_data();
+		if (create_jibres_table() === true) 
+		{
+			$this->where_backup = (wis() == 'csv') ? 'posts' : '/post/add';
+			$this->get_post_data();
+		}
+	}
+
+	function post_arr_sort($arr)
+	{
+
+		$changed = sort_arr($this->jibres_stantard_post_array, $arr);
+
+		wis($this->where_backup, $changed);
+	}
+	
+	function insert_post_in_jibres($id)
+	{
+		$data = array('item_id' => $id, 'type' => 'post');
+		insert_in_jibres($data);
+	}
+	
+	function get_post_data()
+	{
+		global $wpdb;
+	
+		$results = $wpdb->get_results("SELECT ID FROM $wpdb->posts WHERE 
+										post_type = 'post' AND ID NOT IN 
+										(SELECT item_id FROM {$wpdb->prefix}jibres_check 
+										WHERE type = 'post' AND backuped = 1)");
+	
+		$arr_results = array();
+		$ids = array();
+	
+		foreach ($results as $key => $value) 
+		{
+			foreach ($value as $key => $val) 
+			{
+				if ($key == "ID") 
+				{
+					array_push($ids, $val);
+				}
+			}
+	
+		}
+	
+		if (!empty($results)) 
+		{
+			$i = 0;
+			printf('<p>Backuping posts...</p>');
+			printf('<progress id="pprog" value="0" max="'.count($ids).'" style="height: 3px;"></progress>  <a id="inof"></a><br><br>');
+			printf('<script>
+					function prsb(meq) {
+						document.getElementById("pprog").value = meq;
+						document.getElementById("inof").innerHTML = meq + " of '.count($ids).' backuped";
+					}
+					</script>');
+			foreach ($ids as $value) 
+			{
+					
+				$i++;
+				$this->insert_post_in_jibres($value);
+				$post_results = $wpdb->get_results("SELECT * FROM $wpdb->posts WHERE ID = $value");
+				foreach ($post_results as $key => $val) 
+				{
+					foreach ($val as $key2 => $val2) 
+					{
+						$arr_results[$key2] = $val2;
+					}
+				}
+				printf('<script>
+							prsb('.$i.');
+						</script>');
+				$this->post_arr_sort($arr_results);
+				ob_flush();
+				flush();
+			}
+	
+			printf("OK Your Posts Backuped<br><br>");
+		}
+		else
+		{
+			printf("All Posts Are Backuped<br><br>");
+		}
+	
 	}
 
 }
