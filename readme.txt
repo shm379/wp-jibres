@@ -41,12 +41,12 @@ The Jibres plugin is hosted on GitHub, if you want to help out with development 
 
 == Frequently Asked Questions ==
 
-= What jibres? =
+**What jibres?**
 
 For Sell and Enjoy :)
 Jibres is the first sales engineering system in the world
 
-= Can I use jibres plugin and I have not a jibres account? =
+**Can I use jibres plugin and I have not a jibres account?**
 
 Yes...
 Jibres plugin helping you to create your backup on your server by csv files. powerful, speedly, beautiful... 
