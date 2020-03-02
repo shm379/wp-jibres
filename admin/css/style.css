@@ -69,9 +69,10 @@
 }
 
 .infos {
-	border: 1px solid #ddd;
-	border-radius: 12px;
+	background-color: white;
+	border: 1px solid black;
+	border-radius: 5px;
 	max-width: 30%;
 	padding: 2em;
-	box-shadow: 0em 0em 2em #ddd;
+	/*box-shadow: 0em 0em 2em #ddd;*/
 }
