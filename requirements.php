@@ -17,7 +17,7 @@ add_action( 'admin_menu', 'menus' );
 function jib_css() 
 {
 	printf('<style type="text/css">');
-	require_once(JIBRES_DIR . 'admin/css/style.css');
+	require_once JIBRES_DIR . 'admin/css/style.css';
 	printf('</style>');
 }
 add_action( 'admin_head', 'jib_css' );

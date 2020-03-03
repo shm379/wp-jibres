@@ -36,12 +36,12 @@ if (create_jibres_table($strc, JIBRES_TABLE) === true)
 		}
 		else
 		{
-			require_once(JIBRES_DIR. 'main.php');
+			require_once JIBRES_DIR. 'main.php';
 		}
 	}
 	else
 	{
-		require_once(JIBRES_DIR. 'first_jibres.php');
+		require_once JIBRES_DIR. 'first_jibres.php';
 	}
 }
 

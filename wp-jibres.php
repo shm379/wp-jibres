@@ -45,10 +45,10 @@ if ( !function_exists( 'add_action' ) )
 
 // define basic variables
 define('JIBRES_DIR', dirname(__FILE__). DIRECTORY_SEPARATOR);
-require_once(JIBRES_DIR. 'includes/define.php');
+require_once JIBRES_DIR. 'includes/define.php';
 
 
-require_once(JIBRES_DIR. 'requirements.php');
+require_once JIBRES_DIR. 'requirements.php';
 
 function admin_jibres()
 {
@@ -57,19 +57,19 @@ function admin_jibres()
 	if (isset($_GET['page']) and $_GET['page'] == 'jibres')
 	{
 
-		require_once(JIBRES_INC. 'functions.php');
+		require_once JIBRES_INC. 'functions.php';
 		jibres_defines();
 
-		require_once(JIBRES_DIR. 'header.php');
+		require_once JIBRES_DIR. 'header.php';
 
 		printf('<div class="jibres"><br>');
 
 		if (isset($_POST))
 		{
-			require_once(JIBRES_DIR. 'if_posts.php');
+			require_once JIBRES_DIR. 'if_posts.php';
 		}
 
-		require_once(JIBRES_DIR. 'gets.php');
+		require_once JIBRES_DIR. 'gets.php';
 
 		printf('</div>');
 
