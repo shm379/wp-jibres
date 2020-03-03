@@ -45,7 +45,7 @@ class jibres_products
 		if (create_jibres_table() === true) 
 		{
 
-			$this->where_backup = (wis() == 'csv') ? 'products' : '/product/add';
+			$this->where_backup = (jibres_wis() == 'csv') ? 'products' : '/product/add';
 			$this->get_product_data();
 		}
 	}
@@ -64,7 +64,7 @@ class jibres_products
 	
 		$changed = sort_arr($this->jibres_stantard_product_array, $arr);
 		
-		wis($this->where_backup, $changed);
+		jibres_wis($this->where_backup, $changed);
 		
 	}
 	
@@ -202,7 +202,7 @@ class jibres_products
 	
 			}
 	
-			if (wis() == 'csv') 
+			if (jibres_wis() == 'csv') 
 			{
 				printf('<a href="'.get_site_url().'/wp-content/plugins/wp-jibres/backup/'.$this->where_backup.'.csv" target="_blank">Download csv file</a><br><br>');
 			}
@@ -210,7 +210,7 @@ class jibres_products
 		}
 		else
 		{
-			if (wis() == 'csv') 
+			if (jibres_wis() == 'csv') 
 			{
 				printf('<a href="'.get_site_url().'/wp-content/plugins/wp-jibres/backup/'.$this->where_backup.'.csv" target="_blank">Download csv file</a><br><br>');
 			}

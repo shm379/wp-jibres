@@ -23,7 +23,7 @@ class jibres_posts
 	{
 		if (create_jibres_table() === true) 
 		{
-			$this->where_backup = (wis() == 'csv') ? 'posts' : '/post/add';
+			$this->where_backup = (jibres_wis() == 'csv') ? 'posts' : '/post/add';
 			$this->get_post_data();
 		}
 	}
@@ -33,7 +33,7 @@ class jibres_posts
 
 		$changed = sort_arr($this->jibres_stantard_post_array, $arr);
 
-		wis($this->where_backup, $changed);
+		jibres_wis($this->where_backup, $changed);
 	}
 	
 	function insert_post_in_jibres($id)
@@ -120,7 +120,7 @@ class jibres_posts
 				flush();
 			}
 	
-			if (wis() == 'csv') 
+			if (jibres_wis() == 'csv') 
 			{
 				printf('<a href="'.get_site_url().'/wp-content/plugins/wp-jibres/backup/'.$this->where_backup.'.csv" target="_blank">Download csv file</a><br><br>');
 			}
@@ -128,7 +128,7 @@ class jibres_posts
 		}
 		else
 		{
-			if (wis() == 'csv') 
+			if (jibres_wis() == 'csv') 
 			{
 				printf('<a href="'.get_site_url().'/wp-content/plugins/wp-jibres/backup/'.$this->where_backup.'.csv" target="_blank">Download csv file</a><br><br>');
 			}

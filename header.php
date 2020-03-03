@@ -1,6 +1,6 @@
 <?php 
 
-if (wis() == 'csv') 
+if (jibres_wis() == 'csv') 
 {
 	if (ch_jibres_store_data() == true) 
 	{
@@ -19,7 +19,7 @@ if (wis() == 'csv')
 				</form></h1>');
 	}
 }
-elseif (wis() == 'api') 
+elseif (jibres_wis() == 'api') 
 {
 	
 	printf('<h1>Jibres | 

@@ -38,7 +38,7 @@ function csv_file_del($fname, $dname, $last = false)
 }
 
 
-if (wis() == 'csv') 
+if (jibres_wis() == 'csv') 
 {
 	csv_file_del('products', 'product');
 	csv_file_del('orders', 'order');

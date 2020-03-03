@@ -98,7 +98,7 @@ function insert_in_jibres($data = [], $tname = JIBRES_CTABLE)
 
 	if ($tname == JIBRES_CTABLE) 
 	{
-		$data['wers'] = wis();
+		$data['wers'] = jibres_wis();
 	}
 	
 	$wpdb->insert( 
@@ -154,7 +154,7 @@ function send_data_jibres($where, $data)
 }
 
 
-function create_csv($cat, $data)
+function jibres_create_csv($cat, $data)
 {
 
 	$fname = JIBRES_DIR . 'backup/' . $cat . '.csv';
@@ -189,7 +189,7 @@ function sort_arr($ch = [], $data = [])
 }
 
 
-function wis($item = null, $data = null)
+function jibres_wis($item = null, $data = null)
 {
 	global $wpdb;
 
@@ -216,7 +216,7 @@ function wis($item = null, $data = null)
 	{
 		if ($weris == 'csv') 
 		{
-			create_csv($item, $data);
+			jibres_create_csv($item, $data);
 		}
 		elseif ($weris == 'api') 
 		{
