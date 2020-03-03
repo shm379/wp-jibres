@@ -31,7 +31,7 @@ class jibres_comments
 	function comment_arr_sort($arr)
 	{
 			
-		$changed = sort_arr($this->jibres_stantard_comments_array, $arr);
+		$changed = jibres_sort_arr($this->jibres_stantard_comments_array, $arr);
 	
 		jibres_wis($this->where_backup, $changed);
 	}

@@ -62,7 +62,7 @@ class jibres_products
 			$arr["onsale"] = 'unavailable';
 		}
 	
-		$changed = sort_arr($this->jibres_stantard_product_array, $arr);
+		$changed = jibres_sort_arr($this->jibres_stantard_product_array, $arr);
 		
 		jibres_wis($this->where_backup, $changed);
 		

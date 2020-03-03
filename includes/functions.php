@@ -178,7 +178,7 @@ function jibres_create_csv($cat, $data)
 
 }
 
-function sort_arr($ch = [], $data = [])
+function jibres_sort_arr($ch = [], $data = [])
 {
 	foreach ($ch as $key => $value) 
 	{

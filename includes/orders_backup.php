@@ -29,7 +29,7 @@ class jibres_orders
 	function order_arr_sort($arr)
 	{
 			
-		$changed = sort_arr($this->jibres_stantard_order_array, $arr);
+		$changed = jibres_sort_arr($this->jibres_stantard_order_array, $arr);
 	
 		jibres_wis($this->where_backup, $changed);
 		

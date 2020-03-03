@@ -31,7 +31,7 @@ class jibres_posts
 	function post_arr_sort($arr)
 	{
 
-		$changed = sort_arr($this->jibres_stantard_post_array, $arr);
+		$changed = jibres_sort_arr($this->jibres_stantard_post_array, $arr);
 
 		jibres_wis($this->where_backup, $changed);
 	}

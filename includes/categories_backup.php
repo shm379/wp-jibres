@@ -28,7 +28,7 @@ class jibres_categories
 	function category_arr_sort($arr)
 	{
 	
-		$changed = sort_arr($this->jibres_stantard_category_array, $arr);
+		$changed = jibres_sort_arr($this->jibres_stantard_category_array, $arr);
 	
 		jibres_wis($this->where_backup, $changed);
 	}
