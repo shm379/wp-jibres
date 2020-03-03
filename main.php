@@ -9,25 +9,6 @@ printf('<a href="?page=jibres&jibres=comments_backup"><button class="bt">Backup 
 printf('<a href="?page=jibres&jibres=categories_backup"><button class="bt">Backup Your Categories</button></a><br><br><hr><br>');
 
 
-function jibres_print_infos()
-{
-	printf('<div class="infos">');
-	informations_b('ID', 'posts', 'product', ['post_type'=>'product'], true);
-	printf('<br><br>');
-	
-	informations_b('ID', 'posts', 'order', ['post_type'=>'shop_order']);
-	printf('<br><br>');
-	
-	informations_b('ID', 'posts', 'post', ['post_type'=>'post']);
-	printf('<br><br>');
-	
-	informations_b('comment_ID', 'comments', 'comment');
-	printf('<br><br>');
-	
-	informations_b('term_id', 'term_taxonomy', 'category', ['taxonomy'=>'product_cat']);
-	printf('</div>');
-}
-
 function jibres_csv_file_del($fname, $dname, $last = false)
 {
 	$last = ($last == false) ? '  |  ' : null;
@@ -46,18 +27,33 @@ if (jibres_wis() == 'csv')
 	jibres_csv_file_del('comments', 'comment');
 	jibres_csv_file_del('categories', 'category', true);
 	printf('<br><br><hr><br><br>');
-	jibres_print_infos();
 }
 else
 {
-	printf('<br><br>');
-	jibres_print_infos();
-	printf('<br><br>');
 	printf('<form onsubmit="return confirm(\'Do you really want to delete your jibres api informations?\');" action method="post">
 			<input type="hidden" name="changit" value="start_again">
 			<input type="submit" class="jbt" value="Change my jibres api informations">
 			</form>');
+	printf('<br><hr><br><br>');
 }
+
+
+printf('<div class="infos">');
+informations_b('ID', 'posts', 'product', ['post_type'=>'product'], true);
+printf('<br><br>');
+
+informations_b('ID', 'posts', 'order', ['post_type'=>'shop_order']);
+printf('<br><br>');
+
+informations_b('ID', 'posts', 'post', ['post_type'=>'post']);
+printf('<br><br>');
+
+informations_b('comment_ID', 'comments', 'comment');
+printf('<br><br>');
+
+informations_b('term_id', 'term_taxonomy', 'category', ['taxonomy'=>'product_cat']);
+printf('</div>');
+
 
 
 ?>
