@@ -229,11 +229,11 @@ function jibres_wis($item = null, $data = null)
 
 
 
-function informations_b($item, $table, $cat, $wb, $where = [], $first = false)
+function informations_b($item, $table, $cat, $where = [], $first = false)
 {
 	global $wpdb;
 
-
+	$wb = jibres_wis();
 	$wers = ($wb == 'csv') ? 'to csv file' : 'to your jibres store';
 	$jibres_ctable = JIBRES_CTABLE;
 

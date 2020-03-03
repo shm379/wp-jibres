@@ -9,26 +9,26 @@ printf('<a href="?page=jibres&jibres=comments_backup"><button class="bt">Backup 
 printf('<a href="?page=jibres&jibres=categories_backup"><button class="bt">Backup Your Categories</button></a><br><br><hr><br>');
 
 
-function print_infos($jwb)
+function jibres_print_infos()
 {
 	printf('<div class="infos">');
-	informations_b('ID', 'posts', 'product', $jwb, ['post_type'=>'product'], true);
+	informations_b('ID', 'posts', 'product', ['post_type'=>'product'], true);
 	printf('<br><br>');
 	
-	informations_b('ID', 'posts', 'order', $jwb, ['post_type'=>'shop_order']);
+	informations_b('ID', 'posts', 'order', ['post_type'=>'shop_order']);
 	printf('<br><br>');
 	
-	informations_b('ID', 'posts', 'post', $jwb, ['post_type'=>'post']);
+	informations_b('ID', 'posts', 'post', ['post_type'=>'post']);
 	printf('<br><br>');
 	
-	informations_b('comment_ID', 'comments', 'comment', $jwb);
+	informations_b('comment_ID', 'comments', 'comment');
 	printf('<br><br>');
 	
-	informations_b('term_id', 'term_taxonomy', 'category', $jwb, ['taxonomy'=>'product_cat']);
+	informations_b('term_id', 'term_taxonomy', 'category', ['taxonomy'=>'product_cat']);
 	printf('</div>');
 }
 
-function csv_file_del($fname, $dname, $last = false)
+function jibres_csv_file_del($fname, $dname, $last = false)
 {
 	$last = ($last == false) ? '  |  ' : null;
 	printf('<form onsubmit="return confirm(\'Do you really want to delete csv file of '.$fname.' backup?\');" action method="post" style="display: inline;">
@@ -40,18 +40,18 @@ function csv_file_del($fname, $dname, $last = false)
 
 if (jibres_wis() == 'csv') 
 {
-	csv_file_del('products', 'product');
-	csv_file_del('orders', 'order');
-	csv_file_del('posts', 'post');
-	csv_file_del('comments', 'comment');
-	csv_file_del('categories', 'category', true);
+	jibres_csv_file_del('products', 'product');
+	jibres_csv_file_del('orders', 'order');
+	jibres_csv_file_del('posts', 'post');
+	jibres_csv_file_del('comments', 'comment');
+	jibres_csv_file_del('categories', 'category', true);
 	printf('<br><br><hr><br><br>');
-	print_infos('csv');
+	jibres_print_infos();
 }
 else
 {
 	printf('<br><br>');
-	print_infos('api');
+	jibres_print_infos();
 	printf('<br><br>');
 	printf('<form onsubmit="return confirm(\'Do you really want to delete your jibres api informations?\');" action method="post">
 			<input type="hidden" name="changit" value="start_again">
