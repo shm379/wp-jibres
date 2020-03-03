@@ -245,44 +245,32 @@ function informations_b($item, $table, $cat, $where = [], $first = false)
 		{
 			if ($i == 0) 
 			{
-				$clm = $key;
-				$rw = $value;
+				$where = "$key='$value'";
 			}
 			$i++;
 		}
-		$fdata = $wpdb->get_results("SELECT COUNT($item) FROM $table WHERE $clm = '$rw'");
-		$query = 
-		"
-			SELECT 
-				COUNT($item) 
-			FROM 
-				$table 
-			WHERE 
-				$clm = '$rw' AND 
-				$item NOT IN 
-				(
-					SELECT item_id FROM $jibres_ctable WHERE type = '$cat' AND backuped = 1 AND wers = '$wb'
-				)
-		";
-		$sdata = $wpdb->get_results($query);
 	}
 	else
 	{
-		$fdata = $wpdb->get_results("SELECT COUNT($item) FROM $table");
-		$query = 
-		"
-			SELECT 
-				COUNT($item) 
-			FROM 
-				$table 
-			WHERE 
-				$item NOT IN 
-				(
-					SELECT item_id FROM $jibres_ctable WHERE type = '$cat' AND backuped = 1 AND wers = '$wb'
-				)
-		";
-		$sdata = $wpdb->get_results($query);
+		$where = "1=1";
 	}
+
+	$fdata = $wpdb->get_results("SELECT COUNT($item) FROM $table WHERE $where");
+	$query = 
+	"
+		SELECT 
+			COUNT($item) 
+		FROM 
+			$table 
+		WHERE 
+			$where AND 
+			$item NOT IN 
+			(
+				SELECT item_id FROM $jibres_ctable WHERE type = '$cat' AND backuped = 1 AND wers = '$wb'
+			)
+	";
+	$sdata = $wpdb->get_results($query);
+
 
 
 	$first = ($first == false) ? 'And' : 'You';
