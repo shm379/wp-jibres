@@ -26,18 +26,17 @@ if (jibres_wis() == 'csv')
 	jibres_csv_file_del('posts', 'post');
 	jibres_csv_file_del('comments', 'comment');
 	jibres_csv_file_del('categories', 'category', true);
-	printf('<br><br><hr><br><br>');
 }
 else
 {
-	printf('<form onsubmit="return confirm(\'Do you really want to delete your jibres api informations?\');" action method="post">
+	printf('<form onsubmit="return confirm(\'Do you really want to delete your jibres api informations?\');" action method="post" style="display: inline;">
 			<input type="hidden" name="changit" value="start_again">
 			<input type="submit" class="jbt" value="Change my jibres api informations">
 			</form>');
-	printf('<br><hr><br><br>');
 }
 
 
+printf('<br><br><hr><br><br>');
 printf('<div class="infos">');
 informations_b('ID', 'posts', 'product', ['post_type'=>'product'], true);
 printf('<br><br>');
