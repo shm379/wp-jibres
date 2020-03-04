@@ -54,7 +54,7 @@ class jibres_orders extends jibres_backup
 				$i++;
 				
 				// insert this product to jibres check table
-				$this->insert_backup_in_jibres([$value['ID'], 'post']);
+				$this->insert_backup_in_jibres([$value['ID'], 'order']);
 				
 				// sort array by jibres products database design
 				$changed = $this->backup_arr_sort($value, $this->jibres_stantard_order_array);
