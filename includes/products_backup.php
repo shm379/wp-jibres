@@ -1,9 +1,9 @@
 <?php
-
+require_once JIBRES_INC. 'jibres_backup_class.php';
 /**
  * products backup class
  */
-class jibres_products
+class jibres_products extends jibres_backup
 {
 
 	public $jibres_stantard_product_array = [   'title'        => 'post_title',
@@ -44,171 +44,63 @@ class jibres_products
 	{
 		if (create_jibres_table() === true) 
 		{
-
+			// backup to csv file or jibres api
 			$this->where_backup = (jibres_wis() == 'csv') ? 'products' : '/product/add';
 			$this->get_product_data();
 		}
 	}
-
-	function product_arr_sort($arr)
-	{
-			
-		if ($arr["onsale"] == "1") 
-		{
-			$arr["onsale"] = 'available';
-		}
-		else
-		{
-			$arr["onsale"] = 'unavailable';
-		}
 	
-		$changed = jibres_sort_arr($this->jibres_stantard_product_array, $arr);
-		
-		jibres_wis($this->where_backup, $changed);
-		
-	}
-	
-	function insert_product_in_jibres($id)
-	{
-		$data = ['item_id' => $id, 'type' => 'product'];
-		insert_in_jibres($data);
-	}
-	
+	// get procucts that are not backuped
 	function get_product_data()
 	{
-		global $wpdb;
-	
 
-		$table = $wpdb->posts;
-		$jibres_ctable = JIBRES_CTABLE;
-		$wers = jibres_wis();
-		$query = 
-		"
-			SELECT
-				ID
-			FROM
-				$table
-			WHERE
-				post_type = 'product' AND
-				ID NOT IN
-				(
-					SELECT item_id FROM $jibres_ctable WHERE type = 'product' AND wers = '$wers' AND backuped = 1
-				)
-		";
+		$where = ['post_type'=>'product'];
+		$excepts = 
+		[
+			'wc_product_meta_lookup'=> 'product_id',
+			'postmeta'=> 'post_id'
+		];
+		$data = $this->get_data('ID', 'posts', 'product', $where, $excepts);
 
-		$results = $wpdb->get_results($query);
 	
-		$arr_results = [];
-		$ids = [];
-	
-		foreach ($results as $key => $value) 
-		{
-			foreach ($value as $key => $val) 
-			{
-				if ($key == "ID") 
-				{
-					array_push($ids, $val);
+		printf('<p>Backuping products...</p>');
+		printf('<progress id="pprog" value="0" max="'.count($data).'" style="height: 3px;"></progress>  <a id="inof"></a><br><br>');
+		printf('<script>
+				function prsb(meq) {
+					document.getElementById("pprog").value = meq;
+					document.getElementById("inof").innerHTML = meq + " of '.count($data).' backuped";
 				}
-			}
-	
-		}
-	
-		if (!empty($results)) 
+				</script>');
+
+		foreach ($data as $value) 
 		{
-			$i = 0;
-	
-			printf('<p>Backuping products...</p>');
-			printf('<progress id="pprog" value="0" max="'.count($ids).'" style="height: 3px;"></progress>  <a id="inof"></a><br><br>');
+			
+			$this->insert_backup_in_jibres([$value['ID'], 'product']);
+
+			$this->backup_arr_sort($value, $this->jibres_stantard_product_array, ["onsale"=>["1"=>'available', "0"=>'unavailable']]);
+			
+			$changed = jibres_sort_arr($this->jibres_stantard_product_array, $arr);
+		
+			jibres_wis($this->where_backup, $changed);
+
 			printf('<script>
-					function prsb(meq) {
-						document.getElementById("pprog").value = meq;
-						document.getElementById("inof").innerHTML = meq + " of '.count($ids).' backuped";
-					}
+						prsb('.$i.');
 					</script>');
-			foreach ($ids as $value) 
-			{
-				
-				$i++;
-				$this->insert_product_in_jibres($value);
-				$query = 
-				"
-					SELECT
-						*
-					FROM 
-						$table
-					WHERE
-						ID = $value
-				";
-				$post_results = $wpdb->get_results($query);
-				foreach ($post_results as $key => $val) 
-				{
-					foreach ($val as $key2 => $val2) 
-					{
-						$arr_results[$key2] = $val2;
-					}
-				}
-	
-				$table = $wpdb->prefix. 'wc_product_meta_lookup';
-				$query = 
-				"
-					SELECT 
-						*
-					FROM 
-						$table
-					WHERE
-						product_id = $value
-				";
-				$meta_results = $wpdb->get_results($query);
-				foreach ($meta_results as $key => $val) 
-				{
-					foreach ($val as $key2 => $val2) 
-					{
-						$arr_results[$key2] = $val2;
-					}
-				}
-	
-				$table = $wpdb->prefix. 'postmeta';
-				$query = 
-				"
-					SELECT 
-						*
-					FROM 
-						$table
-					WHERE 
-						post_id = $value
-				";
-				$meta_post = $wpdb->get_results($query);
-				foreach ($meta_post as $key => $val) 
-				{
-					foreach ($val as $key2 => $val2) 
-					{
-						if ($key2 == 'meta_key') 
-						{
-							$this_key = $val2;
-						}
-						if ($key2 == 'meta_value') 
-						{
-							$arr_results[$this_key] = $val2;
-						}
-					}	
-				}
-	
-				
-				printf('<script>
-							prsb('.$i.');
-						</script>');
-				$this->product_arr_sort($arr_results);
-				ob_flush();
-				flush();
-	
-			}
-	
-			if (jibres_wis() == 'csv') 
-			{
-				printf('<a href="'.get_site_url().'/wp-content/plugins/wp-jibres/backup/'.$this->where_backup.'.csv" target="_blank">Download csv file</a><br><br>');
-			}
-			printf("OK Your Products Backuped<br><br>");
+			$this->product_arr_sort($arr_results);
+			ob_flush();
+			flush();
 		}
+
+			
+		
+		
+		
+		if (jibres_wis() == 'csv') 
+		{
+			printf('<a href="'.get_site_url().'/wp-content/plugins/wp-jibres/backup/'.$this->where_backup.'.csv" target="_blank">Download csv file</a><br><br>');
+		}
+		printf("OK Your Products Backuped<br><br>");
+			
 		else
 		{
 			if (jibres_wis() == 'csv') 
