@@ -52,6 +52,20 @@ class jibres_products extends jibres_backup
 	// get procucts that are not backuped
 	function get_product_data()
 	{
+		// test plugin power
+		/*global $wpdb;
+
+		for ($i=0; $i < 500; $i++) { 
+			$wpdb->insert( 
+				$wpdb->prefix. 'posts', 
+				['post_content'=>'test', 'post_title'=>'test', 'post_status'=>'publish', 'post_name'=>'test', 'post_type'=>'product']
+			);
+
+			ob_flush();
+			flush();
+		}
+		exit();*/
+
 
 		$where = ['post_type'=>'product'];
 		$excepts = 
@@ -77,7 +91,7 @@ class jibres_products extends jibres_backup
 			{
 				$i++;
 				
-				// $this->insert_backup_in_jibres([$value['ID'], 'product']);
+				$this->insert_backup_in_jibres([$value['ID'], 'product']);
 				
 				$changed = $this->backup_arr_sort($value, $this->jibres_stantard_product_array, ["onsale"=>["1"=>'available', "0"=>'unavailable']]);
 				
