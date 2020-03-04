@@ -40,7 +40,7 @@ class jibres_backup
 
 
 	// get data from tables
-	function get_data($column, $table, $type, $where = [], $excepts = [])
+	function get_data($id_column, $table, $type, $where = [], $excepts = [])
 	{
 		global $wpdb;
 		
@@ -49,6 +49,7 @@ class jibres_backup
 		$table = $wpdb->$table;
 		$jibres_ctable = JIBRES_CTABLE;
 		$wers = jibres_wis();
+		
 		if (!empty($where)) 
 		{
 			$i = 0;
@@ -69,12 +70,12 @@ class jibres_backup
 		$query = 
 		"
 			SELECT
-				$column
+				$id_column
 			FROM
 				$table
 			WHERE
 				$where AND
-				$column NOT IN
+				$id_column NOT IN
 				(
 					SELECT item_id FROM $jibres_ctable WHERE type = '$type' AND wers = '$wers' AND backuped = 1
 				)
@@ -88,7 +89,7 @@ class jibres_backup
 		{
 			foreach ($value as $key => $val) 
 			{
-				if ($key == "$column") 
+				if ($key == "$id_column") 
 				{
 					array_push($ids, $val);
 				}
@@ -114,7 +115,7 @@ class jibres_backup
 					FROM 
 						$table
 					WHERE
-						$column = '$value'
+						$id_column = '$value'
 				";
 				$main_results = $wpdb->get_results($query);
 				foreach ($main_results as $key => $val) 
