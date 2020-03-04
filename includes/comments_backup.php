@@ -49,6 +49,7 @@ class jibres_comments
 
 		$table = $wpdb->comments;
 		$jibre_ctable = JIBRES_CTABLE;
+		$wers = jibres_wis();
 		$query = 
 		"
 			SELECT 
@@ -58,7 +59,7 @@ class jibres_comments
 			WHERE 
 				comment_ID NOT IN 
 				(
-					SELECT item_id FROM $jibre_ctable WHERE type = 'comment' AND backuped = 1
+					SELECT item_id FROM $jibre_ctable WHERE type = 'comment' AND wers = '$wers' AND backuped = 1
 				)
 		";
 		$results = $wpdb->get_results($query);

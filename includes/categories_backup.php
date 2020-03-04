@@ -46,6 +46,7 @@ class jibres_categories
 
 		$table = $wpdb->term_taxonomy;
 		$jibres_ctable = JIBRES_CTABLE;
+		$wers = jibres_wis();
 		$query = 
 		"
 			SELECT 
@@ -56,7 +57,7 @@ class jibres_categories
 				taxonomy = 'product_cat' AND 
 				term_id NOT IN 
 				(
-					SELECT item_id FROM $jibres_ctable WHERE type = 'category' AND backuped = 1
+					SELECT item_id FROM $jibres_ctable WHERE type = 'category' AND wers = '$wers' AND backuped = 1
 				)
 		";
 		$results = $wpdb->get_results($query);

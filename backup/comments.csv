@@ -1,6 +1,0 @@
-post,author,author_email,date,content,approved
-1,"A WordPress Commenter",wapuu@wordpress.example,"2020-02-06 08:39:27","Hi, this is a comment.
-To get started with moderating, editing, and deleting comments, please visit the Comments screen in the dashboard.
-Commenter avatars come from <a href=""https://gravatar.com"">Gravatar</a>.",1
-10,ActionScheduler,,"2020-02-06 09:43:53","action created",1
-23,root,abc@def.com,"2020-02-26 11:01:40","Order status changed from Pending payment to Completed.",1

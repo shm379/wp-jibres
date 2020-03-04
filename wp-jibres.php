@@ -57,18 +57,22 @@ function admin_jibres()
 	if (isset($_GET['page']) and $_GET['page'] == 'jibres')
 	{
 
+		// force include the global jibres functions
 		require_once JIBRES_INC. 'functions.php';
 		jibres_defines();
 
+		// force include headers
 		require_once JIBRES_DIR. 'header.php';
 
 		printf('<div class="jibres"><br>');
 
+		// if post sent to this plugin page force include posts page
 		if (isset($_POST))
 		{
 			require_once JIBRES_DIR. 'if_posts.php';
 		}
 
+		//force include the main pages of plugin
 		require_once JIBRES_DIR. 'gets.php';
 
 		printf('</div>');

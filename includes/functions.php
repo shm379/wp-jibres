@@ -112,7 +112,8 @@ function insert_in_jibres($data = [], $tname = JIBRES_CTABLE)
 function send_data_jibres($where, $data)
 {
 	global $wpdb;
-	
+	echo json_encode($data);
+	exit();
 	$jibres_table = JIBRES_TABLE;
 	$results = $wpdb->get_results("SELECT * FROM $jibres_table");
 	$arr_results = [];
@@ -129,13 +130,21 @@ function send_data_jibres($where, $data)
 
 	$ch = curl_init();
 
-	$headers =  array('Content-Type: application/json', 'appkey: '.$appkey, 'apikey: '.$apikey);
-	
-	curl_setopt($ch, CURLOPT_URL, "https://jibres.com/fa/api/v1/".$store.$where);
+	$headers =  ['Content-Type: application/json', 'appkey: '.$appkey, 'apikey: '.$apikey];
+
+	curl_setopt($ch, CURLOPT_URL, "https://api.jibres.ir/".$store."/v2".$where);
 	curl_setopt($ch, CURLOPT_HEADER, $headers);
 	curl_setopt($ch, CURLOPT_POST, true);
 	curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
-	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+	//FALSE to stop cURL from verifying the peer's certificate
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
+
+    //TRUE to return the transfer as a string of the return value of curl_exec() instead of outputting it out directly.
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER,1);
+
+    curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 20); // 20 time out of nic-broker
+    curl_setopt($ch, CURLOPT_TIMEOUT, 20); // 20 time out of nic-broker
+
 	
 	// $push_p = curl_exec($ch);
 
@@ -143,12 +152,10 @@ function send_data_jibres($where, $data)
 	{
 		printf('Curl error: ' . curl_error($ch));
 	}
-	else
-	{
-		return true;
-	}
-	
+	$httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+	echo $httpcode;
 	curl_close($ch);
+	return true;
 
 	// return $push_p;
 }

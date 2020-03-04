@@ -81,6 +81,7 @@ class jibres_products
 
 		$table = $wpdb->posts;
 		$jibres_ctable = JIBRES_CTABLE;
+		$wers = jibres_wis();
 		$query = 
 		"
 			SELECT
@@ -91,7 +92,7 @@ class jibres_products
 				post_type = 'product' AND
 				ID NOT IN
 				(
-					SELECT item_id FROM $jibres_ctable WHERE type = 'product' AND backuped = 1
+					SELECT item_id FROM $jibres_ctable WHERE type = 'product' AND wers = '$wers' AND backuped = 1
 				)
 		";
 
