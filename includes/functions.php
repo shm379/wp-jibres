@@ -1,10 +1,11 @@
 <?php 
 
-
+// define jibres tables
 define('JIBRES_TABLE', $wpdb->prefix. 'jibres');
 define('JIBRES_CTABLE', $wpdb->prefix. 'jibres_check');
 
 
+// check jibres information exist or if update argument equal to start_again delete jibres table to start plugin again (reset plugin)
 function ch_jibres_store_data($update = null)
 {
 	global $wpdb;
@@ -40,6 +41,7 @@ function ch_jibres_store_data($update = null)
 }
 
 
+// if jibres tables not exist create them
 function create_jibres_table($tstrc = null, $tname = JIBRES_CTABLE)
 {
 	global $wpdb;
@@ -88,6 +90,7 @@ function create_jibres_table($tstrc = null, $tname = JIBRES_CTABLE)
 }
 
 
+// insert backuped data in jibres_check table
 function insert_in_jibres($data = [], $tname = JIBRES_CTABLE)
 {
 	global $wpdb;
@@ -105,6 +108,7 @@ function insert_in_jibres($data = [], $tname = JIBRES_CTABLE)
 
 
 
+// send data to jibres by api with curl
 function send_data_jibres($where, $data)
 {
 	global $wpdb;
@@ -171,6 +175,7 @@ function send_data_jibres($where, $data)
 }
 
 
+// create csv file backups by its name in backup folder
 function jibres_create_csv($cat, $data)
 {
 
@@ -195,6 +200,7 @@ function jibres_create_csv($cat, $data)
 
 }
 
+// sort informations by jibres database design
 function jibres_sort_arr($ch = [], $data = [])
 {
 	foreach ($ch as $key => $value) 
@@ -206,6 +212,7 @@ function jibres_sort_arr($ch = [], $data = [])
 }
 
 
+// check where plugin back up data and send data to there
 function jibres_wis($item = null, $data = null)
 {
 	global $wpdb;
@@ -245,7 +252,7 @@ function jibres_wis($item = null, $data = null)
 
 
 
-
+// return which data are backuped
 function informations_b($item, $table, $cat, $where = [], $first = false)
 {
 	global $wpdb;
