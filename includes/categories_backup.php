@@ -30,8 +30,11 @@ class jibres_categories extends jibres_backup
 
 
 		$where = ['taxonomy'=>'product_cat'];
-		$data = $this->get_data('term_id', 'term_taxonomy', 'category', $where);
-
+		$excepts = 
+		[
+			'terms'=> 'term_id'
+		];
+		$data = $this->get_data('term_id', 'term_taxonomy', 'category', $where, $excepts);
 
 
 		if (!empty($data)) 
