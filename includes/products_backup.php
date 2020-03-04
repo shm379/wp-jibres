@@ -1,5 +1,4 @@
 <?php
-require_once JIBRES_INC. 'jibres_backup_class.php';
 /**
  * products backup class
  */
@@ -61,7 +60,6 @@ class jibres_products extends jibres_backup
 			'postmeta'=> 'post_id'
 		];
 		$data = $this->get_data('ID', 'posts', 'product', $where, $excepts);
-
 	
 		printf('<p>Backuping products...</p>');
 		printf('<progress id="pprog" value="0" max="'.count($data).'" style="height: 3px;"></progress>  <a id="inof"></a><br><br>');
@@ -72,35 +70,35 @@ class jibres_products extends jibres_backup
 				}
 				</script>');
 
-		foreach ($data as $value) 
+		if (!empty($data)) 
 		{
-			
-			$this->insert_backup_in_jibres([$value['ID'], 'product']);
+			$i = 0;
+			foreach ($data as $value) 
+			{
+				$i++;
+				
+				// $this->insert_backup_in_jibres([$value['ID'], 'product']);
+				
+				$changed = $this->backup_arr_sort($value, $this->jibres_stantard_product_array, ["onsale"=>["1"=>'available', "0"=>'unavailable']]);
+				
+				
+				jibres_wis($this->where_backup, $changed);
+				
+				printf('<script>
+							prsb('.$i.');
+						</script>');
+				ob_flush();
+				flush();
+			}
 
-			$this->backup_arr_sort($value, $this->jibres_stantard_product_array, ["onsale"=>["1"=>'available', "0"=>'unavailable']]);
-			
-			$changed = jibres_sort_arr($this->jibres_stantard_product_array, $arr);
 		
-			jibres_wis($this->where_backup, $changed);
-
-			printf('<script>
-						prsb('.$i.');
-					</script>');
-			$this->product_arr_sort($arr_results);
-			ob_flush();
-			flush();
+			if (jibres_wis() == 'csv') 
+			{
+				printf('<a href="'.get_site_url().'/wp-content/plugins/wp-jibres/backup/'.$this->where_backup.'.csv" target="_blank">Download csv file</a><br><br>');
+			}
+			printf("OK Your Products Backuped<br><br>");
+			
 		}
-
-			
-		
-		
-		
-		if (jibres_wis() == 'csv') 
-		{
-			printf('<a href="'.get_site_url().'/wp-content/plugins/wp-jibres/backup/'.$this->where_backup.'.csv" target="_blank">Download csv file</a><br><br>');
-		}
-		printf("OK Your Products Backuped<br><br>");
-			
 		else
 		{
 			if (jibres_wis() == 'csv') 

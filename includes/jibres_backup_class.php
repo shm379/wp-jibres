@@ -145,7 +145,7 @@ class jibres_backup
 						$ex_results = $wpdb->get_results($exquery);
 						foreach ($ex_results as $key => $val) 
 						{
-							if ($extable == 'postmeta') 
+							if ($exkey == 'postmeta') 
 							{
 								foreach ($val as $key2 => $val2) 
 								{

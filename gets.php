@@ -12,9 +12,11 @@ $strc =  "CREATE TABLE $table_name (
 		) $charset_collate;";
 if (create_jibres_table($strc, JIBRES_TABLE) === true) 
 {
-	$check_jib = $wpdb->get_results("SELECT * FROM $table_name");
-	if (!empty($check_jib)) 
+	$check_jibres_table = $wpdb->get_results("SELECT * FROM $table_name");
+	if (!empty($check_jibres_table)) 
 	{
+		require_once JIBRES_INC. 'jibres_backup_class.php';
+
 		if (isset($_GET['jibres']) and $_GET['jibres'] == 'backup_all') 
 		{
 			$packs = array('products', 'orders', 'posts', 'comments', 'categories');
