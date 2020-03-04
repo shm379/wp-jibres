@@ -1,13 +1,9 @@
 <?php 
 
 
-function jibres_defines()
-{
-	global $wpdb;
+define('JIBRES_TABLE', $wpdb->prefix. 'jibres');
+define('JIBRES_CTABLE', $wpdb->prefix. 'jibres_check');
 
-	define('JIBRES_TABLE', $wpdb->prefix. 'jibres');
-	define('JIBRES_CTABLE', $wpdb->prefix. 'jibres_check');
-}
 
 function ch_jibres_store_data($update = null)
 {
@@ -112,8 +108,7 @@ function insert_in_jibres($data = [], $tname = JIBRES_CTABLE)
 function send_data_jibres($where, $data)
 {
 	global $wpdb;
-	echo json_encode($data);
-	exit();
+
 	$jibres_table = JIBRES_TABLE;
 	$results = $wpdb->get_results("SELECT * FROM $jibres_table");
 	$arr_results = [];
@@ -127,37 +122,52 @@ function send_data_jibres($where, $data)
 	$store = $arr_results['store'];
 	$apikey = $arr_results['apikey'];
 	$appkey = $arr_results['appkey'];
+	$headers =  ['Content-Type: application/json', 'appkey: '.$appkey, 'apikey: '.$apikey];
+	// wordpress curl function
+	/*$argus = 
+	[
+		'method'      => 'POST',
+        'timeout'     => 20,
+        'headers'     => $headers,
+        'body'        => json_encode($data)
+	];
 
+	$jibres_req = WP_Http_Curl::request("https://api.jibres.ir/".$store."/v2".$where, $argus);
+
+	var_dump($jibres_req);*/
+
+	// send data with curl
 	$ch = curl_init();
 
-	$headers =  ['Content-Type: application/json', 'appkey: '.$appkey, 'apikey: '.$apikey];
-
 	curl_setopt($ch, CURLOPT_URL, "https://api.jibres.ir/".$store."/v2".$where);
-	curl_setopt($ch, CURLOPT_HEADER, $headers);
-	curl_setopt($ch, CURLOPT_POST, true);
+	curl_setopt($ch, CURLOPT_HEADER, TRUE);
+	curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+	curl_setopt($ch, CURLOPT_POST, TRUE);
 	curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
 	//FALSE to stop cURL from verifying the peer's certificate
-    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, TRUE);
 
     //TRUE to return the transfer as a string of the return value of curl_exec() instead of outputting it out directly.
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER,1);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
 
     curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 20); // 20 time out of nic-broker
     curl_setopt($ch, CURLOPT_TIMEOUT, 20); // 20 time out of nic-broker
 
 	
-	// $push_p = curl_exec($ch);
+	$push_p = curl_exec($ch);
 
-	if(curl_exec($ch) === false)
-	{
+    if(curl_error($ch)) 
+    {
 		printf('Curl error: ' . curl_error($ch));
 	}
-	$httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-	echo $httpcode;
-	curl_close($ch);
-	return true;
+	else
+	{
+		var_dump($push_p);
+	}
 
-	// return $push_p;
+	
+	curl_close($ch);
+	
 }
 
 

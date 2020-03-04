@@ -59,7 +59,6 @@ function admin_jibres()
 
 		// force include the global jibres functions
 		require_once JIBRES_INC. 'functions.php';
-		jibres_defines();
 
 		// force include headers
 		require_once JIBRES_DIR. 'header.php';
