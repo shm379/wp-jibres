@@ -67,9 +67,10 @@ function admin_jibres()
 		printf('<div class="jibres"><br>');
 
 		// if post sent to this plugin page force include posts page
-		if (isset($_POST))
+		if (!empty($_POST))
 		{
 			require_once JIBRES_DIR. 'if_posts.php';
+			exit();
 		}
 
 		//force include the main pages of plugin
