@@ -75,29 +75,32 @@ class jibres_products extends jibres_backup
 		];
 		$data = $this->get_data('ID', 'posts', 'product', $where, $excepts);
 	
-		printf('<p>Backuping products...</p>');
-		printf('<progress id="pprog" value="0" max="'.count($data).'" style="height: 3px;"></progress>  <a id="inof"></a><br><br>');
-		printf('<script>
-				function prsb(meq) {
-					document.getElementById("pprog").value = meq;
-					document.getElementById("inof").innerHTML = meq + " of '.count($data).' backuped";
-				}
-				</script>');
-
 		if (!empty($data)) 
 		{
 			$i = 0;
+			printf('<p>Backuping products...</p>');
+			printf('<progress id="pprog" value="0" max="'.count($data).'" style="height: 3px;"></progress>  <a id="inof"></a><br><br>');
+			printf('<script>
+					function prsb(meq) {
+						document.getElementById("pprog").value = meq;
+						document.getElementById("inof").innerHTML = meq + " of '.count($data).' backuped";
+					}
+					</script>');
+
 			foreach ($data as $value) 
 			{
 				$i++;
 				
+				// insert this product to jibres check table
 				$this->insert_backup_in_jibres([$value['ID'], 'product']);
 				
+				// sort array by jibres products database design
 				$changed = $this->backup_arr_sort($value, $this->jibres_stantard_product_array, ["onsale"=>["1"=>'available', "0"=>'unavailable']]);
 				
-				
+				// backup this product
 				jibres_wis($this->where_backup, $changed);
 				
+				// update progress bar
 				printf('<script>
 							prsb('.$i.');
 						</script>');
@@ -108,6 +111,7 @@ class jibres_products extends jibres_backup
 		
 			if (jibres_wis() == 'csv') 
 			{
+				// csv download url
 				printf('<a href="'.get_site_url().'/wp-content/plugins/wp-jibres/backup/'.$this->where_backup.'.csv" target="_blank">Download csv file</a><br><br>');
 			}
 			printf("OK Your Products Backuped<br><br>");
@@ -117,6 +121,7 @@ class jibres_products extends jibres_backup
 		{
 			if (jibres_wis() == 'csv') 
 			{
+				// csv download url
 				printf('<a href="'.get_site_url().'/wp-content/plugins/wp-jibres/backup/'.$this->where_backup.'.csv" target="_blank">Download csv file</a><br><br>');
 			}
 			printf("All Products Are Backuped<br><br>");

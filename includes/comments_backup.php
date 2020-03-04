@@ -4,7 +4,7 @@
 /**
  * comments backup class
  */
-class jibres_comments
+class jibres_comments extends jibres_backup
 {
 
 	public $jibres_stantard_comments_array = [  'post'         => 'comment_post_ID',
@@ -27,96 +27,43 @@ class jibres_comments
 		}
 	}
 
-
-	function comment_arr_sort($arr)
-	{
-			
-		$changed = jibres_sort_arr($this->jibres_stantard_comments_array, $arr);
-	
-		jibres_wis($this->where_backup, $changed);
-	}
-	
-	function insert_comment_in_jibres($id)
-	{
-		$data = array('item_id' => $id, 'type' => 'comment');
-		insert_in_jibres($data);
-	}
 	
 	function get_comment_data()
 	{
-		global $wpdb;
-	
 
-		$table = $wpdb->comments;
-		$jibre_ctable = JIBRES_CTABLE;
-		$wers = jibres_wis();
-		$query = 
-		"
-			SELECT 
-				comment_ID 
-			FROM 
-				$table 
-			WHERE 
-				comment_ID NOT IN 
-				(
-					SELECT item_id FROM $jibre_ctable WHERE type = 'comment' AND wers = '$wers' AND backuped = 1
-				)
-		";
-		$results = $wpdb->get_results($query);
+		$data = $this->get_data('comment_ID', 'comments', 'comment');
+
 	
-		$arr_results = [];
-		$ids = [];
-	
-		foreach ($results as $key => $value) 
-		{
-			foreach ($value as $key => $val) 
-			{
-				if ($key == "comment_ID") 
-				{
-					array_push($ids, $val);
-				}
-			}
-	
-		}
-	
-		if (!empty($results)) 
+		if (!empty($data)) 
 		{
 			$i = 0;
 			printf('<p>Backuping comments...</p>');
-			printf('<progress id="cprog" value="0" max="'.count($ids).'" style="height: 3px;"></progress>  <a id="cinof"></a><br><br>');
+			printf('<progress id="cprog" value="0" max="'.count($data).'" style="height: 3px;"></progress>  <a id="cinof"></a><br><br>');
 			printf('<script>
 					function crsb(meq) {
 						document.getElementById("cprog").value = meq;
-						document.getElementById("cinof").innerHTML = meq + " of '.count($ids).' backuped";
+						document.getElementById("cinof").innerHTML = meq + " of '.count($data).' backuped";
 					}
 					</script>');
-			foreach ($ids as $value) 
+			foreach ($data as $value) 
 			{
 					
 				$i++;
-				$this->insert_comment_in_jibres($value);
-				$query = 
-				"
-					SELECT 
-						* 
-					FROM 
-						$table 
-					WHERE 
-						comment_ID = $value
-				";
-				$post_results = $wpdb->get_results($query);
-				foreach ($post_results as $key => $val) 
-				{
-					foreach ($val as $key2 => $val2) 
-					{
-						$arr_results[$key2] = $val2;
-					}
-				}
-	
+
+
+				// insert this product to jibres check table
+				$this->insert_backup_in_jibres([$value['comment_ID'], 'comment']);
+				
+				// sort array by jibres products database design
+				$changed = $this->backup_arr_sort($value, $this->jibres_stantard_comments_array);
+				
+				// backup this product
+				jibres_wis($this->where_backup, $changed);
+				
+				// update progress bar
 				printf('<script>
 							crsb('.$i.');
 						</script>');
-				$this->comment_arr_sort($arr_results);
 				ob_flush();
 				flush();
 			}
