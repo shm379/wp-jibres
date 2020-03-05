@@ -14,12 +14,14 @@ class jibres_categories extends jibres_backup
 	
 
 	private $where_backup;
+	private $this_jibres_wis;
 
 	function __construct()
 	{
 		if (create_jibres_table() === true) 
 		{
-			$this->where_backup = (jibres_wis() == 'csv') ? 'categories' : '/category/add';
+			$this->this_jibres_wis = jibres_wis();
+			$this->where_backup = ($this->this_jibres_wis == 'csv') ? 'categories' : '/category/add';
 			$this->get_category_data();
 		}
 	}
@@ -70,7 +72,7 @@ class jibres_categories extends jibres_backup
 				flush();
 			}
 			
-			if (jibres_wis() == 'csv') 
+			if ($this->this_jibres_wis == 'csv') 
 			{
 				printf('<a href="'.get_site_url().'/wp-content/plugins/wp-jibres/backup/'.$this->where_backup.'.csv" target="_blank">Download csv file</a><br><br>');
 			}
@@ -78,7 +80,7 @@ class jibres_categories extends jibres_backup
 		}
 		else
 		{
-			if (jibres_wis() == 'csv') 
+			if ($this->this_jibres_wis == 'csv') 
 			{
 				printf('<a href="'.get_site_url().'/wp-content/plugins/wp-jibres/backup/'.$this->where_backup.'.csv" target="_blank">Download csv file</a><br><br>');
 			}
