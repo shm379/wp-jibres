@@ -6,7 +6,7 @@
 class jibres_posts extends jibres_backup
 {
 
-	public $jibres_stantard_post_array = [  'title'       => 'post_title',
+	public static $jibres_stantard_post_array = [  'title'       => 'post_title',
 											'seotitle'    => '',
 											'slug'        => '',
 											'excerpt'     => 'post_excerpt',
@@ -55,7 +55,7 @@ class jibres_posts extends jibres_backup
 				$i++;
 				
 				// sort array by jibres posts database design
-				$changed = $this->backup_arr_sort($value, $this->jibres_stantard_post_array);
+				$changed = $this->backup_arr_sort($value, self::$jibres_stantard_post_array);
 				
 				// backup this post
 				jibres_wis($this->where_backup, $changed);

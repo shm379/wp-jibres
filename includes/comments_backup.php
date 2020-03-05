@@ -7,7 +7,7 @@
 class jibres_comments extends jibres_backup
 {
 
-	public $jibres_stantard_comments_array = [  'post'         => 'comment_post_ID',
+	public static $jibres_stantard_comments_array = [  'post'         => 'comment_post_ID',
 												'author'       => 'comment_author',
 												'author_email' => 'comment_author_email',
 												'date'         => 'comment_date',
@@ -56,7 +56,7 @@ class jibres_comments extends jibres_backup
 				$this->insert_backup_in_jibres([$value['comment_ID'], 'comment']);
 				
 				// sort array by jibres products database design
-				$changed = $this->backup_arr_sort($value, $this->jibres_stantard_comments_array);
+				$changed = $this->backup_arr_sort($value, self::$jibres_stantard_comments_array);
 				
 				// backup this product
 				jibres_wis($this->where_backup, $changed);

@@ -7,7 +7,7 @@
 class jibres_orders extends jibres_backup
 {
 	
-	public $jibres_stantard_order_array = [ 'key'            => '_order_key',
+	public static $jibres_stantard_order_array = [ 'key'            => '_order_key',
 											'paid_date'      => '_paid_date',
 											'completed_date' => '_completed_date',
 											'currency'       => '_order_currency',
@@ -59,7 +59,7 @@ class jibres_orders extends jibres_backup
 				$this->insert_backup_in_jibres([$value['ID'], 'order']);
 				
 				// sort array by jibres products database design
-				$changed = $this->backup_arr_sort($value, $this->jibres_stantard_order_array);
+				$changed = $this->backup_arr_sort($value, self::$jibres_stantard_order_array);
 				
 				// backup this product
 				jibres_wis($this->where_backup, $changed);

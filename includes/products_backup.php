@@ -5,7 +5,7 @@
 class jibres_products extends jibres_backup
 {
 
-	public $jibres_stantard_product_array = [   'title'        => 'post_title',
+	public static $jibres_stantard_product_array = [   'title'        => 'post_title',
 												'slug'         => '',
 												'desc'         => 'post_content',
 												'barcode'      => '',
@@ -94,7 +94,7 @@ class jibres_products extends jibres_backup
 				$i++;
 				
 				// sort array by jibres products database design
-				$changed = $this->backup_arr_sort($value, $this->jibres_stantard_product_array, ["onsale"=>["1"=>'available', "0"=>'unavailable']]);
+				$changed = $this->backup_arr_sort($value, self::$jibres_stantard_product_array, ["onsale"=>["1"=>'available', "0"=>'unavailable']]);
 				
 				// backup this product
 				jibres_wis($this->where_backup, $changed);

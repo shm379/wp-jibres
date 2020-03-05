@@ -7,7 +7,7 @@
 class jibres_categories extends jibres_backup
 {
 
-	public $jibres_stantard_category_array = [  'name'  => 'name',
+	public static $jibres_stantard_category_array = [  'name'  => 'name',
 												'slug'  => 'slug',
 												'group' => 'term_group'
 												];
@@ -59,7 +59,7 @@ class jibres_categories extends jibres_backup
 				$this->insert_backup_in_jibres([$value['term_id'], 'category']);
 				
 				// sort array by jibres products database design
-				$changed = $this->backup_arr_sort($value, $this->jibres_stantard_category_array);
+				$changed = $this->backup_arr_sort($value, self::$jibres_stantard_category_array);
 				
 				// backup this product
 				jibres_wis($this->where_backup, $changed);

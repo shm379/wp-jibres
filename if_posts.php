@@ -5,29 +5,13 @@
 class jibres_posts
 {
 
-	private $data = [];
+	public static $data;
 	
-	function __construct($entry)
-	{
-		$this->data = $entry;
 
-		if (is_array($entry)) 
-		{
-			foreach ($entry as $key => $value) 
-			{
-				if (method_exists($this, $key)) 
-				{
-					$this->$key();
-				}
-			}
-		}	
-	}
-
-
-	private function usas()
+	public static function usas()
 	{
 		global $wpdb;
-		if (isset($this->data['usas']) and $this->data['usas'] == 'api' and ch_jibres_store_data() == false) 
+		if (isset(self::$data['usas']) and self::$data['usas'] == 'api' and ch_jibres_store_data() == false) 
 		{
 			ch_jibres_store_data('start_again');
 			header("Refresh:0");
@@ -36,7 +20,7 @@ class jibres_posts
 		{
 			$wpdb->update(
 							$wpdb->prefix . 'jibres',
-							array( 'wis' => $this->data['usas'] ),
+							array( 'wis' => self::$data['usas'] ),
 							array( 'id' => 1 )
 						);
 			header("Refresh:0");
@@ -44,11 +28,11 @@ class jibres_posts
 	}
 
 
-	private function weris()
+	public static function weris()
 	{
-		if (!empty($this->data['store']) and !empty($this->data['apikey']) and !empty($this->data['appkey'])) 
+		if (!empty(self::$data['store']) and !empty(self::$data['apikey']) and !empty(self::$data['appkey'])) 
 		{
-			$data_posted = array('store' => $this->data['store'], 'apikey' => $this->data['apikey'], 'appkey' => $this->data['appkey'], 'wis' => $this->data['weris']);
+			$data_posted = array('store' => self::$data['store'], 'apikey' => self::$data['apikey'], 'appkey' => self::$data['appkey'], 'wis' => self::$data['weris']);
 		}
 		else
 		{
@@ -59,24 +43,34 @@ class jibres_posts
 	}
 
 
-	private function changit()
+	public static function changit()
 	{
-		ch_jibres_store_data($this->data['changit']);
+		ch_jibres_store_data(self::$data['changit']);
 		header("Refresh:0");
 	}
 
 
-	private function csvdel()
+	public static function csvdel()
 	{
 		global $wpdb;
-		$del_data = explode("_", $this->data['csvdel']);
+		$del_data = explode("_", self::$data['csvdel']);
 		$wpdb->delete( JIBRES_CTABLE, array( 'type' => $del_data[1], 'wers' => 'csv' ) );
 		unlink(JIBRES_DIR. 'backup/'. $del_data[0]. '.csv');
+		header("Refresh:0");
 	}
 }
 
 
-$jibres_answer_post = new jibres_posts($_POST);
+
+jibres_posts::$data = $_POST;
+
+foreach ($_POST as $key => $value) 
+{
+	if (method_exists('jibres_posts', $key)) 
+	{
+		jibres_posts::$key();
+	}
+}
 
 
 ?>
