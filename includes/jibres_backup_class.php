@@ -8,20 +8,21 @@ class jibres_backup
 
 	function backup_arr_sort($arr, $stnd, $excepts = [])
 	{
+
 		if (!empty($excepts)) 
 		{
 			foreach ($excepts as $exkey => $exvalue) 
 			{
 				foreach ($exvalue as $key => $value) 
 				{
-					if ($arr[$exkey] == $key) 
+					if ($arr[$exkey] == "$key") 
 					{
 						$arr[$exkey] = $value;
 					}
 				}
 			}
 		}
-	
+
 		$changed = jibres_sort_arr($stnd, $arr);
 		
 		return $changed;		
