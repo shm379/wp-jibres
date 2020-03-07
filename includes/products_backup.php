@@ -39,6 +39,7 @@ class jibres_products extends jibres_backup
 
 	private $where_backup;
 	private $this_jibres_wis;
+	private $last_i = 0;
 	
 	function __construct()
 	{
@@ -47,21 +48,54 @@ class jibres_products extends jibres_backup
 			// backup to csv file or jibres api
 			$this->this_jibres_wis = jibres_wis();
 			$this->where_backup = ($this->this_jibres_wis == 'csv') ? 'products' : '/product/add';
+			$this->create_pbr();
 			$this->get_product_data();
 		}
 	}
 	
+
+	private function create_pbr()
+	{
+		global $wpdb;
+		
+		$table = $wpdb->prefix. 'posts';
+		$get_all_product_count = $wpdb->get_results("SELECT COUNT(ID) FROM $table WHERE post_type = 'product'");
+		foreach ($get_all_products_count as $key => $value) 
+		{
+			foreach ($value as $key2 => $val) 
+			{
+				$all = $val;
+			}
+		}
+		printf('<p>Backuping products...</p>');
+		printf('<progress id="pprog" value="0" max="'.$all.'" style="height: 3px;"></progress>  <a id="inof"></a><br><br>');
+		printf('<script>
+				function prsb(meq) {
+					document.getElementById("pprog").value = meq;
+					document.getElementById("inof").innerHTML = meq + " of '.$all.' backuped";
+				}
+				</script>');
+	
+	}
+
+
 	// get procucts that are not backuped
 	function get_product_data()
 	{
 		// test plugin power
-		/*global $wpdb;
+		/*// global $wpdb;
 
-		for ($i=0; $i < 500; $i++) { 
-			$wpdb->insert( 
-				$wpdb->prefix. 'posts', 
-				['post_content'=>'test', 'post_title'=>'test', 'post_status'=>'publish', 'post_name'=>'test', 'post_type'=>'product']
-			);
+		for ($i=0; $i < 200000; $i++) { 
+			// $wpdb->insert( 
+			// 	$wpdb->prefix. 'posts', 
+			// 	['post_content'=>'test', 'post_title'=>'test', 'post_status'=>'publish', 'post_name'=>'test', 'post_type'=>'product']
+			// );
+			$msql = new mysqli('localhost', 'root', 'divet', 'new_wp');
+			$sql = "INSERT INTO 
+						`wp_posts`(`post_content`, `post_title`, `post_name`, `post_type`, `post_excerpt`, `to_ping`, `pinged`, `post_content_filtered`) 
+					VALUES 
+						('test','test','test','product',' ',' ',' ',' ')";
+			$msql->query($sql);
 
 			ob_flush();
 			flush();
@@ -79,15 +113,7 @@ class jibres_products extends jibres_backup
 	
 		if (!empty($data)) 
 		{
-			$i = 0;
-			printf('<p>Backuping products...</p>');
-			printf('<progress id="pprog" value="0" max="'.count($data).'" style="height: 3px;"></progress>  <a id="inof"></a><br><br>');
-			printf('<script>
-					function prsb(meq) {
-						document.getElementById("pprog").value = meq;
-						document.getElementById("inof").innerHTML = meq + " of '.count($data).' backuped";
-					}
-					</script>');
+			$i = $this->last_i;
 
 			foreach ($data as $value) 
 			{
@@ -110,13 +136,14 @@ class jibres_products extends jibres_backup
 				flush();
 			}
 
-		
-			if ($this->this_jibres_wis == 'csv') 
+			$this->last_i = $i;
+			$this->pb_start_again();
+			/*if ($this->this_jibres_wis == 'csv') 
 			{
 				// csv download url
 				printf('<a href="'.get_site_url().'/wp-content/plugins/wp-jibres/backup/'.$this->where_backup.'.csv" target="_blank">Download csv file</a><br><br>');
 			}
-			printf("OK Your Products Backuped<br><br>");
+			printf("OK Your Products Backuped<br><br>");*/
 			
 		}
 		else
@@ -129,6 +156,12 @@ class jibres_products extends jibres_backup
 			printf("All Products Are Backuped<br><br>");
 		}
 	
+	}
+
+
+	function pb_start_again()
+	{
+		$this->get_product_data();
 	}
 
 }

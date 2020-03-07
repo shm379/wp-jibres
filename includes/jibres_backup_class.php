@@ -80,6 +80,7 @@ class jibres_backup
 				(
 					SELECT item_id FROM $jibres_ctable WHERE type = '$type' AND wers = '$wers' AND backuped = 1
 				)
+			LIMIT 1000
 		";
 
 		$results = $wpdb->get_results($query);

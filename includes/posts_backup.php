@@ -19,6 +19,7 @@ class jibres_posts extends jibres_backup
 
 	private $where_backup;
 	private $this_jibres_wis;
+	private $last_i = 0;
 	
 	function __construct()
 	{
@@ -26,11 +27,37 @@ class jibres_posts extends jibres_backup
 		{
 			$this->this_jibres_wis = jibres_wis();
 			$this->where_backup = ($this->this_jibres_wis == 'csv') ? 'posts' : '/post/add';
+			$this->create_pbr();
 			$this->get_post_data();
 		}
 	}
 
 	
+	private function create_pbr()
+	{
+		global $wpdb;
+		
+		$table = $wpdb->prefix. 'posts';
+		$get_all_posts_count = $wpdb->get_results("SELECT COUNT(ID) FROM $table WHERE post_type = 'post'");
+		foreach ($get_all_posts_count as $key => $value) 
+		{
+			foreach ($value as $key2 => $val) 
+			{
+				$all = $val;
+			}
+		}
+		printf('<p>Backuping posts...</p>');
+		printf('<progress id="sprog" value="0" max="'.$all.'" style="height: 3px;"></progress>  <a id="sinof"></a><br><br>');
+		printf('<script>
+				function srsb(meq) {
+					document.getElementById("sprog").value = meq;
+					document.getElementById("sinof").innerHTML = meq + " of '.$all.' backuped";
+				}
+				</script>');
+	
+	}
+
+
 	function get_post_data()
 	{
 
@@ -40,15 +67,8 @@ class jibres_posts extends jibres_backup
 	
 		if (!empty($data)) 
 		{
-			$i = 0;
-			printf('<p>Backuping posts...</p>');
-			printf('<progress id="sprog" value="0" max="'.count($data).'" style="height: 3px;"></progress>  <a id="sinof"></a><br><br>');
-			printf('<script>
-					function srsb(meq) {
-						document.getElementById("sprog").value = meq;
-						document.getElementById("sinof").innerHTML = meq + " of '.count($data).' backuped";
-					}
-					</script>');
+			$i = $this->last_i;
+			
 			foreach ($data as $value) 
 			{
 					
@@ -71,12 +91,9 @@ class jibres_posts extends jibres_backup
 				flush();
 			}
 	
-			if ($this->this_jibres_wis == 'csv') 
-			{
-				// csv download url
-				printf('<a href="'.get_site_url().'/wp-content/plugins/wp-jibres/backup/'.$this->where_backup.'.csv" target="_blank">Download csv file</a><br><br>');
-			}
-			printf("OK Your Posts Backuped<br><br>");
+
+			$this->last_i = $i;
+			$this->pob_start_again();
 		}
 		else
 		{
@@ -88,6 +105,12 @@ class jibres_posts extends jibres_backup
 			printf("All Posts Are Backuped<br><br>");
 		}
 	
+	}
+
+
+	function pob_start_again()
+	{
+		$this->get_post_data();
 	}
 
 }

@@ -17,6 +17,7 @@ class jibres_comments extends jibres_backup
 	
 	private $where_backup;
 	private $this_jibres_wis;
+	private $last_i = 0;
 
 	function __construct()
 	{
@@ -24,8 +25,34 @@ class jibres_comments extends jibres_backup
 		{
 			$this->this_jibres_wis = jibres_wis();
 			$this->where_backup = ($this->this_jibres_wis == 'csv') ? 'comments' : '/comment/add';
+			$this->create_pbr();
 			$this->get_comment_data();
 		}
+	}
+
+
+	private function create_pbr()
+	{
+		global $wpdb;
+		
+		$table = $wpdb->prefix. 'comments';
+		$get_all_comments_count = $wpdb->get_results("SELECT COUNT(comment_ID) FROM $table");
+		foreach ($get_all_comments_count as $key => $value) 
+		{
+			foreach ($value as $key2 => $val) 
+			{
+				$all = $val;
+			}
+		}
+		printf('<p>Backuping comments...</p>');
+		printf('<progress id="cprog" value="0" max="'.$all.'" style="height: 3px;"></progress>  <a id="cinof"></a><br><br>');
+		printf('<script>
+				function crsb(meq) {
+					document.getElementById("cprog").value = meq;
+					document.getElementById("cinof").innerHTML = meq + " of '.$all.' backuped";
+				}
+				</script>');
+	
 	}
 
 	
@@ -37,15 +64,8 @@ class jibres_comments extends jibres_backup
 	
 		if (!empty($data)) 
 		{
-			$i = 0;
-			printf('<p>Backuping comments...</p>');
-			printf('<progress id="cprog" value="0" max="'.count($data).'" style="height: 3px;"></progress>  <a id="cinof"></a><br><br>');
-			printf('<script>
-					function crsb(meq) {
-						document.getElementById("cprog").value = meq;
-						document.getElementById("cinof").innerHTML = meq + " of '.count($data).' backuped";
-					}
-					</script>');
+			$i = $this->last_i;
+			
 			foreach ($data as $value) 
 			{
 					
@@ -69,11 +89,9 @@ class jibres_comments extends jibres_backup
 				flush();
 			}
 			
-			if ($this->this_jibres_wis == 'csv') 
-			{
-				printf('<a href="'.get_site_url().'/wp-content/plugins/wp-jibres/backup/'.$this->where_backup.'.csv" target="_blank">Download csv file</a><br><br>');
-			}
-			printf("OK Your Comments Backuped<br><br>");
+
+			$this->last_i = $i;
+			$this->cob_start_again();
 		}
 		else
 		{
@@ -84,6 +102,12 @@ class jibres_comments extends jibres_backup
 			printf("All Comments Are Backuped<br><br>");
 		}
 	
+	}
+
+
+	function cob_start_again()
+	{
+		$this->get_comment_data();
 	}
 
 }

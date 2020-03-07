@@ -15,6 +15,7 @@ class jibres_categories extends jibres_backup
 
 	private $where_backup;
 	private $this_jibres_wis;
+	private $last_i = 0;
 
 	function __construct()
 	{
@@ -22,8 +23,34 @@ class jibres_categories extends jibres_backup
 		{
 			$this->this_jibres_wis = jibres_wis();
 			$this->where_backup = ($this->this_jibres_wis == 'csv') ? 'categories' : '/category/add';
+			$this->create_pbr();
 			$this->get_category_data();
 		}
+	}
+
+
+	private function create_pbr()
+	{
+		global $wpdb;
+		
+		$table = $wpdb->prefix. 'term_taxonomy';
+		$get_all_categories_count = $wpdb->get_results("SELECT COUNT(term_id) FROM $table WHERE taxonomy = 'product_cat'");
+		foreach ($get_all_categories_count as $key => $value) 
+		{
+			foreach ($value as $key2 => $val) 
+			{
+				$all = $val;
+			}
+		}
+		printf('<p>Backuping categories...</p>');
+		printf('<progress id="tprog" value="0" max="'.$all.'" style="height: 3px;"></progress>  <a id="tinof"></a><br><br>');
+		printf('<script>
+				function trsb(meq) {
+					document.getElementById("tprog").value = meq;
+					document.getElementById("tinof").innerHTML = meq + " of '.$all.' backuped";
+				}
+				</script>');
+	
 	}
 
 	
@@ -41,15 +68,8 @@ class jibres_categories extends jibres_backup
 
 		if (!empty($data)) 
 		{
-			$i = 0;
-			printf('<p>Backuping categories...</p>');
-			printf('<progress id="tprog" value="0" max="'.count($data).'" style="height: 3px;"></progress>  <a id="tinof"></a><br><br>');
-			printf('<script>
-					function trsb(meq) {
-						document.getElementById("tprog").value = meq;
-						document.getElementById("tinof").innerHTML = meq + " of '.count($data).' backuped";
-					}
-					</script>');
+			$i = $this->last_i;
+			
 			foreach ($data as $value) 
 			{
 				
@@ -72,11 +92,9 @@ class jibres_categories extends jibres_backup
 				flush();
 			}
 			
-			if ($this->this_jibres_wis == 'csv') 
-			{
-				printf('<a href="'.get_site_url().'/wp-content/plugins/wp-jibres/backup/'.$this->where_backup.'.csv" target="_blank">Download csv file</a><br><br>');
-			}
-			printf("OK Your Categories Bacuped<br><br>");
+			
+			$this->last_i = $i;
+			$this->cab_start_again();
 		}
 		else
 		{
@@ -87,6 +105,12 @@ class jibres_categories extends jibres_backup
 			printf("All Categories Are Backuped<br><br>");
 		}
 	
+	}
+
+
+	function cab_start_again()
+	{
+		$this->get_category_data();
 	}
 
 

@@ -16,6 +16,7 @@ class jibres_orders extends jibres_backup
 
 	private $where_backup;
 	private $this_jibres_wis;
+	private $last_i = 0;
 
 	function __construct()
 	{
@@ -23,8 +24,34 @@ class jibres_orders extends jibres_backup
 		{
 			$this->this_jibres_wis = jibres_wis();
 			$this->where_backup = ($this->this_jibres_wis == 'csv') ? 'orders' : '/cart/add';
+			$this->create_pbr();
 			$this->get_order_data();
 		}
+	}
+
+
+	private function create_pbr()
+	{
+		global $wpdb;
+		
+		$table = $wpdb->prefix. 'posts';
+		$get_all_orders_count = $wpdb->get_results("SELECT COUNT(ID) FROM $table WHERE post_type = 'shop_order'");
+		foreach ($get_all_orders_count as $key => $value) 
+		{
+			foreach ($value as $key2 => $val) 
+			{
+				$all = $val;
+			}
+		}
+		printf('<p>Backuping orders...</p>');
+		printf('<progress id="oprog" value="0" max="'.$all.'" style="height: 3px;"></progress>  <a id="oinof"></a><br><br>');
+		printf('<script>
+				function orsb(meq) {
+					document.getElementById("oprog").value = meq;
+					document.getElementById("oinof").innerHTML = meq + " of '.$all.' backuped";
+				}
+				</script>');
+	
 	}
 
 	
@@ -41,15 +68,8 @@ class jibres_orders extends jibres_backup
 
 		if (!empty($data)) 
 		{
-			$i = 0;
-			printf('<p>Backuping orders...</p>');
-			printf('<progress id="oprog" value="0" max="'.count($data).'" style="height: 3px;"></progress>  <a id="oinof"></a><br><br>');
-			printf('<script>
-					function orsb(meq) {
-						document.getElementById("oprog").value = meq;
-						document.getElementById("oinof").innerHTML = meq + " of '.count($data).' backuped";
-					}
-					</script>');
+			$i = $this->last_i;
+			
 			foreach ($data as $value) 
 			{
 				
@@ -72,12 +92,9 @@ class jibres_orders extends jibres_backup
 				flush();
 			}
 	
-			if ($this->this_jibres_wis == 'csv') 
-			{
-				// csv download url
-				printf('<a href="'.get_site_url().'/wp-content/plugins/wp-jibres/backup/'.$this->where_backup.'.csv" target="_blank">Download csv file</a><br><br>');
-			}	
-			printf("OK Your Orders Backuped<br><br>");
+
+			$this->last_i = $i;
+			$this->orb_start_again();
 		}
 		else
 		{
@@ -89,6 +106,12 @@ class jibres_orders extends jibres_backup
 			printf("All Orders Are Backuped<br><br>");
 		}
 	
+	}
+
+
+	function orb_start_again()
+	{
+		$this->get_order_data();
 	}
 
 }
