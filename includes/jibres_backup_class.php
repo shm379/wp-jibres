@@ -51,22 +51,7 @@ class jibres_backup
 		$jibres_ctable = JIBRES_CTABLE;
 		$wers = jibres_wis();
 		
-		if (!empty($where)) 
-		{
-			$i = 0;
-			foreach ($where as $key => $value) 
-			{
-				if ($i == 0) 
-				{
-					$where = "$key='$value'";
-				}
-				$i++;
-			}
-		}
-		else
-		{
-			$where = "1=1";
-		}
+		$where = jibres_create_sql_where($where);
 
 		$query = 
 		"
