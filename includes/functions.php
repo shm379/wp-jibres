@@ -250,18 +250,8 @@ function jibres_wis($item = null, $data = null)
 }
 
 
-
-
-// return which data are backuped
-function informations_b($item, $table, $cat, $where = [], $first = false)
+function jibres_create_sql_where($where = [])
 {
-	global $wpdb;
-
-	$wb = jibres_wis();
-	$wers = ($wb == 'csv') ? 'to csv file' : 'to your jibres store';
-	$jibres_ctable = JIBRES_CTABLE;
-
-	$table = $wpdb->$table;
 	if (!empty($where)) 
 	{
 		$i = 0;
@@ -279,7 +269,19 @@ function informations_b($item, $table, $cat, $where = [], $first = false)
 		$where = "1=1";
 	}
 
-	$fdata = $wpdb->get_results("SELECT COUNT($item) FROM $table WHERE $where");
+	return $where;
+}
+
+function jibres_get_not_backuped($item, $table, $cat, $where = [])
+{
+	global $wpdb;
+
+	create_jibres_table();
+	$wb = jibres_wis();
+	$jibres_ctable = JIBRES_CTABLE;
+	$table = $wpdb->$table;
+	$where = jibres_create_sql_where($where);
+
 	$query = 
 	"
 		SELECT 
@@ -293,8 +295,35 @@ function informations_b($item, $table, $cat, $where = [], $first = false)
 				SELECT item_id FROM $jibres_ctable WHERE type = '$cat' AND backuped = 1 AND wers = '$wb'
 			)
 	";
-	$sdata = $wpdb->get_results($query);
+	$data = $wpdb->get_results($query);
 
+	foreach ($data as $key => $value) 
+	{
+		foreach ($value as $vkey => $val) 
+		{
+			$not_b = $val;
+		}
+	}
+
+	return $not_b;
+
+}
+
+
+// return which data are backuped
+function informations_b($item, $table, $cat, $where = [], $first = false)
+{
+	global $wpdb;
+
+	$wb = jibres_wis();
+	$wers = ($wb == 'csv') ? 'to csv file' : 'to your jibres store';
+	$jibres_ctable = JIBRES_CTABLE;
+	$sdata = jibres_get_not_backuped($item, $table, $cat, $where);
+
+	$table = $wpdb->$table;
+	$where = jibres_create_sql_where($where);
+
+	$fdata = $wpdb->get_results("SELECT COUNT($item) FROM $table WHERE $where");
 
 
 	$first = ($first == false) ? 'And' : 'You';
@@ -311,36 +340,13 @@ function informations_b($item, $table, $cat, $where = [], $first = false)
 	
 		printf($first.' have '.$all.' '.$cat);
 		
-		if (!empty($sdata)) 
+		if ($sdata == '0') 
 		{
-			foreach ($sdata as $key => $value) 
-			{
-				foreach ($value as $key2 => $val) 
-				{
-					$not_b = $val;
-				}
-			}
-			if ($not_b == '0') 
-			{
-				printf(' and <a style="font-weight: bold; color: green;">all of your '.$cat.'s backuped '.$wers.'</a>');
-			}
-			else
-			{
-				printf(' and <a style="font-weight: bold; color: #c80a5a;">'.$not_b.' '.$cat.' not backuped '.$wers.'</a>');
-			}
+			printf(' and <a style="font-weight: bold; color: green;">all of your '.$cat.'s backuped '.$wers.'</a>');
 		}
 		else
 		{
-			if (create_jibres_table() === false) 
-			{
-				printf(' and <a style="font-weight: bold; color: #c80a5a;">all of your '.$cat.'s not backuped '.$wers.'</a>');
-				header("Refresh:0");
-			}
-			else
-			{
-				printf(' and <a style="font-weight: bold; color: green;">all of your '.$cat.'s backuped '.$wers.'</a>');
-				header("Refresh:0");
-			}
+			printf(' and <a style="font-weight: bold; color: #c80a5a;">'.$sdata.' '.$cat.' not backuped '.$wers.'</a>');
 		}
 		
 	}

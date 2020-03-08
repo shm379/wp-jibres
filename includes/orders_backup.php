@@ -32,25 +32,18 @@ class jibres_orders extends jibres_backup
 
 	private function create_pbr()
 	{
-		global $wpdb;
-		
-		$table = $wpdb->prefix. 'posts';
-		$get_all_orders_count = $wpdb->get_results("SELECT COUNT(ID) FROM $table WHERE post_type = 'shop_order'");
-		foreach ($get_all_orders_count as $key => $value) 
+		$all = jibres_get_not_backuped('ID', 'posts', 'order', ['post_type'=>'shop_order']);
+		if ($all != '0') 
 		{
-			foreach ($value as $key2 => $val) 
-			{
-				$all = $val;
-			}
+			printf('<p>Backuping orders...</p>');
+			printf('<progress id="oprog" value="0" max="'.$all.'" style="height: 3px;"></progress>  <a id="oinof"></a><br><br>');
+			printf('<script>
+					function orsb(meq) {
+						document.getElementById("oprog").value = meq;
+						document.getElementById("oinof").innerHTML = meq + " of '.$all.' backuped";
+					}
+					</script>');
 		}
-		printf('<p>Backuping orders...</p>');
-		printf('<progress id="oprog" value="0" max="'.$all.'" style="height: 3px;"></progress>  <a id="oinof"></a><br><br>');
-		printf('<script>
-				function orsb(meq) {
-					document.getElementById("oprog").value = meq;
-					document.getElementById("oinof").innerHTML = meq + " of '.$all.' backuped";
-				}
-				</script>');
 	
 	}
 

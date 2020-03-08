@@ -35,25 +35,18 @@ class jibres_posts extends jibres_backup
 	
 	private function create_pbr()
 	{
-		global $wpdb;
-		
-		$table = $wpdb->prefix. 'posts';
-		$get_all_posts_count = $wpdb->get_results("SELECT COUNT(ID) FROM $table WHERE post_type = 'post'");
-		foreach ($get_all_posts_count as $key => $value) 
+		$all = jibres_get_not_backuped('ID', 'posts', 'post', ['post_type'=>'post']);
+		if ($all != '0') 
 		{
-			foreach ($value as $key2 => $val) 
-			{
-				$all = $val;
-			}
+			printf('<p>Backuping posts...</p>');
+			printf('<progress id="sprog" value="0" max="'.$all.'" style="height: 3px;"></progress>  <a id="sinof"></a><br><br>');
+			printf('<script>
+					function srsb(meq) {
+						document.getElementById("sprog").value = meq;
+						document.getElementById("sinof").innerHTML = meq + " of '.$all.' backuped";
+					}
+					</script>');
 		}
-		printf('<p>Backuping posts...</p>');
-		printf('<progress id="sprog" value="0" max="'.$all.'" style="height: 3px;"></progress>  <a id="sinof"></a><br><br>');
-		printf('<script>
-				function srsb(meq) {
-					document.getElementById("sprog").value = meq;
-					document.getElementById("sinof").innerHTML = meq + " of '.$all.' backuped";
-				}
-				</script>');
 	
 	}
 

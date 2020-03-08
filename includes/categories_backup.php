@@ -31,25 +31,18 @@ class jibres_categories extends jibres_backup
 
 	private function create_pbr()
 	{
-		global $wpdb;
-		
-		$table = $wpdb->prefix. 'term_taxonomy';
-		$get_all_categories_count = $wpdb->get_results("SELECT COUNT(term_id) FROM $table WHERE taxonomy = 'product_cat'");
-		foreach ($get_all_categories_count as $key => $value) 
+		$all = jibres_get_not_backuped('term_id', 'term_taxonomy', 'category', ['taxonomy'=>'product_cat']);
+		if ($all != '0') 
 		{
-			foreach ($value as $key2 => $val) 
-			{
-				$all = $val;
-			}
+			printf('<p>Backuping categories...</p>');
+			printf('<progress id="tprog" value="0" max="'.$all.'" style="height: 3px;"></progress>  <a id="tinof"></a><br><br>');
+			printf('<script>
+					function trsb(meq) {
+						document.getElementById("tprog").value = meq;
+						document.getElementById("tinof").innerHTML = meq + " of '.$all.' backuped";
+					}
+					</script>');
 		}
-		printf('<p>Backuping categories...</p>');
-		printf('<progress id="tprog" value="0" max="'.$all.'" style="height: 3px;"></progress>  <a id="tinof"></a><br><br>');
-		printf('<script>
-				function trsb(meq) {
-					document.getElementById("tprog").value = meq;
-					document.getElementById("tinof").innerHTML = meq + " of '.$all.' backuped";
-				}
-				</script>');
 	
 	}
 

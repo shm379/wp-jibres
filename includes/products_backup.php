@@ -56,25 +56,19 @@ class jibres_products extends jibres_backup
 
 	private function create_pbr()
 	{
-		global $wpdb;
-		
-		$table = $wpdb->prefix. 'posts';
-		$get_all_product_count = $wpdb->get_results("SELECT COUNT(ID) FROM $table WHERE post_type = 'product'");
-		foreach ($get_all_products_count as $key => $value) 
+
+		$all = jibres_get_not_backuped('ID', 'posts', 'product', ['post_type'=>'product']);
+		if ($all != '0') 
 		{
-			foreach ($value as $key2 => $val) 
-			{
-				$all = $val;
-			}
+			printf('<p>Backuping products...</p>');
+			printf('<progress id="pprog" value="0" max="'.$all.'" style="height: 3px;"></progress>  <a id="inof"></a><br><br>');
+			printf('<script>
+					function prsb(meq) {
+						document.getElementById("pprog").value = meq;
+						document.getElementById("inof").innerHTML = meq + " of '.$all.' backuped";
+					}
+					</script>');
 		}
-		printf('<p>Backuping products...</p>');
-		printf('<progress id="pprog" value="0" max="'.$all.'" style="height: 3px;"></progress>  <a id="inof"></a><br><br>');
-		printf('<script>
-				function prsb(meq) {
-					document.getElementById("pprog").value = meq;
-					document.getElementById("inof").innerHTML = meq + " of '.$all.' backuped";
-				}
-				</script>');
 	
 	}
 

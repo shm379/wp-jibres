@@ -33,25 +33,18 @@ class jibres_comments extends jibres_backup
 
 	private function create_pbr()
 	{
-		global $wpdb;
-		
-		$table = $wpdb->prefix. 'comments';
-		$get_all_comments_count = $wpdb->get_results("SELECT COUNT(comment_ID) FROM $table");
-		foreach ($get_all_comments_count as $key => $value) 
+		$all = jibres_get_not_backuped('comment_ID', 'comments', 'comment');
+		if ($all != '0') 
 		{
-			foreach ($value as $key2 => $val) 
-			{
-				$all = $val;
-			}
+			printf('<p>Backuping comments...</p>');
+			printf('<progress id="cprog" value="0" max="'.$all.'" style="height: 3px;"></progress>  <a id="cinof"></a><br><br>');
+			printf('<script>
+					function crsb(meq) {
+						document.getElementById("cprog").value = meq;
+						document.getElementById("cinof").innerHTML = meq + " of '.$all.' backuped";
+					}
+					</script>');
 		}
-		printf('<p>Backuping comments...</p>');
-		printf('<progress id="cprog" value="0" max="'.$all.'" style="height: 3px;"></progress>  <a id="cinof"></a><br><br>');
-		printf('<script>
-				function crsb(meq) {
-					document.getElementById("cprog").value = meq;
-					document.getElementById("cinof").innerHTML = meq + " of '.$all.' backuped";
-				}
-				</script>');
 	
 	}
 
