@@ -254,14 +254,19 @@ function jibres_create_sql_where($where = [])
 {
 	if (!empty($where)) 
 	{
+		$aw = count($where);
 		$i = 0;
 		foreach ($where as $key => $value) 
 		{
-			if ($i == 0) 
+			$i++;
+			if ($i == $aw) 
 			{
 				$where = "$key='$value'";
 			}
-			$i++;
+			else
+			{
+				$where = "$key='$value' AND ";
+			}
 		}
 	}
 	else
