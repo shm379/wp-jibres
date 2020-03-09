@@ -10,7 +10,7 @@ class Jibres
 	{
 		insert_in_jibres($data, JIBRES_TABLE);
 		$get_data = send_data_jibres('/account/token');
-		jibres_enter($get_data['result']['token']);
+		self::jibres_enter($get_data['result']['token']);
 	}
 
 	private static function jibres_enter($token)
