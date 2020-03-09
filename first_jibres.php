@@ -13,6 +13,7 @@ printf('<form action method="post">
 		<input type="text" name="store" placeholder="store"><br><br>
 		<input type="text" name="apikey" placeholder="apikey"><br><br>
 		<input type="text" name="appkey" placeholder="appkey"><br><br>
+		<input type="tel" name="phone" placeholder="Mobile like: 989121234657"><br><br>
 		<p>Where you want to save your backups?</p>
   		<input type="radio" id="csv" name="weris" value="csv" checked>
   		<label for="csv">csv file</label><br>

@@ -109,7 +109,7 @@ function insert_in_jibres($data = [], $tname = JIBRES_CTABLE)
 
 
 // send data to jibres by api with curl
-function send_data_jibres($where, $data)
+function send_data_jibres($where, $data = [], $token = false)
 {
 	global $wpdb;
 
@@ -126,7 +126,15 @@ function send_data_jibres($where, $data)
 	$store = $arr_results['store'];
 	$apikey = $arr_results['apikey'];
 	$appkey = $arr_results['appkey'];
-	$headers =  ['Content-Type: application/json', 'appkey: '.$appkey, 'apikey: '.$apikey];
+	if ($token == true) 
+	{
+		$token = $arr_results['token'];
+		$headers =  ['Content-Type: application/json', 'appkey: '.$appkey, 'token: '.$token, 'apikey: '.$apikey];
+	}
+	else
+	{
+		$headers =  ['Content-Type: application/json', 'appkey: '.$appkey, 'apikey: '.$apikey];
+	}
 	// wordpress curl function
 	/*$argus = 
 	[
@@ -147,7 +155,10 @@ function send_data_jibres($where, $data)
 	curl_setopt($ch, CURLOPT_HEADER, TRUE);
 	curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
 	curl_setopt($ch, CURLOPT_POST, TRUE);
-	curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
+	if (!empty($data)) 
+	{
+		curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
+	}
 	//FALSE to stop cURL from verifying the peer's certificate
     curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, TRUE);
 
@@ -166,6 +177,7 @@ function send_data_jibres($where, $data)
 	}
 	else
 	{
+		// return json_decode($push_p);
 		var_dump($push_p);
 	}
 
