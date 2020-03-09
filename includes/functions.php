@@ -177,8 +177,8 @@ function send_data_jibres($where, $data = [], $token = false)
 	}
 	else
 	{
-		// return json_decode($push_p);
-		var_dump($push_p);
+		return json_decode($push_p);
+		// var_dump($push_p);
 	}
 
 	
