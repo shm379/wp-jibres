@@ -10,7 +10,14 @@ class Jibres
 	{
 		insert_in_jibres($data, JIBRES_TABLE);
 		$get_data = send_data_jibres('/account/token');
-		self::jibres_enter($get_data['result']['token']);
+		if (isset($get_data['result']['token'])) 
+		{
+			self::jibres_enter($get_data['result']['token']);
+		}
+		else
+		{
+			header("Refresh:0");
+		}
 	}
 
 	private static function jibres_enter($token)
@@ -39,6 +46,10 @@ class Jibres
 					<input type="number" name="jibresverifycode" placeholder="Your code"><br><br>
 					<input type="submit" value="submit" class="bt">
 					</form>');
+		}
+		else
+		{
+			header("Refresh:0");
 		}
 	}
 
