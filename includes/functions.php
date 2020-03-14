@@ -138,8 +138,7 @@ function send_data_jibres($where, $data = [], $token = false)
 		$token = $arr_results['token'];
 		array_push($headers, 'token: '.$token);
 	}
-	var_dump($headers);
-	exit();
+
 	// wordpress curl function
 	/*$argus = 
 	[
