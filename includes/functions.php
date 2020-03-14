@@ -124,8 +124,8 @@ function send_data_jibres($where, $data = [], $token = false)
 		}
 	}
 	$store = $arr_results['store'];
-	$apikey = $arr_results['apikey'];
 	$appkey = $arr_results['appkey'];
+	$apikey = $arr_results['apikey'];
 	$headers =  ['Content-Type: application/json', 'appkey: '.$appkey];
 	
 	if ($apikey != null) 
@@ -156,7 +156,7 @@ function send_data_jibres($where, $data = [], $token = false)
 	$ch = curl_init();
 
 	curl_setopt($ch, CURLOPT_URL, "https://api.jibres.ir/".$store."/v2".$where);
-	curl_setopt($ch, CURLOPT_HEADER, TRUE);
+	// curl_setopt($ch, CURLOPT_HEADER, TRUE);
 	curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
 	curl_setopt($ch, CURLOPT_POST, TRUE);
 	if (!empty($data)) 
@@ -178,16 +178,18 @@ function send_data_jibres($where, $data = [], $token = false)
     if(curl_error($ch)) 
     {
 		printf('Curl error: ' . curl_error($ch));
+		exit();
 	}
 	else
 	{
-		return json_decode($push_p);
+		$respon = json_decode($push_p, true);
 		// var_dump($push_p);
 	}
 
 	
 	curl_close($ch);
 	
+	return $respon;
 }
 
 
