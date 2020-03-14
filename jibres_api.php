@@ -5,12 +5,11 @@
  */
 class Jibres
 {
-	
-	public static function login($data)
+
+	private static function jibres_get_token()
 	{
 		global $wpdb;
 
-		insert_in_jibres($data, JIBRES_TABLE);
 		$get_data = send_data_jibres('/account/token');
 		if (isset($get_data['result']['token'])) 
 		{
@@ -19,13 +18,14 @@ class Jibres
 							array( 'token' => $get_data['result']['token'] ),
 							array( 'id' => 1 )
 						);
-			self::jibres_get_apikey();
+			return true;
 		}
 		else
 		{
-			header("Refresh:0");
+			return false;
 		}
 	}
+	
 
 
 	private static function jibres_get_apikey()
@@ -65,9 +65,11 @@ class Jibres
 				$arr_results[$key2] = $val2;
 			}
 		}
+		self::jibres_get_token();
 		$phone_number = $arr_results['phone_number'];
 		$data = ['mobile' => $phone_number];
 		$get_data = send_data_jibres('/account/enter', $data, true);
+
 		if ($get_data['ok'] == true) 
 		{
 			printf('<form action method="post">
@@ -81,6 +83,26 @@ class Jibres
 			header("Refresh:0");
 		}
 	}
+
+
+
+	public static function login($data)
+	{
+		global $wpdb;
+
+		insert_in_jibres($data, JIBRES_TABLE);
+		$get_data = send_data_jibres('/account/token');
+		if (self::jibres_get_token() == true) 
+		{
+			self::jibres_get_apikey();
+		}
+		else
+		{
+			header("Refresh:0");
+		}
+	}
+
+
 
 	public static function verify($code)
 	{
@@ -96,6 +118,7 @@ class Jibres
 				$arr_results[$key2] = $val2;
 			}
 		}
+		self::jibres_get_token();
 		$phone_number = $arr_results['phone_number'];
 		$data = ['mobile' => $phone_number, 'verifycode' => $code];
 		$get_data = send_data_jibres('/account/enter/verify', $data, true);
