@@ -126,15 +126,19 @@ function send_data_jibres($where, $data = [], $token = false)
 	$store = $arr_results['store'];
 	$apikey = $arr_results['apikey'];
 	$appkey = $arr_results['appkey'];
+	$headers =  ['Content-Type: application/json', 'appkey: '.$appkey];
+	
+	if ($apikey != '' or $apikey != ' ') 
+	{
+		array_push($headers, 'apikey: '.$apikey);
+	}
+
 	if ($token == true) 
 	{
 		$token = $arr_results['token'];
-		$headers =  ['Content-Type: application/json', 'appkey: '.$appkey, 'token: '.$token, 'apikey: '.$apikey];
+		array_push($headers, 'token: '.$token);
 	}
-	else
-	{
-		$headers =  ['Content-Type: application/json', 'appkey: '.$appkey, 'apikey: '.$apikey];
-	}
+
 	// wordpress curl function
 	/*$argus = 
 	[
