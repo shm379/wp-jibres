@@ -72,6 +72,10 @@ class jibres_orders extends jibres_backup
 				$changed = $this->backup_arr_sort($value, self::$jibres_stantard_order_array);
 				
 				// backup this product
+				if ( $this->this_jibres_wis == 'api' ) 
+				{
+					$changed['product'] = $this->get_jibres_id( $value['_product_id'], 'product' );
+				}
 				jibres_wis($this->where_backup, $changed);
 				
 				// update progress bar
