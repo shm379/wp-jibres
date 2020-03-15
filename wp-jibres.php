@@ -54,30 +54,34 @@ function admin_jibres()
 {
 	global $wpdb;
 
-	if (isset($_GET['page']) and $_GET['page'] == 'jibres')
+	if ( is_admin() ) 
 	{
-
-		// force include the global jibres functions
-		require_once JIBRES_INC. 'functions.php';
-
-		// force include headers
-		require_once JIBRES_DIR. 'header.php';
-
-		printf('<div class="jibres"><br>');
-
-		// if post sent to this plugin page force include posts page
-		if (!empty($_POST))
+		
+		if (isset($_GET['page']) and $_GET['page'] == 'jibres')
 		{
-			require_once JIBRES_DIR. 'if_posts.php';
-			exit();
+
+			// force include the global jibres functions
+			require_once JIBRES_INC. 'functions.php';
+
+			// force include headers
+			require_once JIBRES_DIR. 'header.php';
+
+			printf('<div class="jibres"><br>');
+
+			// if post sent to this plugin page force include posts page
+			if (!empty($_POST))
+			{
+				require_once JIBRES_DIR. 'if_posts.php';
+				exit();
+			}
+
+			//force include the main pages of plugin
+			require_once JIBRES_DIR. 'gets.php';
+
+			printf('</div>');
+
+
 		}
-
-		//force include the main pages of plugin
-		require_once JIBRES_DIR. 'gets.php';
-
-		printf('</div>');
-
-
 	}
 }
 add_action( 'admin_notices', 'admin_jibres' );
