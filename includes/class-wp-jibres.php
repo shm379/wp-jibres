@@ -21,36 +21,38 @@ class run_jibres
 	{
 		global $wpdb;
 
-		$table = JIBRES_TABLE;
-		$check_jibres_table = $wpdb->get_results("SELECT * FROM $table WHERE id = '1'");
-		$jibres_v = [];
-
-		foreach ( $check_jibres_table as $key => $val ) 
-		{
-			foreach ( $val as $key2 => $val2 ) 
-			{
-				$jibres_v[$key2] = $val2;
-			}
-		}
-
-		if ( $jibres_v['wis'] == 'api' ) 
-		{
-			if ( $jibres_v['login'] == '1' ) 
-			{
-				$login = true;
-			}
-			else
-			{
-				$login = false;
-			}
-		}
-		elseif ( $jibres_v['wis'] == 'csv' ) 
-		{
-			$login = true;
-		}
 
 		if ( ! empty($check_jibres_table) ) 
 		{
+			
+			$table = JIBRES_TABLE;
+			$check_jibres_table = $wpdb->get_results("SELECT * FROM $table WHERE id = '1'");
+			$jibres_v = [];
+			
+			foreach ( $check_jibres_table as $key => $val ) 
+			{
+				foreach ( $val as $key2 => $val2 ) 
+				{
+					$jibres_v[$key2] = $val2;
+				}
+			}
+			
+			if ( $jibres_v['wis'] == 'api' ) 
+			{
+				if ( $jibres_v['login'] == '1' ) 
+				{
+					$login = true;
+				}
+				else
+				{
+					$login = false;
+				}
+			}
+			elseif ( $jibres_v['wis'] == 'csv' ) 
+			{
+				$login = true;
+			}
+			
 			if ( $login == true ) 
 			{
 				$this->start_jibres();
