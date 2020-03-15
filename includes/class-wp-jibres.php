@@ -93,6 +93,7 @@ class jibres_start
 		if ( isset($_GET['jibres']) ) 
 		{
 			require_once JIBRES_INC. 'jibres_backup_class.php';
+
 			if ( $_GET['jibres'] == 'backup_all' ) 
 			{
 				$this->jibres_backup_all();
@@ -112,24 +113,32 @@ class jibres_start
 
 	private function jibres_backup_all()
 	{
-		$packs = array('products', 'orders', 'posts', 'comments', 'categories');
-		foreach ($packs as $value) 
+
+		$packs = array( 'products', 'orders', 'posts', 'comments', 'categories' );
+
+		foreach ( $packs as $value ) 
 		{
 			require_once JIBRES_INC . $value.'_backup.php';
 			$classname = 'jibres_'.$value;
 			$run_class = new $classname();
 		}
+
 		printf('<a href="?page=jibres"><button class="bt">Back Home</button></a>');
+
 	}
 
 
 	private function jibres_backup()
 	{
+
 		require_once JIBRES_INC. $_GET['jibres'].'.php';
+
 		$get_cname = explode("_", $_GET['jibres']);
 		$classname = 'jibres_'. $get_cname[0];
 		$run_class = new $classname();
+
 		printf('<a href="?page=jibres"><button class="bt">Back Home</button></a>');
+		
 	}
 
 

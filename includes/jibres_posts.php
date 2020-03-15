@@ -33,7 +33,7 @@ class jibres_posts
 		if (!empty(self::$data['store']) and !empty(self::$data['appkey']) and !empty(self::$data['phone'])) 
 		{
 			$data_posted = ['store' => self::$data['store'], 'appkey' => self::$data['appkey'], 'phone_number' => self::$data['phone'], 'wis' => self::$data['weris']];
-			require_once JIBRES_DIR. 'jibres_api.php';
+			require_once JIBRES_INC. 'jibres_api.php';
 			Jibres::jibres_login($data_posted);
 		}
 		elseif (!empty(self::$data['weris']))
@@ -46,7 +46,7 @@ class jibres_posts
 
 	public static function jibresverifycode()
 	{
-		require_once JIBRES_DIR. 'jibres_api.php';
+		require_once JIBRES_INC. 'jibres_api.php';
 		Jibres::jibres_verify(self::$data['jibresverifycode']);
 	}
 
