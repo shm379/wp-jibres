@@ -1,4 +1,6 @@
-<?php if ( jibres_wis() == 'csv' ) : ?>
+<?php $header_jw = jibres_wis(); ?>
+
+<?php if ( $header_jw == 'csv' ) : ?>
 
 	<?php if ( ch_jibres_store_data() == true ) : ?>
 
@@ -18,7 +20,7 @@
 
 	<?php endif; ?>
 
-<?php elseif ( jibres_wis() == 'api' ) : ?>
+<?php elseif ( $header_jw == 'api' ) : ?>
 
 	<h1>Jibres | 
 	<form id="fwis" action method="post" style="display: inline;">

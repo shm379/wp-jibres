@@ -1,9 +1,8 @@
 <?php
-
 /**
  * jibres main class
  */
-class jibres_start
+class run_jibres
 {
 	
 

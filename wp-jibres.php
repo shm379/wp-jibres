@@ -50,7 +50,7 @@ require_once JIBRES_DIR . 'includes/define.php';
 
 require_once JIBRES_INC . 'jibres_requirements.php';
 
-function admin_jibres()
+function jibres_admin()
 {
 	global $wpdb;
 
@@ -77,7 +77,7 @@ function admin_jibres()
 
 			// load jibres
 			require_once JIBRES_INC . 'class-wp-jibres.php';
-			new jibres_start();
+			new run_jibres();
 
 			printf('</div>');
 
@@ -85,6 +85,6 @@ function admin_jibres()
 		}
 	}
 }
-add_action( 'admin_notices', 'admin_jibres' );
+add_action( 'admin_notices', 'jibres_admin' );
 
 ?>
