@@ -7,15 +7,10 @@
 class jibres_comments extends jibres_backup
 {
 
-	public static $jibres_stantard_comments_array = [  'post'         => 'comment_post_ID',
-												'author'       => 'comment_author',
-												'author_email' => 'comment_author_email',
-												'date'         => 'comment_date',
-												'content'      => 'comment_content',
-												'approved'     => 'comment_approved'
-												];
+	public static $jibres_stantard_comments_array = ['content' => 'comment_content'];
 	
 	private $where_backup;
+	private $where_jibres_api;
 	private $this_jibres_wis;
 	private $last_i = 0;
 
@@ -24,7 +19,6 @@ class jibres_comments extends jibres_backup
 		if (create_jibres_table() === true) 
 		{
 			$this->this_jibres_wis = jibres_wis();
-			$this->where_backup = ($this->this_jibres_wis == 'csv') ? 'comments' : '/comment/add';
 			$this->create_pbr();
 			$this->get_comment_data();
 		}
@@ -52,7 +46,14 @@ class jibres_comments extends jibres_backup
 	function get_comment_data()
 	{
 
-		$data = $this->get_data('comment_ID', 'comments', 'comment');
+		if ( $this->this_jibres_wis == 'api' ) 
+		{
+			$data = $this->get_data( 'comment_ID', 'comments', 'comment', ['comment_type'=>'review'] );
+		}
+		else
+		{
+			$data = $this->get_data('comment_ID', 'comments', 'comment');
+		}
 
 	
 		if (!empty($data)) 
@@ -72,8 +73,18 @@ class jibres_comments extends jibres_backup
 				$changed = $this->backup_arr_sort($value, self::$jibres_stantard_comments_array);
 				
 				// backup this product
+				if ( $this->this_jibres_wis == 'csv' )
+				{
+					$this->where_backup = 'comments';
+				}
+				elseif ( $this->this_jibres_wis == 'api' )
+				{
+					$this->where_backup = '/product/' . $this->get_jibres_id( $value['comment_post_ID'], 'product' ) . '/comment/add';
+				}
+				
 				jibres_wis($this->where_backup, $changed);
 				
+
 				// update progress bar
 				printf('<script>
 							crsb('.$i.');

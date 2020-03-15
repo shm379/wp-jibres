@@ -7,12 +7,9 @@
 class jibres_orders extends jibres_backup
 {
 	
-	public static $jibres_stantard_order_array = [ 'key'            => '_order_key',
-											'paid_date'      => '_paid_date',
-											'completed_date' => '_completed_date',
-											'currency'       => '_order_currency',
-											'customer'       => '_customer_user'
-											];
+	public static $jibres_stantard_order_array = [  'product' => '_product_id',
+													'count'   => '_qty'
+												 ];
 
 	private $where_backup;
 	private $this_jibres_wis;
@@ -52,12 +49,12 @@ class jibres_orders extends jibres_backup
 	{
 	
 
-		$where = ['post_type'=>'shop_order'];
+		$where = [];
 		$excepts = 
 		[
-			'postmeta'=> 'post_id'
+			'woocommerce_order_itemmeta'=> 'order_item_id'
 		];
-		$data = $this->get_data('ID', 'posts', 'order', $where, $excepts);
+		$data = $this->get_data('order_item_id', 'woocommerce_order_items', 'order', $where, $excepts);
 
 		if (!empty($data)) 
 		{

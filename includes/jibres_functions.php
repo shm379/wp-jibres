@@ -55,6 +55,7 @@ function create_jibres_table( $tname = JIBRES_CTABLE )
 					   type varchar(50) NOT NULL,
 					   wers varchar(55) NOT NULL,
 					   backuped int(11) DEFAULT 1 NOT NULL,
+					   jibres_id int(11) DEFAULT NULL,
 					   PRIMARY KEY  (id)
 					 ) $charset_collate;";
 	}
@@ -227,6 +228,8 @@ function jibres_create_csv($cat, $data)
 	
 	fclose($fp);
 
+	return true;
+
 }
 
 // sort informations by jibres database design
@@ -269,11 +272,11 @@ function jibres_wis($item = null, $data = null)
 	{
 		if ($weris == 'csv') 
 		{
-			jibres_create_csv($item, $data);
+			return jibres_create_csv($item, $data);
 		}
 		elseif ($weris == 'api') 
 		{
-			send_data_jibres($item, $data);
+			return send_data_jibres($item, $data);
 		}
 	}
 }

@@ -117,10 +117,17 @@ class jibres_products extends jibres_backup
 				$changed = $this->backup_arr_sort($value, self::$jibres_stantard_product_array, ["onsale"=>["1"=>'available', "0"=>'unavailable']]);
 				
 				// backup this product
-				jibres_wis($this->where_backup, $changed);
+				$get_data = jibres_wis($this->where_backup, $changed);
 				
 				// insert this product to jibres check table
-				$this->insert_backup_in_jibres([$value['ID'], 'product']);
+				if ( is_array( $get_data ) and !empty( $get_data ) and $get_data['ok'] == true ) 
+				{
+					$this->insert_backup_in_jibres( [$value['ID'], 'product'], $get_data['result']['id'] );
+				}
+				else
+				{
+					$this->insert_backup_in_jibres( [$value['ID'], 'product'] );
+				}
 				
 				// update progress bar
 				printf('<script>

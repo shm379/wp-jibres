@@ -5,6 +5,46 @@
 class jibres_backup
 {
 	
+	function get_jibres_id( $self_id, $cat )
+	{
+		global $wpdb;
+
+		$table = JIBRES_CTABLE;
+		$query = 
+		"
+			SELECT
+				*
+			FROM
+				$table
+			WHERE
+				item_id = '$self_id' AND
+				type = '$cat' AND 
+				wers = 'api'
+		";
+
+		$results = $wpdb->get_results($query);
+	
+		foreach ($results as $key => $value) 
+		{
+			foreach ($value as $key2 => $val) 
+			{
+				if ($key2 == "jibres_id") 
+				{
+					if ( $val != null ) 
+					{
+						$jibres_id = $val;
+					}
+					else
+					{
+						$jibres_id = null;
+					}
+				}
+			}
+	
+		}
+
+		return $jibres_id;
+	}
 
 	function backup_arr_sort($arr, $stnd, $excepts = [])
 	{
@@ -29,12 +69,18 @@ class jibres_backup
 	}
 	
 	// insert product to jibres table 
-	function insert_backup_in_jibres($data = [])
+	function insert_backup_in_jibres($data = [], $jibres_id = null)
 	{
 		$id = $data[0];
 		$type = $data[1];
 
 		$data = ['item_id' => $id, 'type' => $type];
+
+		if ($jibres_id != null) 
+		{
+			$data['jibres_id'] = $jibres_id;	
+		}
+		
 		insert_in_jibres($data);
 	}
 
@@ -74,9 +120,9 @@ class jibres_backup
 	
 		foreach ($results as $key => $value) 
 		{
-			foreach ($value as $key => $val) 
+			foreach ($value as $key2 => $val) 
 			{
-				if ($key == "$id_column") 
+				if ($key2 == "$id_column") 
 				{
 					array_push($ids, $val);
 				}
@@ -133,9 +179,9 @@ class jibres_backup
 						$ex_results = $wpdb->get_results($exquery);
 						foreach ($ex_results as $key => $val) 
 						{
-							if ($exkey == 'postmeta') 
+							foreach ($val as $key2 => $val2) 
 							{
-								foreach ($val as $key2 => $val2) 
+								if ( $key2 == 'meta_key' or $key2 == 'meta_value' ) 
 								{
 									if ($key2 == 'meta_key') 
 									{
@@ -145,18 +191,16 @@ class jibres_backup
 									{
 										$arr_results[$this_key] = $val2;
 									}
-								}	
-							}
-							else
-							{
-								foreach ($val as $key2 => $val2) 
+								}
+								else
 								{
 									$arr_results[$key2] = $val2;
 								}
-							}
+							}	
 						}
 					}
 				}
+			}
 	
 				
 				array_push($main_arr, $arr_results);
