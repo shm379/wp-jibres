@@ -272,6 +272,7 @@ function jibres_create_sql_where($where = [])
 {
 	if (!empty($where)) 
 	{
+		$sqlwhere = "";
 		$aw = count($where);
 		$i = 0;
 		foreach ($where as $key => $value) 
@@ -279,20 +280,20 @@ function jibres_create_sql_where($where = [])
 			$i++;
 			if ($i == $aw) 
 			{
-				$where = "$key='$value'";
+				$sqlwhere .= "$key='$value'";
 			}
 			else
 			{
-				$where = "$key='$value' AND ";
+				$sqlwhere .= "$key='$value' AND ";
 			}
 		}
 	}
 	else
 	{
-		$where = "1=1";
+		$sqlwhere = "1=1";
 	}
 
-	return $where;
+	return $sqlwhere;
 }
 
 function jibres_get_not_backuped($item, $table, $cat, $where = [])
