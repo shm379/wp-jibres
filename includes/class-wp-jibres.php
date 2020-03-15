@@ -21,12 +21,12 @@ class run_jibres
 	{
 		global $wpdb;
 
+		$table = JIBRES_TABLE;
+		$check_jibres_table = $wpdb->get_results("SELECT * FROM $table WHERE id = '1'");
 
 		if ( ! empty($check_jibres_table) ) 
 		{
 			
-			$table = JIBRES_TABLE;
-			$check_jibres_table = $wpdb->get_results("SELECT * FROM $table WHERE id = '1'");
 			$jibres_v = [];
 			
 			foreach ( $check_jibres_table as $key => $val ) 

@@ -34,7 +34,7 @@
 
 <?php else : ?>
 
-	<form onsubmit="return confirm(\'Do you really want to delete your jibres api informations?\');" action method="post" style="display: inline;">
+	<form onsubmit="return confirm('Do you really want to delete your jibres api informations?');" action method="post" style="display: inline;">
 	<input type="hidden" name="changit" value="start_again">
 	<input type="submit" class="jbt" value="Change my jibres api informations">
 	</form>
