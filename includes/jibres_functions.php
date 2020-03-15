@@ -346,7 +346,7 @@ function jibres_get_not_backuped($item, $table, $cat, $where = [])
 
 
 // return which data are backuped
-function informations_b($item, $table, $cat, $where = [], $first = false)
+function jibres_informations_b($item, $table, $cat, $where = [], $first = false)
 {
 	global $wpdb;
 
