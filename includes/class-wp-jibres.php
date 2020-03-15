@@ -53,7 +53,7 @@ class run_jibres
 		{
 			if ( $login == true ) 
 			{
-				$this->run_jibres();
+				$this->start_jibres();
 			}
 			else
 			{
@@ -69,7 +69,7 @@ class run_jibres
 
 
 
-	private function run_jibres()
+	private function start_jibres()
 	{
 		
 		if ( isset($_GET['jibres']) ) 
