@@ -77,7 +77,7 @@ function admin_jibres()
 
 			// load jibres
 			require_once JIBRES_INC . 'class-wp-jibres.php';
-			$jibres_load = new jibres_start();
+			new jibres_start();
 
 			printf('</div>');
 
