@@ -34,7 +34,7 @@ class jibres_posts
 		{
 			$data_posted = ['store' => self::$data['store'], 'appkey' => self::$data['appkey'], 'phone_number' => self::$data['phone'], 'wis' => self::$data['weris']];
 			require_once JIBRES_DIR. 'jibres_api.php';
-			Jibres::login($data_posted);
+			Jibres::jibres_login($data_posted);
 		}
 		elseif (!empty(self::$data['weris']))
 		{
@@ -47,7 +47,7 @@ class jibres_posts
 	public static function jibresverifycode()
 	{
 		require_once JIBRES_DIR. 'jibres_api.php';
-		Jibres::verify(self::$data['jibresverifycode']);
+		Jibres::jibres_verify(self::$data['jibresverifycode']);
 	}
 
 

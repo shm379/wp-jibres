@@ -48,7 +48,7 @@ define('JIBRES_DIR', dirname(__FILE__). DIRECTORY_SEPARATOR);
 require_once JIBRES_DIR. 'includes/define.php';
 
 
-require_once JIBRES_DIR. 'requirements.php';
+require_once JIBRES_INC. 'jibres_requirements.php';
 
 function admin_jibres()
 {
@@ -60,23 +60,24 @@ function admin_jibres()
 		if (isset($_GET['page']) and $_GET['page'] == 'jibres')
 		{
 
-			// force include the global jibres functions
-			require_once JIBRES_INC. 'functions.php';
+			// include the global jibres functions
+			require_once JIBRES_INC. 'jibres_functions.php';
 
-			// force include headers
-			require_once JIBRES_DIR. 'header.php';
+			// include headers
+			require_once JIBRES_INC. 'jibres_header.php';
 
 			printf('<div class="jibres"><br>');
 
-			// if post sent to this plugin page force include posts page
+			// if post sent to this plugin page include posts page
 			if (!empty($_POST))
 			{
-				require_once JIBRES_DIR. 'if_posts.php';
+				require_once JIBRES_INC. 'jibres_posts.php';
 				exit();
 			}
 
-			//force include the main pages of plugin
-			require_once JIBRES_DIR. 'gets.php';
+			// include the main pages of plugin
+			require_once JIBRES_INC. 'class-wp-jibres.php';
+			$jibres_load = new jibres_start();
 
 			printf('</div>');
 

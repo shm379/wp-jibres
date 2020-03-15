@@ -86,7 +86,7 @@ class Jibres
 
 
 
-	public static function login($data)
+	public static function jibres_login($data)
 	{
 		global $wpdb;
 
@@ -104,7 +104,7 @@ class Jibres
 
 
 
-	public static function verify($code)
+	public static function jibres_verify($code)
 	{
 		global $wpdb;
 		
