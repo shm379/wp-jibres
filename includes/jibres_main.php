@@ -48,7 +48,7 @@
 <?php jibres_informations_b('ID', 'posts', 'product', ['post_type'=>'product'], true); ?>
 <br><br>
 
-<?php jibres_informations_b('ID', 'posts', 'order', ['post_type'=>'shop_order']); ?>
+<?php jibres_informations_b('order_item_id', 'woocommerce_order_items', 'order'); ?>
 <br><br>
 
 <?php jibres_informations_b('ID', 'posts', 'post', ['post_type'=>'post']); ?>

@@ -358,7 +358,7 @@ function jibres_informations_b($item, $table, $cat, $where = [], $first = false)
 	$jibres_ctable = JIBRES_CTABLE;
 	$sdata = jibres_get_not_backuped($item, $table, $cat, $where);
 
-	$table = $wpdb->$table;
+	$table = $wpdb->prefix. $table;
 	$where = jibres_create_sql_where($where);
 
 	$fdata = $wpdb->get_results("SELECT COUNT($item) FROM $table WHERE $where");
