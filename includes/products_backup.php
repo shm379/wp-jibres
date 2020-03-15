@@ -17,7 +17,7 @@ class jibres_products extends jibres_backup
 												'sku'          => 'sku',
 												'infinite'     => '',
 												'gallery'      => '',
-												'weight'       => '',
+												'weight'       => '_weight',
 												'weightunit'   => '',
 												'seotitle'     => '',
 												'type'         => 'post_type',
@@ -73,6 +73,106 @@ class jibres_products extends jibres_backup
 	}
 
 
+	private function get_product_cat_tag( $p_id, $cort )
+	{
+		global $wpdb;
+
+		$ids = [];
+		$sids = [];
+		$data = [];
+
+		$table = $wpdb->prefix. 'term_relationships';
+		$query = 
+		"
+			SELECT
+				term_taxonomy_id
+			FROM
+				$table
+			WHERE
+				object_id = '$p_id'
+		";
+
+		$results = $wpdb->get_results($query);
+	
+		foreach ($results as $key => $value) 
+		{
+			foreach ($value as $key2 => $val) 
+			{
+				if ($key2 == "term_taxonomy_id") 
+				{
+					array_push($ids, $val);
+				}
+			}
+	
+		}
+
+		$table = $wpdb->prefix. 'term_taxonomy';
+		foreach ($ids as $id) 
+		{
+			$query = 
+			"
+				SELECT 
+					term_id
+				FROM 
+					$table
+				WHERE 
+					term_id = '$id' AND 
+					taxonomy = '$cort'
+			";
+
+
+			$results = $wpdb->get_results($query);
+			if ( ! empty( $results ) ) 
+			{
+				foreach ($results as $key => $value) 
+				{
+					foreach ($value as $key2 => $val) 
+					{
+						if ($key2 == "term_id") 
+						{
+							array_push($sids, $val);
+						}
+					}
+				
+				}
+
+			}
+
+		}
+
+
+		$table = $wpdb->prefix. 'terms';
+		foreach ($sids as $id) 
+		{
+			$query = 
+			"
+				SELECT 
+					name
+				FROM
+					$table
+				WHERE 
+					term_id = '$id'
+			";
+
+			$results = $wpdb->get_results($query);
+	
+			foreach ($results as $key => $value) 
+			{
+				foreach ($value as $key2 => $val) 
+				{
+					array_push($data, $val);
+				}
+			
+			}
+		}
+
+
+		$ct = implode(' ', $data);
+		return $ct;
+
+	}
+
+
 	// get procucts that are not backuped
 	function get_product_data()
 	{
@@ -115,6 +215,8 @@ class jibres_products extends jibres_backup
 				
 				// sort array by jibres products database design
 				$changed = $this->backup_arr_sort($value, self::$jibres_stantard_product_array, ["onsale"=>["1"=>'available', "0"=>'unavailable']]);
+				$changed['category'] = $this->get_product_cat_tag( $value['ID'], 'product_cat' );
+				$changed['tag'] = $this->get_product_cat_tag( $value['ID'], 'product_tag' );
 				
 				// backup this product
 				$get_data = jibres_wis($this->where_backup, $changed);
