@@ -317,7 +317,7 @@ function jibres_get_not_backuped($item, $table, $cat, $where = [])
 	create_jibres_table();
 	$wb = jibres_wis();
 	$jibres_ctable = JIBRES_CTABLE;
-	$table = $wpdb->$table;
+	$table = $wpdb->prefix. $table;
 	$where = jibres_create_sql_where($where);
 
 	$query = 

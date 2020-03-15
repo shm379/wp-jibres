@@ -29,7 +29,7 @@ class jibres_orders extends jibres_backup
 
 	private function create_pbr()
 	{
-		$all = jibres_get_not_backuped('ID', 'posts', 'order', ['post_type'=>'shop_order']);
+		$all = jibres_get_not_backuped('order_item_id', 'woocommerce_order_items', 'order');
 		if ($all != '0') 
 		{
 			printf('<p>Backuping orders...</p>');
@@ -66,7 +66,7 @@ class jibres_orders extends jibres_backup
 				$i++;
 				
 				// insert this product to jibres check table
-				$this->insert_backup_in_jibres([$value['ID'], 'order']);
+				$this->insert_backup_in_jibres([$value['order_item_id'], 'order']);
 				
 				// sort array by jibres products database design
 				$changed = $this->backup_arr_sort($value, self::$jibres_stantard_order_array);

@@ -93,7 +93,7 @@ class jibres_backup
 		
 		$main_arr = [];
 
-		$table = $wpdb->$table;
+		$table = $wpdb->prefix. $table;
 		$jibres_ctable = JIBRES_CTABLE;
 		$wers = jibres_wis();
 		
@@ -200,14 +200,10 @@ class jibres_backup
 						}
 					}
 				}
-			}
-	
-				
+
 				array_push($main_arr, $arr_results);
-
 			}
 	
-
 			return $main_arr;
 		}
 		else
