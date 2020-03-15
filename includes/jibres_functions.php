@@ -42,11 +42,11 @@ function ch_jibres_store_data($update = null)
 
 
 // if jibres tables not exist create them
-function create_jibres_table($tstrc = null, $tname = JIBRES_CTABLE)
+function create_jibres_table( $tname = JIBRES_CTABLE )
 {
 	global $wpdb;
 		
-	if ($tstrc == null) 
+	if ( $tname == JIBRES_CTABLE ) 
 	{
 		$create_ddl = "CREATE TABLE $tname (
 					   id int(11) NOT NULL AUTO_INCREMENT,
@@ -58,9 +58,20 @@ function create_jibres_table($tstrc = null, $tname = JIBRES_CTABLE)
 					   PRIMARY KEY  (id)
 					 ) $charset_collate;";
 	}
-	else
+	elseif( $tname == JIBRES_TABLE )
 	{
-		$create_ddl = $tstrc;
+		$create_ddl = "CREATE TABLE $tname (
+		  		 	   id int(11) NOT NULL AUTO_INCREMENT,
+		  		 	   time datetime DEFAULT NOW() NOT NULL,
+		  		 	   store varchar(11) DEFAULT NULL,
+		  		 	   token varchar(255) DEFAULT NULL,
+		  		 	   appkey varchar(32) DEFAULT NULL,
+		  		 	   apikey varchar(32) DEFAULT NULL,
+		  		 	   phone_number varchar(20) DEFAULT NULL,
+		  		 	   login tinyint(1) DEFAULT '0',
+		  		 	   wis varchar(55) NOT NULL,
+		  		 	   PRIMARY KEY  (id)
+				 	   ) $charset_collate;";
 	}
 
 	$query = $wpdb->prepare( 'SHOW TABLES LIKE %s', $wpdb->esc_like( $tname ) );

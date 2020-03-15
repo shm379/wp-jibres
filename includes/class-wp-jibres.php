@@ -6,30 +6,15 @@
 class jibres_start
 {
 	
-	private static $jibres_t = JIBRES_TABLE;
-	
 
 	function __construct()
 	{
-		$table = self::$jibres_t;
-		$strc = "CREATE TABLE $table (
-		  		 id int(11) NOT NULL AUTO_INCREMENT,
-		  		 time datetime DEFAULT NOW() NOT NULL,
-		  		 store varchar(11) DEFAULT NULL,
-		  		 token varchar(255) DEFAULT NULL,
-		  		 appkey varchar(32) DEFAULT NULL,
-		  		 apikey varchar(32) DEFAULT NULL,
-		  		 phone_number varchar(20) DEFAULT NULL,
-		  		 login tinyint(1) DEFAULT '0',
-		  		 wis varchar(55) NOT NULL,
-		  		 PRIMARY KEY  (id)
-				 ) $charset_collate;";
 
-
-		if (create_jibres_table($strc, $table) === true) 
+		if (create_jibres_table(JIBRES_TABLE) === true) 
 		{
 			$this->jibres_check_login();
 		}
+
 	}
 
 
@@ -37,7 +22,7 @@ class jibres_start
 	{
 		global $wpdb;
 
-		$table = self::$jibres_t;
+		$table = JIBRES_TABLE;
 		$check_jibres_table = $wpdb->get_results("SELECT * FROM $table");
 		$jibres_v = [];
 
