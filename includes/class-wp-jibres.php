@@ -23,7 +23,7 @@ class jibres_start
 		global $wpdb;
 
 		$table = JIBRES_TABLE;
-		$check_jibres_table = $wpdb->get_results("SELECT * FROM $table");
+		$check_jibres_table = $wpdb->get_results("SELECT * FROM $table WHERE id = '1'");
 		$jibres_v = [];
 
 		foreach ( $check_jibres_table as $key => $val ) 
@@ -72,8 +72,6 @@ class jibres_start
 
 	private function run_jibres()
 	{
-		global $wpdb;
-
 		
 		if ( isset($_GET['jibres']) ) 
 		{
