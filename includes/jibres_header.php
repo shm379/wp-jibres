@@ -7,7 +7,7 @@
 		<h1>Jibres | 
 		<form id="fwis" action method="post" style="display: inline;">
 		<input type="hidden" name="usas" value="api">
-		<a id="subm" style="cursor: pointer; font-size: 0.5em; font-weight: 400;">Save backups to my store in Jibres</a>
+		<a id="subm" style="cursor: pointer; font-size: 0.5em; font-weight: 400;">Save backups to my jibres store</a>
 		</form></h1>
 
 	<?php else : ?>
