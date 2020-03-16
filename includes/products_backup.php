@@ -248,12 +248,13 @@ class jibres_products extends jibres_backup
 				// insert this product to jibres check table
 				if ( is_array( $get_data ) and !empty( $get_data ) and $get_data['ok'] == true ) 
 				{
-					$this->insert_backup_in_jibres( [$value['ID'], 'product'], $get_data['result']['id'] );
+					$this_jibres_id = $get_data['result']['id'];
 				}
 				else
 				{
-					$this->insert_backup_in_jibres( [$value['ID'], 'product'] );
+					$this_jibres_id = null;
 				}
+				$this->insert_backup_in_jibres( [$value['ID'], 'product'], $this_jibres_id );
 				
 				// update progress bar
 				printf('<script>
