@@ -1,0 +1,5 @@
+title,slug,desc,barcode,barcode2,buyprice,price,discount,vat,sku,infinite,gallery,weight,weightunit,seotitle,type,seodesc,saleonline,saletelegram,saleapp,company,scalecode,status,minsale,maxsale,salestep,oversale,unit,category,tag
+"First Product",,"the first product for test",,,2000,1750,,,"test sku",,,100,,,product,,,,,,,available,,,,,,"Uncategorized, mypro","first, test, ali"
+"Second Product",,"the second product for test",,,150000,140000,,,,,,,,,product,,,,,,,available,,,,,,Uncategorized,
+"Third Product",,"the third product for test",,,1400000,1390000,,,,,,,,,product,,,,,,,available,,,,,,Uncategorized,
+"Forth Product",,"the forth product for test",,,18000,14300,,,,,,,,,product,,,,,,,available,,,,,,"Uncategorized, mypro","tag1, tag2"
