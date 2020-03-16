@@ -12,6 +12,7 @@
 
 <?php if ( jibres_wis() == 'csv' ) : ?>
 	<?php
+		$this_wis = 'csv';
 		$jibres_csv_file_del = ['products'=>'product',
 								'orders'=>'order',
 								'posts'=>'post',
@@ -28,7 +29,7 @@
 		<input type="hidden" name="csvdel" value="<?php echo $key; ?>_<?php echo $value; ?>">
 		<input type="submit" class="dbt" value="Delete <?php echo $key; ?> csv file">
 		</form>
-		<?php if ( $i < count($jibres_csv_file_del) ) : ?> | <?php endif; ?>
+		<?php if ( $i < count( $jibres_csv_file_del ) ) : ?> | <?php endif; ?>
 	
 	<?php endforeach; ?>
 
@@ -45,19 +46,30 @@
 <br><br><hr><br><br>
 <div class="infos">
 
-<?php jibres_informations_b('ID', 'posts', 'product', ['post_type'=>'product'], true); ?>
+<?php jibres_informations_b( 'ID', 'posts', 'product', ['post_type'=>'product'], true ); ?>
 <br><br>
 
-<?php jibres_informations_b('order_item_id', 'woocommerce_order_items', 'order'); ?>
+<?php jibres_informations_b( 'order_item_id', 'woocommerce_order_items', 'order' ); ?>
 <br><br>
 
-<?php jibres_informations_b('ID', 'posts', 'post', ['post_type'=>'post']); ?>
+<?php jibres_informations_b( 'ID', 'posts', 'post', ['post_type'=>'post'] ); ?>
+<br><br>
+<?php 
+	if ( $this_wis != 'csv' ) 
+	{
+		global $wpdb;
+		$table = $wpdb->prefix. 'posts';
+		$cwhere = "comment_post_ID IN (SELECT ID FROM $table WHERE post_type='product')";
+	}
+	else
+	{
+		$cwhere = [];
+	}
+?>
+<?php jibres_informations_b( 'comment_ID', 'comments', 'comment', $cwhere ); ?>
 <br><br>
 
-<?php jibres_informations_b('comment_ID', 'comments', 'comment'); ?>
-<br><br>
-
-<?php jibres_informations_b('term_id', 'term_taxonomy', 'category', ['taxonomy'=>'product_cat']); ?>
+<?php jibres_informations_b( 'term_id', 'term_taxonomy', 'category', ['taxonomy'=>'product_cat'] ); ?>
 
 </div>
 
