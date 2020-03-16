@@ -63,10 +63,11 @@ function jibres_admin()
 			// include the global jibres functions
 			require_once JIBRES_INC . 'jibres_functions.php';
 
+			printf('<div class="wrap"><br>');
+
 			// include jibres headers
 			require_once JIBRES_INC . 'jibres_header.php';
 
-			printf('<div class="jibres"><br>');
 
 			// if post sent to this plugin page include posts page
 			if (!empty($_POST))
