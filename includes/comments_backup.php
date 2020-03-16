@@ -45,6 +45,7 @@ class jibres_comments extends jibres_backup
 	
 	function get_comment_data()
 	{
+		global $wpdb;
 
 		if ( $this->this_jibres_wis == 'api' ) 
 		{
