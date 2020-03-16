@@ -284,27 +284,34 @@ function jibres_wis($item = null, $data = null)
 
 function jibres_create_sql_where($where = [])
 {
-	if (!empty($where)) 
+	if ( is_array( $where ) ) 
 	{
-		$sqlwhere = "";
-		$aw = count($where);
-		$i = 0;
-		foreach ($where as $key => $value) 
+		if (!empty($where)) 
 		{
-			$i++;
-			if ($i == $aw) 
+			$sqlwhere = "";
+			$aw = count($where);
+			$i = 0;
+			foreach ($where as $key => $value) 
 			{
-				$sqlwhere .= "$key='$value'";
+				$i++;
+				if ($i == $aw) 
+				{
+					$sqlwhere .= "$key='$value'";
+				}
+				else
+				{
+					$sqlwhere .= "$key='$value' AND ";
+				}
 			}
-			else
-			{
-				$sqlwhere .= "$key='$value' AND ";
-			}
+		}
+		else
+		{
+			$sqlwhere = "1=1";
 		}
 	}
 	else
 	{
-		$sqlwhere = "1=1";
+		$sqlwhere = "$where";
 	}
 
 	return $sqlwhere;
