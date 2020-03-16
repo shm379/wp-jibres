@@ -187,7 +187,7 @@ class jibres_products extends jibres_backup
 		}
 
 
-		$ct = implode(' ', $data);
+		$ct = implode(', ', $data);
 		return $ct;
 
 	}
