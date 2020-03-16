@@ -47,7 +47,7 @@ class jibres_products extends jibres_backup
 		{
 			// backup to csv file or jibres api
 			$this->this_jibres_wis = jibres_wis();
-			$this->where_backup = ($this->this_jibres_wis == 'csv') ? 'products' : '/product/add';
+			$this->where_backup = ( $this->this_jibres_wis == 'csv' ) ? 'products' : '/product/add';
 			$this->create_pbr();
 			$this->get_product_data();
 		}
@@ -58,7 +58,8 @@ class jibres_products extends jibres_backup
 	{
 
 		$all = jibres_get_not_backuped('ID', 'posts', 'product', ['post_type'=>'product']);
-		if ($all != '0') 
+
+		if ( $all != '0' ) 
 		{
 			printf('<p>Backuping products...</p>');
 			printf('<progress id="pprog" value="0" max="'.$all.'" style="height: 3px;"></progress>  <a id="inof"></a><br><br>');
@@ -90,15 +91,15 @@ class jibres_products extends jibres_backup
 				object_id = '$p_id'
 		";
 
-		$results = $wpdb->get_results($query);
+		$results = $wpdb->get_results( $query );
 	
-		foreach ($results as $key => $value) 
+		foreach ( $results as $key => $value ) 
 		{
-			foreach ($value as $key2 => $val) 
+			foreach ( $value as $key2 => $val ) 
 			{
-				if ($key2 == "term_taxonomy_id") 
+				if ( $key2 == "term_taxonomy_id" ) 
 				{
-					array_push($ids, $val);
+					array_push( $ids, $val );
 				}
 			}
 	
@@ -127,7 +128,7 @@ class jibres_products extends jibres_backup
 		$data =[];
 
 		$table = $wpdb->prefix. 'term_taxonomy';
-		foreach ($ids as $id) 
+		foreach ( $ids as $id ) 
 		{
 			$query = 
 			"
@@ -141,16 +142,16 @@ class jibres_products extends jibres_backup
 			";
 
 
-			$results = $wpdb->get_results($query);
+			$results = $wpdb->get_results( $query );
 			if ( ! empty( $results ) ) 
 			{
-				foreach ($results as $key => $value) 
+				foreach ( $results as $key => $value ) 
 				{
-					foreach ($value as $key2 => $val) 
+					foreach ( $value as $key2 => $val ) 
 					{
-						if ($key2 == "term_id") 
+						if ( $key2 == "term_id" ) 
 						{
-							array_push($sids, $val);
+							array_push( $sids, $val );
 						}
 					}
 				
@@ -162,7 +163,7 @@ class jibres_products extends jibres_backup
 
 
 		$table = $wpdb->prefix. 'terms';
-		foreach ($sids as $id) 
+		foreach ( $sids as $id ) 
 		{
 			$query = 
 			"
@@ -174,13 +175,13 @@ class jibres_products extends jibres_backup
 					term_id = '$id'
 			";
 
-			$results = $wpdb->get_results($query);
+			$results = $wpdb->get_results( $query );
 	
-			foreach ($results as $key => $value) 
+			foreach ( $results as $key => $value ) 
 			{
-				foreach ($value as $key2 => $val) 
+				foreach ( $value as $key2 => $val ) 
 				{
-					array_push($data, $val);
+					array_push( $data, $val );
 				}
 			
 			}
@@ -223,18 +224,18 @@ class jibres_products extends jibres_backup
 			'wc_product_meta_lookup'=> 'product_id',
 			'postmeta'=> 'post_id'
 		];
-		$data = $this->get_data('ID', 'posts', 'product', $where, $excepts);
+		$data = $this->get_data( 'ID', 'posts', 'product', $where, $excepts );
 	
-		if (!empty($data)) 
+		if ( ! empty( $data ) ) 
 		{
 			$i = $this->last_i;
 
-			foreach ($data as $value) 
+			foreach ( $data as $value ) 
 			{
 				$i++;
 				
 				// sort array by jibres products database design
-				$changed = $this->backup_arr_sort($value, self::$jibres_stantard_product_array, ["onsale"=>["1"=>'available', "0"=>'unavailable']]);
+				$changed = $this->backup_arr_sort( $value, self::$jibres_stantard_product_array, ["onsale"=>["1"=>'available', "0"=>'unavailable']] );
 				$cat_and_tag = $this->get_product_cat_tag( $value['ID'] );
 				if ( $cat_and_tag != null ) 
 				{
@@ -243,7 +244,7 @@ class jibres_products extends jibres_backup
 				}
 				
 				// backup this product
-				$get_data = jibres_wis($this->where_backup, $changed);
+				$get_data = jibres_wis( $this->where_backup, $changed );
 				
 				// insert this product to jibres check table
 				if ( is_array( $get_data ) and !empty( $get_data ) and $get_data['ok'] == true ) 
@@ -276,7 +277,7 @@ class jibres_products extends jibres_backup
 		}
 		else
 		{
-			if ($this->this_jibres_wis == 'csv') 
+			if ( $this->this_jibres_wis == 'csv' ) 
 			{
 				// csv download url
 				printf('<a href="'.get_site_url().'/wp-content/plugins/wp-jibres/backup/'.$this->where_backup.'.csv" target="_blank">Download csv file</a><br><br>');

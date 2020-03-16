@@ -20,7 +20,7 @@ class jibres_orders extends jibres_backup
 		if (create_jibres_table() === true) 
 		{
 			$this->this_jibres_wis = jibres_wis();
-			$this->where_backup = ($this->this_jibres_wis == 'csv') ? 'orders' : '/cart/add';
+			$this->where_backup = ( $this->this_jibres_wis == 'csv' ) ? 'orders' : '/cart/add';
 			$this->create_pbr();
 			$this->get_order_data();
 		}
@@ -29,8 +29,9 @@ class jibres_orders extends jibres_backup
 
 	private function create_pbr()
 	{
-		$all = jibres_get_not_backuped('order_item_id', 'woocommerce_order_items', 'order');
-		if ($all != '0') 
+		$all = jibres_get_not_backuped( 'order_item_id', 'woocommerce_order_items', 'order' );
+
+		if ( $all != '0' ) 
 		{
 			printf('<p>Backuping orders...</p>');
 			printf('<progress id="oprog" value="0" max="'.$all.'" style="height: 3px;"></progress>  <a id="oinof"></a><br><br>');
@@ -54,29 +55,29 @@ class jibres_orders extends jibres_backup
 		[
 			'woocommerce_order_itemmeta'=> 'order_item_id'
 		];
-		$data = $this->get_data('order_item_id', 'woocommerce_order_items', 'order', $where, $excepts);
+		$data = $this->get_data( 'order_item_id', 'woocommerce_order_items', 'order', $where, $excepts );
 
-		if (!empty($data)) 
+		if ( ! empty( $data ) ) 
 		{
 			$i = $this->last_i;
 			
-			foreach ($data as $value) 
+			foreach ( $data as $value ) 
 			{
 				
 				$i++;
 				
 				// insert this product to jibres check table
-				$this->insert_backup_in_jibres([$value['order_item_id'], 'order']);
+				$this->insert_backup_in_jibres( [$value['order_item_id'], 'order'] );
 				
 				// sort array by jibres products database design
-				$changed = $this->backup_arr_sort($value, self::$jibres_stantard_order_array);
+				$changed = $this->backup_arr_sort( $value, self::$jibres_stantard_order_array );
 				
 				// backup this product
 				if ( $this->this_jibres_wis == 'api' ) 
 				{
 					$changed['product'] = $this->get_jibres_id( $value['_product_id'], 'product' );
 				}
-				jibres_wis($this->where_backup, $changed);
+				jibres_wis( $this->where_backup, $changed );
 				
 				// update progress bar
 				printf('<script>
@@ -92,7 +93,7 @@ class jibres_orders extends jibres_backup
 		}
 		else
 		{
-			if ($this->this_jibres_wis == 'csv') 
+			if ( $this->this_jibres_wis == 'csv' ) 
 			{
 				// csv download url
 				printf('<a href="'.get_site_url().'/wp-content/plugins/wp-jibres/backup/'.$this->where_backup.'.csv" target="_blank">Download csv file</a><br><br>');

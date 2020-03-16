@@ -46,16 +46,16 @@ class jibres_backup
 		return $jibres_id;
 	}
 
-	function backup_arr_sort($arr, $stnd, $excepts = [])
+	function backup_arr_sort( $arr, $stnd, $excepts = [] )
 	{
 
-		if (!empty($excepts)) 
+		if ( ! empty( $excepts ) ) 
 		{
-			foreach ($excepts as $exkey => $exvalue) 
+			foreach ( $excepts as $exkey => $exvalue ) 
 			{
-				foreach ($exvalue as $key => $value) 
+				foreach ( $exvalue as $key => $value ) 
 				{
-					if ($arr[$exkey] == "$key") 
+					if ( $arr[$exkey] == "$key" ) 
 					{
 						$arr[$exkey] = $value;
 					}
@@ -63,31 +63,31 @@ class jibres_backup
 			}
 		}
 
-		$changed = jibres_sort_arr($stnd, $arr);
+		$changed = jibres_sort_arr( $stnd, $arr );
 		
 		return $changed;		
 	}
 	
 	// insert product to jibres table 
-	function insert_backup_in_jibres($data = [], $jibres_id = null)
+	function insert_backup_in_jibres( $data = [], $jibres_id = null )
 	{
 		$id = $data[0];
 		$type = $data[1];
 
 		$data = ['item_id' => $id, 'type' => $type];
 
-		if ($jibres_id != null) 
+		if ( $jibres_id != null ) 
 		{
 			$data['jibres_id'] = $jibres_id;	
 		}
 		
-		insert_in_jibres($data);
+		insert_in_jibres( $data );
 	}
 
 
 
 	// get data from tables
-	function get_data($id_column, $table, $type, $where = [], $excepts = [])
+	function get_data( $id_column, $table, $type, $where = [], $excepts = [] )
 	{
 		global $wpdb;
 		
@@ -97,7 +97,7 @@ class jibres_backup
 		$jibres_ctable = JIBRES_CTABLE;
 		$wers = jibres_wis();
 		
-		$where = jibres_create_sql_where($where);
+		$where = jibres_create_sql_where( $where );
 
 		$query = 
 		"
@@ -114,27 +114,27 @@ class jibres_backup
 			LIMIT 1000
 		";
 
-		$results = $wpdb->get_results($query);
+		$results = $wpdb->get_results( $query );
 	
 		$ids = [];
 	
-		foreach ($results as $key => $value) 
+		foreach ( $results as $key => $value ) 
 		{
-			foreach ($value as $key2 => $val) 
+			foreach ( $value as $key2 => $val ) 
 			{
-				if ($key2 == "$id_column") 
+				if ( $key2 == "$id_column" ) 
 				{
-					array_push($ids, $val);
+					array_push( $ids, $val );
 				}
 			}
 	
 		}
 	
-		if (!empty($results)) 
+		if ( ! empty( $results ) ) 
 		{
 			$i = 0;
 	
-			foreach ($ids as $value) 
+			foreach ( $ids as $value ) 
 			{
 				
 				$arr_results = [];
@@ -150,19 +150,19 @@ class jibres_backup
 					WHERE
 						$id_column = '$value'
 				";
-				$main_results = $wpdb->get_results($query);
-				foreach ($main_results as $key => $val) 
+				$main_results = $wpdb->get_results( $query );
+				foreach ( $main_results as $key => $val ) 
 				{
-					foreach ($val as $key2 => $val2) 
+					foreach ( $val as $key2 => $val2 ) 
 					{
 						$arr_results[$key2] = $val2;
 					}
 				}
 
 
-				if (!empty($excepts)) 
+				if ( ! empty( $excepts ) ) 
 				{
-					foreach ($excepts as $exkey => $exvalue) 
+					foreach ( $excepts as $exkey => $exvalue ) 
 					{
 						$extable = $wpdb->prefix. $exkey;
 						$exwhere = "$exvalue='$value'";
@@ -176,18 +176,18 @@ class jibres_backup
 							WHERE
 								$exwhere
 						";
-						$ex_results = $wpdb->get_results($exquery);
-						foreach ($ex_results as $key => $val) 
+						$ex_results = $wpdb->get_results( $exquery );
+						foreach ( $ex_results as $key => $val ) 
 						{
-							foreach ($val as $key2 => $val2) 
+							foreach ( $val as $key2 => $val2 ) 
 							{
 								if ( $key2 == 'meta_key' or $key2 == 'meta_value' ) 
 								{
-									if ($key2 == 'meta_key') 
+									if ( $key2 == 'meta_key' ) 
 									{
 										$this_key = $val2;
 									}
-									if ($key2 == 'meta_value') 
+									if ( $key2 == 'meta_value' ) 
 									{
 										$arr_results[$this_key] = $val2;
 									}
@@ -201,7 +201,7 @@ class jibres_backup
 					}
 				}
 
-				array_push($main_arr, $arr_results);
+				array_push( $main_arr, $arr_results );
 			}
 	
 			return $main_arr;

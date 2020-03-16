@@ -1,12 +1,12 @@
 <?php 
 
 // define jibres tables
-define('JIBRES_TABLE', $wpdb->prefix. 'jibres');
-define('JIBRES_CTABLE', $wpdb->prefix. 'jibres_check');
+define( 'JIBRES_TABLE', $wpdb->prefix. 'jibres' );
+define( 'JIBRES_CTABLE', $wpdb->prefix. 'jibres_check' );
 
 
 // check jibres information exist or if update argument equal to start_again delete jibres table to start plugin again (reset plugin)
-function ch_jibres_store_data($update = null)
+function ch_jibres_store_data( $update = null )
 {
 	global $wpdb;
 
@@ -25,7 +25,7 @@ function ch_jibres_store_data($update = null)
 				appkey IS NULL
 		";
 		$store_check = $wpdb->get_results($query);
-		if (!empty($store_check)) 
+		if ( ! empty( $store_check ) ) 
 		{
 			return false;
 		}
@@ -34,7 +34,7 @@ function ch_jibres_store_data($update = null)
 			return true;
 		}
 	}
-	elseif ($update == 'start_again') 
+	elseif ( $update == 'start_again' ) 
 	{
 		$wpdb->query( "DROP TABLE IF EXISTS $jibres_table" );
 	}
@@ -103,11 +103,11 @@ function create_jibres_table( $tname = JIBRES_CTABLE )
 
 
 // insert backuped data in jibres_check table
-function insert_in_jibres($data = [], $tname = JIBRES_CTABLE)
+function insert_in_jibres( $data = [], $tname = JIBRES_CTABLE )
 {
 	global $wpdb;
 
-	if ($tname == JIBRES_CTABLE) 
+	if ( $tname == JIBRES_CTABLE ) 
 	{
 		$data['wers'] = jibres_wis();
 	}
@@ -121,16 +121,16 @@ function insert_in_jibres($data = [], $tname = JIBRES_CTABLE)
 
 
 // send data to jibres by api with curl
-function send_data_jibres($where, $data = [], $token = false)
+function send_data_jibres( $where, $data = [], $token = false )
 {
 	global $wpdb;
 
 	$jibres_table = JIBRES_TABLE;
-	$results = $wpdb->get_results("SELECT * FROM $jibres_table");
+	$results = $wpdb->get_results( "SELECT * FROM $jibres_table" );
 	$arr_results = [];
-	foreach ($results as $key => $val) 
+	foreach ( $results as $key => $val ) 
 	{
-		foreach ($val as $key2 => $val2) 
+		foreach ( $val as $key2 => $val2 ) 
 		{
 			$arr_results[$key2] = $val2;
 		}
@@ -140,15 +140,15 @@ function send_data_jibres($where, $data = [], $token = false)
 	$apikey = $arr_results['apikey'];
 	$headers =  ['Content-Type: application/json', 'appkey: '.$appkey];
 	
-	if ($apikey != null) 
+	if ( $apikey != null ) 
 	{
-		array_push($headers, 'apikey: '.$apikey);
+		array_push( $headers, 'apikey: '.$apikey );
 	}
 
-	if ($token == true) 
+	if ( $token == true ) 
 	{
 		$token = $arr_results['token'];
-		array_push($headers, 'token: '.$token);
+		array_push( $headers, 'token: '.$token );
 	}
 
 	// wordpress curl function
@@ -206,36 +206,36 @@ function send_data_jibres($where, $data = [], $token = false)
 
 
 // create csv file backups by its name in backup folder
-function jibres_create_csv($cat, $data)
+function jibres_create_csv( $cat, $data )
 {
 
 	$fname = JIBRES_DIR . 'backup/' . $cat . '.csv';
 
-	if (file_exists($fname)) 
+	if ( file_exists( $fname ) ) 
 	{
-		$arr = array_values($data);
-		$fp = fopen($fname, 'a');
-		fputcsv($fp, $arr);
+		$arr = array_values( $data );
+		$fp = fopen( $fname, 'a' );
+		fputcsv( $fp, $arr );
 	} 
 	else 
 	{
-		$fp = fopen($fname, 'a');
-		$arr = array_keys($data);
-		fputcsv($fp, $arr);
-		$arr = array_values($data);
-		fputcsv($fp, $arr);
+		$fp = fopen( $fname, 'a' );
+		$arr = array_keys( $data );
+		fputcsv( $fp, $arr );
+		$arr = array_values( $data );
+		fputcsv( $fp, $arr );
 	}
 	
-	fclose($fp);
+	fclose( $fp );
 
 	return true;
 
 }
 
 // sort informations by jibres database design
-function jibres_sort_arr($ch = [], $data = [])
+function jibres_sort_arr( $ch = [], $data = [] )
 {
-	foreach ($ch as $key => $value) 
+	foreach ( $ch as $key => $value ) 
 	{
 		$ch[$key] = $data[$value];
 	}
@@ -245,18 +245,18 @@ function jibres_sort_arr($ch = [], $data = [])
 
 
 // check where plugin back up data and send data to there
-function jibres_wis($item = null, $data = null)
+function jibres_wis( $item = null, $data = null )
 {
 	global $wpdb;
 
 	$jibres_table = JIBRES_TABLE;
 	$results = $wpdb->get_results("SELECT wis FROM $jibres_table");
 
-	foreach ($results as $key => $value) 
+	foreach ( $results as $key => $value ) 
 	{
-		foreach ($value as $key => $val) 
+		foreach ( $value as $key => $val ) 
 		{
-			if ($key == "wis") 
+			if ( $key == "wis" ) 
 			{
 				$weris = $val;
 			}
@@ -264,37 +264,37 @@ function jibres_wis($item = null, $data = null)
 
 	}
 
-	if ($item == null and $data == null) 
+	if ( $item == null and $data == null ) 
 	{
 		return $weris;
 	}
 	else
 	{
-		if ($weris == 'csv') 
+		if ( $weris == 'csv' ) 
 		{
-			return jibres_create_csv($item, $data);
+			return jibres_create_csv( $item, $data );
 		}
-		elseif ($weris == 'api') 
+		elseif ( $weris == 'api' ) 
 		{
-			return send_data_jibres($item, $data);
+			return send_data_jibres( $item, $data );
 		}
 	}
 }
 
 
-function jibres_create_sql_where($where = [])
+function jibres_create_sql_where( $where = [] )
 {
 	if ( is_array( $where ) ) 
 	{
-		if (!empty($where)) 
+		if ( ! empty( $where ) ) 
 		{
 			$sqlwhere = "";
-			$aw = count($where);
+			$aw = count( $where );
 			$i = 0;
-			foreach ($where as $key => $value) 
+			foreach ( $where as $key => $value ) 
 			{
 				$i++;
-				if ($i == $aw) 
+				if ( $i == $aw ) 
 				{
 					$sqlwhere .= "$key='$value'";
 				}
@@ -317,7 +317,7 @@ function jibres_create_sql_where($where = [])
 	return $sqlwhere;
 }
 
-function jibres_get_not_backuped($item, $table, $cat, $where = [])
+function jibres_get_not_backuped( $item, $table, $cat, $where = [] )
 {
 	global $wpdb;
 
@@ -325,7 +325,7 @@ function jibres_get_not_backuped($item, $table, $cat, $where = [])
 	$wb = jibres_wis();
 	$jibres_ctable = JIBRES_CTABLE;
 	$table = $wpdb->prefix. $table;
-	$where = jibres_create_sql_where($where);
+	$where = jibres_create_sql_where( $where );
 
 	$query = 
 	"
@@ -340,11 +340,11 @@ function jibres_get_not_backuped($item, $table, $cat, $where = [])
 				SELECT item_id FROM $jibres_ctable WHERE type = '$cat' AND backuped = 1 AND wers = '$wb'
 			)
 	";
-	$data = $wpdb->get_results($query);
+	$data = $wpdb->get_results( $query );
 
-	foreach ($data as $key => $value) 
+	foreach ( $data as $key => $value ) 
 	{
-		foreach ($value as $vkey => $val) 
+		foreach ( $value as $vkey => $val ) 
 		{
 			$not_b = $val;
 		}
@@ -356,28 +356,28 @@ function jibres_get_not_backuped($item, $table, $cat, $where = [])
 
 
 // return which data are backuped
-function jibres_informations_b($item, $table, $cat, $where = [], $first = false)
+function jibres_informations_b( $item, $table, $cat, $where = [], $first = false )
 {
 	global $wpdb;
 
 	$wb = jibres_wis();
-	$wers = ($wb == 'csv') ? 'to csv file' : 'to your jibres store';
+	$wers = ( $wb == 'csv' ) ? 'to csv file' : 'to your jibres store';
 	$jibres_ctable = JIBRES_CTABLE;
-	$sdata = jibres_get_not_backuped($item, $table, $cat, $where);
+	$sdata = jibres_get_not_backuped( $item, $table, $cat, $where );
 
 	$table = $wpdb->prefix. $table;
-	$where = jibres_create_sql_where($where);
+	$where = jibres_create_sql_where( $where );
 
-	$fdata = $wpdb->get_results("SELECT COUNT($item) FROM $table WHERE $where");
+	$fdata = $wpdb->get_results( "SELECT COUNT($item) FROM $table WHERE $where" );
 
 
-	$first = ($first == false) ? 'And' : 'You';
+	$first = ( $first == false ) ? 'And' : 'You';
 
-	if (!empty($fdata)) 
+	if ( ! empty( $fdata ) ) 
 	{
-		foreach ($fdata as $key => $value) 
+		foreach ( $fdata as $key => $value ) 
 		{
-			foreach ($value as $key2 => $val) 
+			foreach ( $value as $key2 => $val ) 
 			{
 				$all = $val;
 			}

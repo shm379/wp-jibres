@@ -57,7 +57,7 @@ function jibres_admin()
 	if ( is_admin() ) 
 	{
 		
-		if (isset($_GET['page']) and $_GET['page'] == 'jibres')
+		if (isset( $_GET['page']) and $_GET['page'] == 'jibres' )
 		{
 
 			// include the global jibres functions
@@ -70,7 +70,7 @@ function jibres_admin()
 
 
 			// if post sent to this plugin page include posts page
-			if (!empty($_POST))
+			if ( ! empty( $_POST ) )
 			{
 				require_once JIBRES_INC . 'jibres_posts.php';
 				exit();
