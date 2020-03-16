@@ -48,10 +48,14 @@ class jibres_comments extends jibres_backup
 
 		if ( $this->this_jibres_wis == 'api' ) 
 		{
-			$data = $this->get_data( 'comment_ID', 'comments', 'comment', ['comment_type'=>'review'] );
+			$table = $wpdb->prefix. 'posts';
+			$where = "comment_post_ID IN (SELECT ID FROM $table WHERE post_type='product')";
+			$data = $this->get_data( 'comment_ID', 'comments', 'comment', $where );
 		}
 		else
 		{
+			self::$jibres_stantard_comments_array['post_id'] = 'comment_post_ID';
+			self::$jibres_stantard_comments_array['date'] = 'comment_date';
 			$data = $this->get_data('comment_ID', 'comments', 'comment');
 		}
 
