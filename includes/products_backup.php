@@ -73,13 +73,11 @@ class jibres_products extends jibres_backup
 	}
 
 
-	private function get_product_cat_tag( $p_id, $cort )
+	private function get_product_cat_tag( $p_id )
 	{
 		global $wpdb;
 
 		$ids = [];
-		$sids = [];
-		$data = [];
 
 		$table = $wpdb->prefix. 'term_relationships';
 		$query = 
@@ -105,6 +103,28 @@ class jibres_products extends jibres_backup
 			}
 	
 		}
+
+		if ( ! empty( $ids ) ) 
+		{
+			$pct['cat'] = $this->get_pct( $ids, 'product_cat' );
+			$pct['tag'] = $this->get_pct( $ids, 'product_tag' );
+
+			return $pct;
+		}
+		else
+		{
+			return null;
+		}
+
+	}
+
+
+	private function get_pct( $ids, $cort )
+	{
+		global $wpdb;
+
+		$sids = [];
+		$data =[];
 
 		$table = $wpdb->prefix. 'term_taxonomy';
 		foreach ($ids as $id) 
@@ -215,8 +235,12 @@ class jibres_products extends jibres_backup
 				
 				// sort array by jibres products database design
 				$changed = $this->backup_arr_sort($value, self::$jibres_stantard_product_array, ["onsale"=>["1"=>'available', "0"=>'unavailable']]);
-				$changed['category'] = $this->get_product_cat_tag( $value['ID'], 'product_cat' );
-				$changed['tag'] = $this->get_product_cat_tag( $value['ID'], 'product_tag' );
+				$cat_and_tag = $this->get_product_cat_tag( $value['ID'] );
+				if ( $cat_and_tag != null ) 
+				{
+					$changed['category'] = $cat_and_tag['cat'];
+					$changed['tag'] = $cat_and_tag['tag'];
+				}
 				
 				// backup this product
 				$get_data = jibres_wis($this->where_backup, $changed);
