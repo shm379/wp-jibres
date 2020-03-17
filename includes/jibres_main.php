@@ -114,6 +114,15 @@
 	<?php endif; ?>
 </tr>
 </tbody>
+<tfoot>
+	<tr>
+		<th scope="col" id="name" class="manage-column column-type"><a><span>Type</span></a></th>
+		<th scope="col" id="name" class="manage-column column-type"><a><span>Count</span></a></th>
+		<th scope="col" id="name" class="manage-column column-type"><a><span>Status</span></a></th>
+		<th scope="col" id="name" class="manage-column column-type"><a><span>Backup</span></a></th>
+		<th scope="col" id="name" class="manage-column column-type"><a><span>Delete</span></a></th>
+	</tr>
+</tfoot>
 </table>
 <br><br>
 <a href="?page=jibres&jibres=backup_all"><button class="button">Backup All Data</button></a>
