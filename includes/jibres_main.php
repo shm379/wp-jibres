@@ -1,12 +1,12 @@
 
 <br><br>
-<a href="?page=jibres&jibres=backup_all"><button class="bt">Backup All Data</button></a>
+<a href="?page=jibres&jibres=backup_all"><button class="button">Backup All Data</button></a>
 <br><br><hr><br>
-<a href="?page=jibres&jibres=products_backup"><button class="bt">Backup Your Products</button></a>  |  
-<a href="?page=jibres&jibres=orders_backup"><button class="bt">Backup Your Orders</button></a>  |  
-<a href="?page=jibres&jibres=posts_backup"><button class="bt">Backup Your Posts</button></a>  |  
-<a href="?page=jibres&jibres=comments_backup"><button class="bt">Backup Your Comments</button></a>  |  
-<a href="?page=jibres&jibres=categories_backup"><button class="bt">Backup Your Categories</button></a>
+<a href="?page=jibres&jibres=products_backup"><button class="button" style="vertical-align: unset;">Backup Your Products</button></a>  |  
+<a href="?page=jibres&jibres=orders_backup"><button class="button" style="vertical-align: unset;">Backup Your Orders</button></a>  |  
+<a href="?page=jibres&jibres=posts_backup"><button class="button" style="vertical-align: unset;">Backup Your Posts</button></a>  |  
+<a href="?page=jibres&jibres=comments_backup"><button class="button" style="vertical-align: unset;">Backup Your Comments</button></a>  |  
+<a href="?page=jibres&jibres=categories_backup"><button class="button" style="vertical-align: unset;">Backup Your Categories</button></a>
 <br><br><hr><br>
 
 

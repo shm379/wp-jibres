@@ -387,11 +387,11 @@ function jibres_informations_b( $item, $table, $cat, $where = [], $first = false
 		
 		if ($sdata == '0') 
 		{
-			printf(' and <a style="font-weight: bold; color: green;">all of your '.$cat.'s backuped '.$wers.'</a>');
+			printf(' and <a style="color: green;">all of your '.$cat.'s backuped '.$wers.'</a>');
 		}
 		else
 		{
-			printf(' and <a style="font-weight: bold; color: #c80a5a;">'.$sdata.' '.$cat.' not backuped '.$wers.'</a>');
+			printf(' and <a style="color: #c80a5a;">'.$sdata.' '.$cat.' not backuped '.$wers.'</a>');
 		}
 		
 	}

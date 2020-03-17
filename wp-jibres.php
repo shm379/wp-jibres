@@ -63,7 +63,7 @@ function jibres_admin()
 			// include the global jibres functions
 			require_once JIBRES_INC . 'jibres_functions.php';
 
-			printf('<div class="wrap"><br>');
+			printf('<div class="wrap">');
 
 			// include jibres headers
 			require_once JIBRES_INC . 'jibres_header.php';

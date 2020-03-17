@@ -107,7 +107,7 @@ class run_jibres
 			$run_class = new $classname();
 		}
 
-		printf('<a href="?page=jibres"><button class="bt">Back Home</button></a>');
+		printf('<a href="?page=jibres"><button class="button">Back Home</button></a>');
 
 	}
 
@@ -121,7 +121,7 @@ class run_jibres
 		$classname = 'jibres_'. $get_cname[0];
 		$run_class = new $classname();
 
-		printf('<a href="?page=jibres"><button class="bt">Back Home</button></a>');
+		printf('<a href="?page=jibres"><button class="button">Back Home</button></a>');
 		
 	}
 
