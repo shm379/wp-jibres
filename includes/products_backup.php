@@ -277,12 +277,12 @@ class jibres_products extends jibres_backup
 		}
 		else
 		{
+			printf("<br>All Products Are Backed up<br><br>");
 			if ( $this->this_jibres_wis == 'csv' ) 
 			{
 				// csv download url
 				printf('<a href="'.get_site_url().'/wp-content/plugins/wp-jibres/backup/'.$this->where_backup.'.csv" target="_blank">Download csv file</a><br><br>');
 			}
-			printf("All Products Are Backed up<br><br>");
 		}
 	
 	}

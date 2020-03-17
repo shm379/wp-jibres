@@ -80,11 +80,14 @@ class run_jibres
 
 			if ( $_GET['jibres'] == 'backup_all' ) 
 			{
-				$this->jibres_backup_all();
+					$this->jibres_backup_all();
 			}
 			else
 			{
+				printf('<div class="updated">');
 				$this->jibres_backup();
+				printf('</div>');
+				require_once JIBRES_INC. 'jibres_main.php';
 			}
 		}
 		else
@@ -121,8 +124,6 @@ class run_jibres
 		$classname = 'jibres_'. $get_cname[0];
 		$run_class = new $classname();
 
-		printf('<a href="?page=jibres"><button class="button">Back Home</button></a>');
-		
 	}
 
 
