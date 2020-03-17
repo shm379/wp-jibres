@@ -33,7 +33,7 @@ class jibres_orders extends jibres_backup
 
 		if ( $all != '0' ) 
 		{
-			printf('<p>Backing up orders...</p>');
+			printf('<br><p>Backing up orders...</p>');
 			printf('<progress id="oprog" value="0" max="'.$all.'" style="height: 3px;"></progress>  <a id="oinof"></a><br><br>');
 			printf('<script>
 					function orsb(meq) {

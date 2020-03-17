@@ -380,26 +380,26 @@ function jibres_informations_b( $item, $table, $cat, $where = [] )
 			}
 		}
 	
-		$ex['a'] = $all;
-		$ex['f'] = $cat;
-		$ex['n'] = $sdata;
+		$exp['a'] = $all;
+		$exp['f'] = $cat;
+		$exp['n'] = $sdata;
 		
 		if ($sdata == '0') 
 		{
-			$ex['s'] = '<a style="color: green;">all of your '.$cat.'s backed up</a>';
+			$exp['s'] = '<a style="color: green;">all of your '.$cat.'s backed up</a>';
 		}
 		else
 		{
-			$ex['s'] = '<a style="color: #c80a5a;">'.$sdata.' not backed up</a>';
+			$exp['s'] = '<a style="color: #c80a5a;">'.$sdata.' not backed up</a>';
 		}
 		
 	}
 	else
 	{
-		$ex = 'You have not any '.$cat;
+		$exp = 'You have not any '.$cat;
 	}
 
-	return $ex;
+	return $exp;
 }
 
 ?>

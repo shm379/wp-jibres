@@ -60,7 +60,7 @@ class jibres_products extends jibres_backup
 		$all = jibres_get_not_backuped('ID', 'posts', 'product', ['post_type'=>'product']);
 		if ( $all != '0' ) 
 		{
-			printf('<p>Backing up products...</p>');
+			printf('<br><p>Backing up products...</p>');
 			printf('<progress id="pprog" value="0" max="'.$all.'" style="height: 3px;"></progress>  <a id="inof"></a><br><br>');
 			printf('<script>
 					function prsb(meq) {
