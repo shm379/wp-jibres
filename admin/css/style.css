@@ -20,14 +20,14 @@
 }
 
 .jbt {
-	padding: 4px 8px;
+	padding: 0 10px;
 	position: relative;
-	top: -3px;
 	text-decoration: none;
 	border: 1px solid #e00b65;
-	border-radius: 2px;
-	text-shadow: none;
-	font-weight: 600;
+	border-radius: 3px;
+	line-height: 2.15384615;
+	min-height: 30px;
+	font-weight: 500;
 	font-size: 13px;
 	line-height: normal;
 	color: #f3f5f6;

@@ -383,22 +383,24 @@ function jibres_informations_b( $item, $table, $cat, $where = [], $first = false
 			}
 		}
 	
-		printf($first.' have '.$all.' '.$cat);
+		$ex = $first.' have '.$all.' '.$cat;
 		
 		if ($sdata == '0') 
 		{
-			printf(' and <a style="color: green;">all of your '.$cat.'s backuped '.$wers.'</a>');
+			$ex .= ' and <a style="color: green;">all of your '.$cat.'s backuped '.$wers.'</a>';
 		}
 		else
 		{
-			printf(' and <a style="color: #c80a5a;">'.$sdata.' '.$cat.' not backuped '.$wers.'</a>');
+			$ex .= ' and <a style="color: #c80a5a;">'.$sdata.' '.$cat.' not backuped '.$wers.'</a>';
 		}
 		
 	}
 	else
 	{
-		printf($first.' have not any '.$cat);
+		$ex = $first.' have not any '.$cat;
 	}
+
+	return $ex;
 }
 
 ?>
