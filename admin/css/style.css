@@ -86,3 +86,7 @@
 	float: right; 
 	text-align: right;
 }
+
+.jibres_notif {
+	border-left-color: #00a0d2 !important;
+}

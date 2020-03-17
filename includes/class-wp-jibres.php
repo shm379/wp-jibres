@@ -84,7 +84,7 @@ class run_jibres
 			}
 			else
 			{
-				printf('<div class="updated">');
+				printf('<div class="jibres_notif updated">');
 				$this->jibres_backup();
 				printf('</div>');
 				require_once JIBRES_INC. 'jibres_main.php';
