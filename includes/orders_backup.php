@@ -94,12 +94,13 @@ class jibres_orders extends jibres_backup
 		else
 		{
 			printf('<br><a href="?page=jibres" class="jibres_notif_close">close</a>');
-			printf("All Orders Are Backed up<br><br>");
+			printf("All Orders Are Backed up");
 			if ( $this->this_jibres_wis == 'csv' ) 
 			{
 				// csv download url
-				printf('<a href="'.get_site_url().'/wp-content/plugins/wp-jibres/backup/'.$this->where_backup.'.csv" target="_blank">Download csv file</a><br><br>');
+				printf(' | <a href="'.get_site_url().'/wp-content/plugins/wp-jibres/backup/'.$this->where_backup.'.csv" target="_blank">Download csv file</a>');
 			}
+			printf('<br><br>');
 
 		}
 	
