@@ -73,7 +73,6 @@ function jibres_admin()
 			if ( ! empty( $_POST ) )
 			{
 				require_once JIBRES_INC . 'jibres_posts.php';
-				exit();
 			}
 
 			// load jibres

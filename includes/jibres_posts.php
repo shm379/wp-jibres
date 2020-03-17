@@ -64,7 +64,7 @@ class jibres_posts
 		$del_data = explode("_", self::$data['csvdel']);
 		$wpdb->delete( JIBRES_CTABLE, array( 'type' => $del_data[1], 'wers' => 'csv' ) );
 		unlink(JIBRES_DIR. 'backup/'. $del_data[0]. '.csv');
-		header( "Refresh:0" );
+		printf('<div class="updated"><br>' . $del_data[0] . ' csv file deleted<a href="?page=jibres" class="jibres_notif_close">close</a><br><br></div>');
 	}
 }
 

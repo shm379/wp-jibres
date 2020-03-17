@@ -81,3 +81,8 @@
 	border-bottom: 1px solid #ccd0d4;
 	line-height: 3em;
 }
+
+.jibres_notif_close {
+	float: right; 
+	text-align: right;
+}
