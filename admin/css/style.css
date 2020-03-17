@@ -85,6 +85,7 @@
 .jibres_notif_close {
 	float: right; 
 	text-align: right;
+	text-decoration: none;
 }
 
 .jibres_notif {
