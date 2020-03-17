@@ -80,7 +80,9 @@ class run_jibres
 
 			if ( $_GET['jibres'] == 'backup_all' ) 
 			{
-					$this->jibres_backup_all();
+				printf('<div class="jibres_notif updated">');
+				$this->jibres_backup_all();
+				printf('</div>');
 			}
 			else
 			{
