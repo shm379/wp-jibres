@@ -27,7 +27,9 @@
 		<th scope="col" id="name" class="manage-column column-type"><a><span>Count</span></a></th>
 		<th scope="col" id="name" class="manage-column column-type"><a><span>Status</span></a></th>
 		<th scope="col" id="name" class="manage-column column-type"><a><span>Backup</span></a></th>
+		<?php if ( function_exists('csv_del') ) : ?>
 		<th scope="col" id="name" class="manage-column column-type"><a><span>Delete</span></a></th>
+		<?php endif; ?>
 	</tr>
 </thead>
 <tbody>
@@ -120,7 +122,9 @@
 		<th scope="col" id="name" class="manage-column column-type"><a><span>Count</span></a></th>
 		<th scope="col" id="name" class="manage-column column-type"><a><span>Status</span></a></th>
 		<th scope="col" id="name" class="manage-column column-type"><a><span>Backup</span></a></th>
+		<?php if ( function_exists('csv_del') ) : ?>
 		<th scope="col" id="name" class="manage-column column-type"><a><span>Delete</span></a></th>
+		<?php endif; ?>
 	</tr>
 </tfoot>
 </table>
