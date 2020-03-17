@@ -94,6 +94,7 @@ class jibres_orders extends jibres_backup
 		else
 		{
 			printf("<br>All Orders Are Backed up<br><br>");
+			printf('<a href="?page=jibres" class="jibres_notif_close">close</a>');
 			if ( $this->this_jibres_wis == 'csv' ) 
 			{
 				// csv download url

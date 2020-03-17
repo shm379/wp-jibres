@@ -93,6 +93,7 @@ class jibres_categories extends jibres_backup
 		else
 		{
 			printf("<br>All Categories Are Backed up<br><br>");
+			printf('<a href="?page=jibres" class="jibres_notif_close">close</a>');
 			if ( $this->this_jibres_wis == 'csv' ) 
 			{
 				printf('<a href="'.get_site_url().'/wp-content/plugins/wp-jibres/backup/'.$this->where_backup.'.csv" target="_blank">Download csv file</a><br><br>');
