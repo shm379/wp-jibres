@@ -78,4 +78,6 @@
 
 .jibreswt td {
 	font-size: 1.3em !important;
+	border-bottom: 1px solid #ccd0d4;
+	line-height: 3em;
 }

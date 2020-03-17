@@ -23,7 +23,7 @@
 <table class="jibreswt widefat" cellspacing="0">
 <thead>
 	<tr>
-		<th colspan="3" data-export-label="Reports"><h2 style="margin: 0;">Reports</h2></th>
+		<th colspan="4" data-export-label="Reports" style="border-bottom: 1px solid black;"><h2>Reports</h2></th>
 	</tr>
 </thead>
 <tbody>
