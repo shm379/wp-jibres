@@ -113,8 +113,8 @@ class jibres_comments extends jibres_backup
 		}
 		else
 		{
-			printf("<br>All Comments Are Backed up<br><br>");
-			printf('<a href="?page=jibres" class="jibres_notif_close">close</a>');
+			printf('<br><a href="?page=jibres" class="jibres_notif_close">close</a>');
+			printf("All Comments Are Backed up<br><br>");
 			if ( $this->this_jibres_wis == 'csv' ) 
 			{
 				printf('<a href="'.get_site_url().'/wp-content/plugins/wp-jibres/backup/'.$this->where_backup.'.csv" target="_blank">Download csv file</a><br><br>');

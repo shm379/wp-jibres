@@ -91,8 +91,8 @@ class jibres_posts extends jibres_backup
 		}
 		else
 		{
-			printf("<br>All Posts Are Backed up<br><br>");
-			printf('<a href="?page=jibres" class="jibres_notif_close">close</a>');
+			printf('<br><a href="?page=jibres" class="jibres_notif_close">close</a>');
+			printf("All Posts Are Backed up<br><br>");
 			if ( $this->this_jibres_wis == 'csv' ) 
 			{
 				// csv download url
