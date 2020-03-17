@@ -361,7 +361,6 @@ function jibres_informations_b( $item, $table, $cat, $where = [], $first = false
 	global $wpdb;
 
 	$wb = jibres_wis();
-	$wers = ( $wb == 'csv' ) ? 'to csv file' : 'to your jibres store';
 	$jibres_ctable = JIBRES_CTABLE;
 	$sdata = jibres_get_not_backuped( $item, $table, $cat, $where );
 
@@ -383,15 +382,15 @@ function jibres_informations_b( $item, $table, $cat, $where = [], $first = false
 			}
 		}
 	
-		$ex = $first.' have '.$all.' '.$cat;
+		$ex['f'] = $all.' '.$cat;
 		
 		if ($sdata == '0') 
 		{
-			$ex .= ' and <a style="color: green;">all of your '.$cat.'s backuped '.$wers.'</a>';
+			$ex['s'] = ' <a style="color: green;">all of your '.$cat.'s backuped</a>';
 		}
 		else
 		{
-			$ex .= ' and <a style="color: #c80a5a;">'.$sdata.' '.$cat.' not backuped '.$wers.'</a>';
+			$ex['s'] = ' <a style="color: #c80a5a;">'.$sdata.' not backuped</a>';
 		}
 		
 	}
