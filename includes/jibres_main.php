@@ -23,12 +23,12 @@
 <table class="jibreswt wp-list-table widefat fixed striped" cellspacing="0">
 <thead>
 	<tr>
-		<th scope="col" id="name" class="manage-column column-type"><a><span>Type</span></a></th>
-		<th scope="col" id="name" class="manage-column column-type"><a><span>Count</span></a></th>
-		<th scope="col" id="name" class="manage-column column-type"><a><span>Status</span></a></th>
-		<th scope="col" id="name" class="manage-column column-type"><a><span>Backup</span></a></th>
+		<th id="type" class="manage-column"><a><span>Type</span></a></th>
+		<th id="count" class="manage-column"><a><span>Count</span></a></th>
+		<th id="status" class="manage-column"><a><span>Status</span></a></th>
+		<th id="backup" class="manage-column"><a><span>Backup</span></a></th>
 		<?php if ( function_exists('csv_del') ) : ?>
-		<th scope="col" id="name" class="manage-column column-type"><a><span>Delete</span></a></th>
+		<th id="delete" class="manage-column"><a><span>Delete</span></a></th>
 		<?php endif; ?>
 	</tr>
 </thead>
@@ -118,12 +118,12 @@
 </tbody>
 <tfoot>
 	<tr>
-		<th scope="col" id="name" class="manage-column column-type"><a><span>Type</span></a></th>
-		<th scope="col" id="name" class="manage-column column-type"><a><span>Count</span></a></th>
-		<th scope="col" id="name" class="manage-column column-type"><a><span>Status</span></a></th>
-		<th scope="col" id="name" class="manage-column column-type"><a><span>Backup</span></a></th>
+		<th id="type" class="manage-column"><a><span>Type</span></a></th>
+		<th id="count" class="manage-column"><a><span>Count</span></a></th>
+		<th id="status" class="manage-column"><a><span>Status</span></a></th>
+		<th id="backup" class="manage-column"><a><span>Backup</span></a></th>
 		<?php if ( function_exists('csv_del') ) : ?>
-		<th scope="col" id="name" class="manage-column column-type"><a><span>Delete</span></a></th>
+		<th id="delete" class="manage-column"><a><span>Delete</span></a></th>
 		<?php endif; ?>
 	</tr>
 </tfoot>
