@@ -76,9 +76,11 @@
 	/*box-shadow: 0em 0em 2em #ddd;*/
 }
 
-.jibreswt td {
-	font-size: 1.3em !important;
-	border-bottom: 1px solid #ccd0d4;
+.jibreswt td{
+	line-height: 3em;
+	font-size: 17px !important;
+}
+.jibreswt tr th{
 	line-height: 3em;
 }
 

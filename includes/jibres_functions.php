@@ -382,7 +382,8 @@ function jibres_informations_b( $item, $table, $cat, $where = [], $first = false
 			}
 		}
 	
-		$ex['f'] = $all.' '.$cat;
+		$ex['a'] = $all;
+		$ex['f'] = $cat;
 		
 		if ($sdata == '0') 
 		{
