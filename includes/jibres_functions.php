@@ -356,7 +356,7 @@ function jibres_get_not_backuped( $item, $table, $cat, $where = [] )
 
 
 // return which data are backuped
-function jibres_informations_b( $item, $table, $cat, $where = [], $first = false )
+function jibres_informations_b( $item, $table, $cat, $where = [] )
 {
 	global $wpdb;
 
@@ -369,8 +369,6 @@ function jibres_informations_b( $item, $table, $cat, $where = [], $first = false
 
 	$fdata = $wpdb->get_results( "SELECT COUNT($item) FROM $table WHERE $where" );
 
-
-	$first = ( $first == false ) ? 'And' : 'You';
 
 	if ( ! empty( $fdata ) ) 
 	{
@@ -398,7 +396,7 @@ function jibres_informations_b( $item, $table, $cat, $where = [], $first = false
 	}
 	else
 	{
-		$ex = $first.' have not any '.$cat;
+		$ex = 'You have not any '.$cat;
 	}
 
 	return $ex;

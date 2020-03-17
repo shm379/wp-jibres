@@ -34,7 +34,7 @@
 </thead>
 <tbody>
 <tr>
-	<?php $info_b = jibres_informations_b( 'ID', 'posts', 'product', ['post_type'=>'product'], true ); ?>
+	<?php $info_b = jibres_informations_b( 'ID', 'posts', 'product', ['post_type'=>'product'] ); ?>
 	<td><?php echo $info_b['f']; ?></td>
 	<td><?php echo $info_b['a']; ?></td>
 	<td><?php echo $info_b['s']; ?></td>
