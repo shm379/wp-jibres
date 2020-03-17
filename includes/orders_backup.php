@@ -98,7 +98,7 @@ class jibres_orders extends jibres_backup
 				// csv download url
 				printf('<a href="'.get_site_url().'/wp-content/plugins/wp-jibres/backup/'.$this->where_backup.'.csv" target="_blank">Download csv file</a><br><br>');
 			}
-			printf("All Orders Are Backuped<br><br>");
+			printf("All Orders Are Backed up<br><br>");
 		}
 	
 	}
