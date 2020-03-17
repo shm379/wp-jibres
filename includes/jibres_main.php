@@ -3,7 +3,7 @@
 <?php if ( $this_wis == 'csv' ) : ?>
 
 	<?php function csv_del( $items, $item, $dis = null ) { ?>
-		<form onsubmit="return confirm('Do you really want to delete csv file of <?php echo $items; ?> backup?');" action method="post" style="display: inline;">
+		<form onsubmit="return confirm('Do you really want to delete csv file of <?php echo $items; ?> backup?');" action="?page=jibres" method="post" style="display: inline;">
 		<input type="hidden" name="csvdel" value="<?php echo $items; ?>_<?php echo $item; ?>">
 		<input type="submit" class="dbt" value="Delete" <?php echo $dis ?>>
 		</form>
@@ -12,7 +12,7 @@
 <?php else : ?>
 
 	<?php function api_del() { ?>
-		<form onsubmit="return confirm('Do you really want to delete your jibres api informations?');" action method="post" style="display: inline;">
+		<form onsubmit="return confirm('Do you really want to delete your jibres api informations?');" action="?page=jibres" method="post" style="display: inline;">
 		<input type="hidden" name="changit" value="start_again">
 		<input type="submit" class="jbt" value="Change my jibres api informations">
 		</form>
