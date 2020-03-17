@@ -97,7 +97,7 @@ class jibres_categories extends jibres_backup
 			{
 				printf('<a href="'.get_site_url().'/wp-content/plugins/wp-jibres/backup/'.$this->where_backup.'.csv" target="_blank">Download csv file</a><br><br>');
 			}
-			header('Refresh: 4; url=?page=jibres');
+
 		}
 	
 	}

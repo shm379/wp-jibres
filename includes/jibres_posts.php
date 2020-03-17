@@ -1,4 +1,8 @@
 <?php 
+if ( ! empty( $_GET ) ) 
+{
+	unset($_GET);	
+}
 /**
  * @author Jibres
  */
