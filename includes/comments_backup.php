@@ -47,7 +47,7 @@ class jibres_comments extends jibres_backup
 			printf('<script>
 					function crsb(meq) {
 						document.getElementById("cprog").value = meq;
-						document.getElementById("cinof").innerHTML = meq + " of '.$all.' backuped";
+						document.getElementById("cinof").innerHTML = meq + " of '.$all.' backed up";
 					}
 					</script>');
 		}

@@ -44,7 +44,7 @@ class jibres_posts extends jibres_backup
 			printf('<script>
 					function srsb(meq) {
 						document.getElementById("sprog").value = meq;
-						document.getElementById("sinof").innerHTML = meq + " of '.$all.' backuped";
+						document.getElementById("sinof").innerHTML = meq + " of '.$all.' backed up";
 					}
 					</script>');
 		}

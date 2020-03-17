@@ -38,7 +38,7 @@ class jibres_orders extends jibres_backup
 			printf('<script>
 					function orsb(meq) {
 						document.getElementById("oprog").value = meq;
-						document.getElementById("oinof").innerHTML = meq + " of '.$all.' backuped";
+						document.getElementById("oinof").innerHTML = meq + " of '.$all.' backed up";
 					}
 					</script>');
 		}

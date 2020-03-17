@@ -40,7 +40,7 @@ class jibres_categories extends jibres_backup
 			printf('<script>
 					function trsb(meq) {
 						document.getElementById("tprog").value = meq;
-						document.getElementById("tinof").innerHTML = meq + " of '.$all.' backuped";
+						document.getElementById("tinof").innerHTML = meq + " of '.$all.' backed up";
 					}
 					</script>');
 		}

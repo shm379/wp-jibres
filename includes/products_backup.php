@@ -65,7 +65,7 @@ class jibres_products extends jibres_backup
 			printf('<script>
 					function prsb(meq) {
 						document.getElementById("pprog").value = meq;
-						document.getElementById("inof").innerHTML = meq + " of '.$all.' backuped";
+						document.getElementById("inof").innerHTML = meq + " of '.$all.' backed up";
 					}
 					</script>');
 		}
