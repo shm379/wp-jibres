@@ -61,7 +61,7 @@ class jibres_products extends jibres_backup
 
 		if ( $all != '0' ) 
 		{
-			printf('<p>Backuping products...</p>');
+			printf('<p>Backing up products...</p>');
 			printf('<progress id="pprog" value="0" max="'.$all.'" style="height: 3px;"></progress>  <a id="inof"></a><br><br>');
 			printf('<script>
 					function prsb(meq) {

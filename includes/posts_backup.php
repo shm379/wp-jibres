@@ -39,7 +39,7 @@ class jibres_posts extends jibres_backup
 
 		if ( $all != '0' ) 
 		{
-			printf('<p>Backuping posts...</p>');
+			printf('<p>Backing up posts...</p>');
 			printf('<progress id="sprog" value="0" max="'.$all.'" style="height: 3px;"></progress>  <a id="sinof"></a><br><br>');
 			printf('<script>
 					function srsb(meq) {

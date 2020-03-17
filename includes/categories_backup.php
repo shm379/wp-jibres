@@ -35,7 +35,7 @@ class jibres_categories extends jibres_backup
 
 		if ( $all != '0' ) 
 		{
-			printf('<p>Backuping categories...</p>');
+			printf('<p>Backing up categories...</p>');
 			printf('<progress id="tprog" value="0" max="'.$all.'" style="height: 3px;"></progress>  <a id="tinof"></a><br><br>');
 			printf('<script>
 					function trsb(meq) {
