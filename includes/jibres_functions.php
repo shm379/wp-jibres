@@ -386,11 +386,11 @@ function jibres_informations_b( $item, $table, $cat, $where = [], $first = false
 		
 		if ($sdata == '0') 
 		{
-			$ex['s'] = ' <a style="color: green;">all of your '.$cat.'s backed up</a>';
+			$ex['s'] = '<a style="color: green;">all of your '.$cat.'s backed up</a>';
 		}
 		else
 		{
-			$ex['s'] = ' <a style="color: #c80a5a;">'.$sdata.' not backed up</a>';
+			$ex['s'] = '<a style="color: #c80a5a;">'.$sdata.' not backed up</a>';
 		}
 		
 	}
