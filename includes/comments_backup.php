@@ -19,6 +19,7 @@ class jibres_comments extends jibres_backup
 		if (create_jibres_table() === true) 
 		{
 			$this->this_jibres_wis = jibres_wis();
+			$this->where_backup = 'comments';
 			$this->create_pbr();
 			$this->get_comment_data();
 		}
@@ -90,11 +91,7 @@ class jibres_comments extends jibres_backup
 				$changed = $this->backup_arr_sort( $value, self::$jibres_stantard_comments_array );
 				
 				// backup this product
-				if ( $this->this_jibres_wis == 'csv' )
-				{
-					$this->where_backup = 'comments';
-				}
-				elseif ( $this->this_jibres_wis == 'api' )
+				if ( $this->this_jibres_wis == 'api' )
 				{
 					$this->where_backup = '/product/' . $this->get_jibres_id( $value['comment_post_ID'], 'product' ) . '/comment/add';
 				}
