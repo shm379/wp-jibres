@@ -384,6 +384,7 @@ function jibres_informations_b( $item, $table, $cat, $where = [], $first = false
 	
 		$ex['a'] = $all;
 		$ex['f'] = $cat;
+		$ex['n'] = $sdata;
 		
 		if ($sdata == '0') 
 		{
