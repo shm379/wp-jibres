@@ -395,7 +395,7 @@ function jibres_informations_b( $item, $table, $cat, $where = [] )
 	}
 	else
 	{
-		$exp = 'You have not any '.$cat;
+		$exp['s'] = 'You have not any '.$cat;
 	}
 
 	return $exp;
