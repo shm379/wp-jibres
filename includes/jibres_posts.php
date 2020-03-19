@@ -36,9 +36,16 @@ class jibres_posts
 	{
 		if ( ! empty( self::$data['store'] ) and ! empty( self::$data['appkey'] ) and ! empty( self::$data['phone'] ) ) 
 		{
-			$data_posted = ['store' => self::$data['store'], 'appkey' => self::$data['appkey'], 'phone_number' => self::$data['phone'], 'wis' => self::$data['weris']];
-			require_once JIBRES_INC. 'jibres_api.php';
-			Jibres::jibres_login( $data_posted );
+			if ( strlen( self::$data['store'] ) == 6 and strlen( self::$data['appkey'] ) == 32 and strlen( self::$data['phone'] ) == 12 and is_numeric( self::$data['phone'] ) ) 
+			{
+				$data_posted = ['store' => self::$data['store'], 'appkey' => self::$data['appkey'], 'phone_number' => self::$data['phone'], 'wis' => self::$data['weris']];
+				require_once JIBRES_INC. 'jibres_api.php';
+				Jibres::jibres_login( $data_posted );
+			}
+			else
+			{
+				printf('<div class="updated" style="border-left-color: #c0392b;"><br>Error for input data!<a href="?page=jibres" class="jibres_notif_close">close</a><br><br></div>');
+			}
 		}
 		elseif ( ! empty( self::$data['weris'] ) )
 		{

@@ -77,6 +77,7 @@ class Jibres
 					<input type="number" name="jibresverifycode" placeholder="Your code"><br><br>
 					<input type="submit" value="submit" class="bt">
 					</form>');
+			exit();
 		}
 		else
 		{
