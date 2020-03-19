@@ -38,7 +38,11 @@
 	<td><?php echo $info_b['f']; ?></td>
 	<td><?php echo $info_b['a']; ?></td>
 	<td><?php echo $info_b['s']; ?></td>
-	<td><a href="?page=jibres&jibres=products_backup"><button class="button" style="vertical-align: unset;">Backup</button></a></td>
+	<?php if ( $info_b['a'] != 0 ) : ?>
+		<td><a href="?page=jibres&jibres=products_backup"><button class="button" style="vertical-align: unset;">Backup</button></a></td>
+	<?php else : ?>
+		<td><a href="?page=jibres&jibres=products_backup"><button class="button" style="vertical-align: unset;" disabled>Backup</button></a></td>
+	<?php endif; ?>
 	<?php if ( function_exists('csv_del') ) : ?>
 		<?php if ( $info_b['n'] != $info_b['a'] ) : ?>
 			<td><?php csv_del( 'products', 'product' ); ?></td>
@@ -52,7 +56,11 @@
 	<td><?php echo $info_b['f']; ?></td>
 	<td><?php echo $info_b['a']; ?></td>
 	<td><?php echo $info_b['s']; ?></td>
-	<td><a href="?page=jibres&jibres=orders_backup"><button class="button" style="vertical-align: unset;">Backup</button></a></td>
+	<?php if ( $info_b['a'] != 0 ) : ?>
+		<td><a href="?page=jibres&jibres=orders_backup"><button class="button" style="vertical-align: unset;">Backup</button></a></td>
+	<?php else : ?>
+		<td><a href="?page=jibres&jibres=orders_backup"><button class="button" style="vertical-align: unset;" disabled>Backup</button></a></td>
+	<?php endif; ?>
 	<?php if ( function_exists('csv_del') ) : ?>
 		<?php if ( $info_b['n'] != $info_b['a'] ) : ?>
 			<td><?php csv_del( 'orders', 'order' ); ?></td>
@@ -66,7 +74,11 @@
 	<td><?php echo $info_b['f']; ?></td>
 	<td><?php echo $info_b['a']; ?></td>
 	<td><?php echo $info_b['s']; ?></td>
-	<td><a href="?page=jibres&jibres=posts_backup"><button class="button" style="vertical-align: unset;">Backup</button></a></td>
+	<?php if ( $info_b['a'] != 0 ) : ?>
+		<td><a href="?page=jibres&jibres=posts_backup"><button class="button" style="vertical-align: unset;">Backup</button></a></td>
+	<?php else : ?>
+		<td><a href="?page=jibres&jibres=posts_backup"><button class="button" style="vertical-align: unset;" disabled>Backup</button></a></td>
+	<?php endif; ?>
 	<?php if ( function_exists('csv_del') ) : ?>
 		<?php if ( $info_b['n'] != $info_b['a'] ) : ?>
 			<td><?php csv_del( 'posts', 'post' ); ?></td>
@@ -92,7 +104,11 @@
 	<td><?php echo $info_b['f']; ?></td>
 	<td><?php echo $info_b['a']; ?></td>
 	<td><?php echo $info_b['s']; ?></td>
-	<td><a href="?page=jibres&jibres=comments_backup"><button class="button" style="vertical-align: unset;">Backup</button></a></td>
+	<?php if ( $info_b['a'] != 0 ) : ?>
+		<td><a href="?page=jibres&jibres=comments_backup"><button class="button" style="vertical-align: unset;">Backup</button></a></td>
+	<?php else : ?>
+		<td><a href="?page=jibres&jibres=comments_backup"><button class="button" style="vertical-align: unset;" disabled>Backup</button></a></td>
+	<?php endif; ?>
 	<?php if ( function_exists('csv_del') ) : ?>
 		<?php if ( $info_b['n'] != $info_b['a'] ) : ?>
 			<td><?php csv_del( 'comments', 'comment' ); ?></td>
@@ -106,7 +122,11 @@
 	<td><?php echo $info_b['f']; ?></td>
 	<td><?php echo $info_b['a']; ?></td>
 	<td><?php echo $info_b['s']; ?></td>
-	<td><a href="?page=jibres&jibres=categories_backup"><button class="button" style="vertical-align: unset;">Backup</button></a></td>
+	<?php if ( $info_b['a'] != 0 ) : ?>
+		<td><a href="?page=jibres&jibres=categories_backup"><button class="button" style="vertical-align: unset;">Backup</button></a></td>
+	<?php else : ?>
+		<td><a href="?page=jibres&jibres=categories_backup"><button class="button" style="vertical-align: unset;" disabled>Backup</button></a></td>
+	<?php endif; ?>
 	<?php if ( function_exists('csv_del') ) : ?>
 		<?php if ( $info_b['n'] != $info_b['a'] ) : ?>
 			<td><?php csv_del( 'categories', 'category' ); ?></td>

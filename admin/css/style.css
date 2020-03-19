@@ -40,6 +40,15 @@
 	color: #f1f1f1;
 }
 
+.dbt[disabled] {
+	color: #a0a5aa !important;
+	border-color: #ddd !important;
+	background: #f7f7f7 !important;
+	box-shadow: none !important;
+	text-shadow: 0 1px 0 #fff !important;
+	cursor: default;
+	transform: none !important;
+}
 .dbt {
 	display: inline-block;
 	padding: 0 10px;
