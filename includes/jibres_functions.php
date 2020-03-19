@@ -368,18 +368,17 @@ function jibres_informations_b( $item, $table, $cat, $where = [] )
 	$where = jibres_create_sql_where( $where );
 
 	$fdata = $wpdb->get_results( "SELECT COUNT($item) FROM $table WHERE $where" );
-
-
-	if ( ! empty( $fdata ) ) 
+	foreach ( $fdata as $key => $value ) 
 	{
-		foreach ( $fdata as $key => $value ) 
+		foreach ( $value as $key2 => $val ) 
 		{
-			foreach ( $value as $key2 => $val ) 
-			{
-				$all = $val;
-			}
+			$all = $val;
 		}
-	
+	}
+
+	if ( $all != '0' ) 
+	{
+		
 		$exp['a'] = $all;
 		$exp['f'] = $cat;
 		$exp['n'] = $sdata;
