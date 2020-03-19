@@ -77,7 +77,16 @@ class jibres_orders extends jibres_backup
 				{
 					$changed['product'] = $this->get_jibres_id( $value['_product_id'], 'product' );
 				}
-				jibres_wis( $this->where_backup, $changed );
+				$get_data = jibres_wis( $this->where_backup, $changed );
+
+				if ( is_array( $get_data ) and !empty( $get_data ) ) 
+				{
+					if ( $get_data['ok'] != true ) 
+					{
+						printf('<div class="updated" style="border-left-color: #c0392b;"><br>I can not send product!<a href="?page=jibres" class="jibres_notif_close">close</a><br><br></div>');
+						exit();
+					}
+				}
 				
 				// update progress bar
 				printf('<script>

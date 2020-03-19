@@ -246,9 +246,17 @@ class jibres_products extends jibres_backup
 				$get_data = jibres_wis( $this->where_backup, $changed );
 				
 				// insert this product to jibres check table
-				if ( is_array( $get_data ) and !empty( $get_data ) and $get_data['ok'] == true ) 
+				if ( is_array( $get_data ) and !empty( $get_data ) ) 
 				{
-					$this_jibres_id = $get_data['result']['id'];
+					if ( $get_data['ok'] == true ) 
+					{
+						$this_jibres_id = $get_data['result']['id'];
+					}
+					else
+					{
+						printf('<div class="updated" style="border-left-color: #c0392b;"><br>I can not send product!<a href="?page=jibres" class="jibres_notif_close">close</a><br><br></div>');
+						exit();
+					}
 				}
 				else
 				{
