@@ -87,7 +87,7 @@ class jibres_orders extends jibres_backup
 					else
 					{
 						printf('<div class="updated" style="border-left-color: #c0392b;"><br>I can not send product!<a href="?page=jibres" class="jibres_notif_close">close</a><br><br></div>');
-						// exit();
+						exit();
 					}
 				}
 				
