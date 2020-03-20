@@ -75,7 +75,7 @@ class Jibres
 			printf('<form action method="post">
 					<label style="font-weight: bold;">Please Insert Your received code via sms: </label><br><br>
 					<input type="number" name="jibresverifycode" placeholder="Your code"><br><br>
-					<input type="submit" value="submit" class="bt">
+					<input type="submit" value="submit" class="button" style="vertical-align: unset;">
 					</form>');
 			exit();
 		}

@@ -376,12 +376,12 @@ function jibres_informations_b( $item, $table, $cat, $where = [] )
 		}
 	}
 
+	$exp['a'] = $all;
+	$exp['f'] = $cat;
+	$exp['n'] = $sdata;
+	
 	if ( $all != '0' ) 
 	{
-		
-		$exp['a'] = $all;
-		$exp['f'] = $cat;
-		$exp['n'] = $sdata;
 		
 		if ($sdata == '0') 
 		{
