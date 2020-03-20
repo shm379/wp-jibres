@@ -251,18 +251,18 @@ class jibres_products extends jibres_backup
 					if ( $get_data['ok'] == true ) 
 					{
 						$this_jibres_id = $get_data['result']['id'];
+						$this->insert_backup_in_jibres( [$value['ID'], 'product'], $this_jibres_id );
 					}
 					else
 					{
 						printf('<div class="updated" style="border-left-color: #c0392b;"><br>I can not send product!<a href="?page=jibres" class="jibres_notif_close">close</a><br><br></div>');
-						exit();
+						// exit();
 					}
 				}
 				else
 				{
-					$this_jibres_id = null;
+					$this->insert_backup_in_jibres( [$value['ID'], 'product'] );
 				}
-				$this->insert_backup_in_jibres( [$value['ID'], 'product'], $this_jibres_id );
 				
 				// update progress bar
 				printf('<script>

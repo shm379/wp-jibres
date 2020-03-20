@@ -66,8 +66,6 @@ class jibres_orders extends jibres_backup
 				
 				$i++;
 				
-				// insert this product to jibres check table
-				$this->insert_backup_in_jibres( [$value['order_item_id'], 'order'] );
 				
 				// sort array by jibres products database design
 				$changed = $this->backup_arr_sort( $value, self::$jibres_stantard_order_array );
@@ -81,10 +79,15 @@ class jibres_orders extends jibres_backup
 
 				if ( is_array( $get_data ) and !empty( $get_data ) ) 
 				{
-					if ( $get_data['ok'] != true ) 
+					if ( $get_data['ok'] == true ) 
+					{
+						// insert this product to jibres check table
+						$this->insert_backup_in_jibres( [$value['order_item_id'], 'order'] );
+					}
+					else
 					{
 						printf('<div class="updated" style="border-left-color: #c0392b;"><br>I can not send product!<a href="?page=jibres" class="jibres_notif_close">close</a><br><br></div>');
-						exit();
+						// exit();
 					}
 				}
 				
