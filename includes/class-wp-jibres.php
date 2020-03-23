@@ -22,19 +22,16 @@ class run_jibres
 		global $wpdb;
 
 		$table = JIBRES_TABLE;
-		$check_jibres_table = $wpdb->get_results("SELECT * FROM $table WHERE id = '1'");
+		$check_jibres_table = $wpdb->get_results( "SELECT * FROM $table WHERE id = '1'", 'ARRAY_A' );
 
 		if ( ! empty($check_jibres_table) ) 
 		{
 			
 			$jibres_v = [];
 			
-			foreach ( $check_jibres_table as $key => $val ) 
+			foreach ( $check_jibres_table[0] as $key => $value ) 
 			{
-				foreach ( $val as $key2 => $val2 ) 
-				{
-					$jibres_v[$key2] = $val2;
-				}
+				$jibres_v[$key] = $value;
 			}
 			
 			if ( $jibres_v['wis'] == 'api' ) 
