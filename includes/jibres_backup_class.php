@@ -22,22 +22,19 @@ class jibres_backup
 				wers = 'api'
 		";
 
-		$results = $wpdb->get_results($query);
+		$results = $wpdb->get_results( $query, 'ARRAY_A' );
 	
-		foreach ($results as $key => $value) 
+		foreach ($results[0] as $key => $value) 
 		{
-			foreach ($value as $key2 => $val) 
+			if ($key == "jibres_id") 
 			{
-				if ($key2 == "jibres_id") 
+				if ( $value != null ) 
 				{
-					if ( $val != null ) 
-					{
-						$jibres_id = $val;
-					}
-					else
-					{
-						$jibres_id = null;
-					}
+					$jibres_id = $value;
+				}
+				else
+				{
+					$jibres_id = null;
 				}
 			}
 	

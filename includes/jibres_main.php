@@ -35,16 +35,16 @@
 <tbody>
 <tr>
 	<?php $info_b = jibres_informations_b( 'ID', 'posts', 'product', ['post_type'=>'product'] ); ?>
-	<td><?php echo $info_b['f']; ?></td>
-	<td><?php echo $info_b['a']; ?></td>
-	<td><?php echo $info_b['s']; ?></td>
-	<?php if ( $info_b['a'] != '0' ) : ?>
+	<td><?php echo $info_b['cat']; ?></td>
+	<td><?php echo $info_b['all']; ?></td>
+	<td><?php echo $info_b['status']; ?></td>
+	<?php if ( $info_b['all'] != '0' ) : ?>
 		<td><a href="?page=jibres&jibres=products_backup"><button class="button" style="vertical-align: unset;">Backup</button></a></td>
 	<?php else : ?>
 		<td><a href="?page=jibres&jibres=products_backup"><button class="button" style="vertical-align: unset;" disabled>Backup</button></a></td>
 	<?php endif; ?>
 	<?php if ( function_exists('csv_del') ) : ?>
-		<?php if ( $info_b['n'] != $info_b['a'] ) : ?>
+		<?php if ( $info_b['not_becked_up'] != $info_b['all'] ) : ?>
 			<td><?php csv_del( 'products', 'product' ); ?></td>
 		<?php else : ?>
 			<td><?php csv_del( 'products', 'product', 'disabled' ); ?></td>
@@ -53,16 +53,16 @@
 </tr>
 <tr>
 	<?php $info_b = jibres_informations_b( 'order_item_id', 'woocommerce_order_items', 'order' ); ?>
-	<td><?php echo $info_b['f']; ?></td>
-	<td><?php echo $info_b['a']; ?></td>
-	<td><?php echo $info_b['s']; ?></td>
-	<?php if ( $info_b['a'] != '0' ) : ?>
+	<td><?php echo $info_b['cat']; ?></td>
+	<td><?php echo $info_b['all']; ?></td>
+	<td><?php echo $info_b['status']; ?></td>
+	<?php if ( $info_b['all'] != '0' ) : ?>
 		<td><a href="?page=jibres&jibres=orders_backup"><button class="button" style="vertical-align: unset;">Backup</button></a></td>
 	<?php else : ?>
 		<td><a href="?page=jibres&jibres=orders_backup"><button class="button" style="vertical-align: unset;" disabled>Backup</button></a></td>
 	<?php endif; ?>
 	<?php if ( function_exists('csv_del') ) : ?>
-		<?php if ( $info_b['n'] != $info_b['a'] ) : ?>
+		<?php if ( $info_b['not_becked_up'] != $info_b['all'] ) : ?>
 			<td><?php csv_del( 'orders', 'order' ); ?></td>
 		<?php else : ?>
 			<td><?php csv_del( 'orders', 'order', 'disabled' ); ?></td>
@@ -71,16 +71,16 @@
 </tr>
 <tr>
 	<?php $info_b = jibres_informations_b( 'ID', 'posts', 'post', ['post_type'=>'post'] ); ?>
-	<td><?php echo $info_b['f']; ?></td>
-	<td><?php echo $info_b['a']; ?></td>
-	<td><?php echo $info_b['s']; ?></td>
-	<?php if ( $info_b['a'] != '0' ) : ?>
+	<td><?php echo $info_b['cat']; ?></td>
+	<td><?php echo $info_b['all']; ?></td>
+	<td><?php echo $info_b['status']; ?></td>
+	<?php if ( $info_b['all'] != '0' ) : ?>
 		<td><a href="?page=jibres&jibres=posts_backup"><button class="button" style="vertical-align: unset;">Backup</button></a></td>
 	<?php else : ?>
 		<td><a href="?page=jibres&jibres=posts_backup"><button class="button" style="vertical-align: unset;" disabled>Backup</button></a></td>
 	<?php endif; ?>
 	<?php if ( function_exists('csv_del') ) : ?>
-		<?php if ( $info_b['n'] != $info_b['a'] ) : ?>
+		<?php if ( $info_b['not_becked_up'] != $info_b['all'] ) : ?>
 			<td><?php csv_del( 'posts', 'post' ); ?></td>
 		<?php else : ?>
 			<td><?php csv_del( 'posts', 'post', 'disabled' ); ?></td>
@@ -101,16 +101,16 @@
 		}
 	?>
 	<?php $info_b = jibres_informations_b( 'comment_ID', 'comments', 'comment', $cwhere ); ?>
-	<td><?php echo $info_b['f']; ?></td>
-	<td><?php echo $info_b['a']; ?></td>
-	<td><?php echo $info_b['s']; ?></td>
-	<?php if ( $info_b['a'] != '0' ) : ?>
+	<td><?php echo $info_b['cat']; ?></td>
+	<td><?php echo $info_b['all']; ?></td>
+	<td><?php echo $info_b['status']; ?></td>
+	<?php if ( $info_b['all'] != '0' ) : ?>
 		<td><a href="?page=jibres&jibres=comments_backup"><button class="button" style="vertical-align: unset;">Backup</button></a></td>
 	<?php else : ?>
 		<td><a href="?page=jibres&jibres=comments_backup"><button class="button" style="vertical-align: unset;" disabled>Backup</button></a></td>
 	<?php endif; ?>
 	<?php if ( function_exists('csv_del') ) : ?>
-		<?php if ( $info_b['n'] != $info_b['a'] ) : ?>
+		<?php if ( $info_b['not_becked_up'] != $info_b['all'] ) : ?>
 			<td><?php csv_del( 'comments', 'comment' ); ?></td>
 		<?php else : ?>
 			<td><?php csv_del( 'comments', 'comment', 'disabled' ); ?></td>
@@ -119,16 +119,16 @@
 </tr>
 <tr>
 	<?php $info_b = jibres_informations_b( 'term_id', 'term_taxonomy', 'category', ['taxonomy'=>'product_cat'] ); ?>
-	<td><?php echo $info_b['f']; ?></td>
-	<td><?php echo $info_b['a']; ?></td>
-	<td><?php echo $info_b['s']; ?></td>
-	<?php if ( $info_b['a'] != '0' ) : ?>
+	<td><?php echo $info_b['cat']; ?></td>
+	<td><?php echo $info_b['all']; ?></td>
+	<td><?php echo $info_b['status']; ?></td>
+	<?php if ( $info_b['all'] != '0' ) : ?>
 		<td><a href="?page=jibres&jibres=categories_backup"><button class="button" style="vertical-align: unset;">Backup</button></a></td>
 	<?php else : ?>
 		<td><a href="?page=jibres&jibres=categories_backup"><button class="button" style="vertical-align: unset;" disabled>Backup</button></a></td>
 	<?php endif; ?>
 	<?php if ( function_exists('csv_del') ) : ?>
-		<?php if ( $info_b['n'] != $info_b['a'] ) : ?>
+		<?php if ( $info_b['not_becked_up'] != $info_b['all'] ) : ?>
 			<td><?php csv_del( 'categories', 'category' ); ?></td>
 		<?php else : ?>
 			<td><?php csv_del( 'categories', 'category', 'disabled' ); ?></td>

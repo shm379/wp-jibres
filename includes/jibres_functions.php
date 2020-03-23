@@ -126,14 +126,11 @@ function send_data_jibres( $where, $data = [], $token = false )
 	global $wpdb;
 
 	$jibres_table = JIBRES_TABLE;
-	$results = $wpdb->get_results( "SELECT * FROM $jibres_table" );
+	$results = $wpdb->get_results( "SELECT * FROM $jibres_table", 'ARRAY_A' );
 	$arr_results = [];
-	foreach ( $results as $key => $val ) 
+	foreach ( $results[0] as $key => $value ) 
 	{
-		foreach ( $val as $key2 => $val2 ) 
-		{
-			$arr_results[$key2] = $val2;
-		}
+		$arr_results[$key] = $value;
 	}
 	$store = $arr_results['store'];
 	$appkey = $arr_results['appkey'];
@@ -250,16 +247,13 @@ function jibres_wis( $item = null, $data = null )
 	global $wpdb;
 
 	$jibres_table = JIBRES_TABLE;
-	$results = $wpdb->get_results("SELECT wis FROM $jibres_table");
+	$results = $wpdb->get_results( "SELECT wis FROM $jibres_table", 'ARRAY_A' );
 
-	foreach ( $results as $key => $value ) 
+	foreach ( $results[0] as $key => $value ) 
 	{
-		foreach ( $value as $key => $val ) 
+		if ( $key == "wis" ) 
 		{
-			if ( $key == "wis" ) 
-			{
-				$weris = $val;
-			}
+			$weris = $value;
 		}
 
 	}
@@ -340,14 +334,11 @@ function jibres_get_not_backuped( $item, $table, $cat, $where = [] )
 				SELECT item_id FROM $jibres_ctable WHERE type = '$cat' AND backuped = 1 AND wers = '$wb'
 			)
 	";
-	$data = $wpdb->get_results( $query );
+	$data = $wpdb->get_results( $query, 'ARRAY_A' );
 
-	foreach ( $data as $key => $value ) 
+	foreach ( $data[0] as $key => $value ) 
 	{
-		foreach ( $value as $vkey => $val ) 
-		{
-			$not_b = $val;
-		}
+		$not_b = $value;
 	}
 
 	return $not_b;
@@ -367,35 +358,32 @@ function jibres_informations_b( $item, $table, $cat, $where = [] )
 	$table = $wpdb->prefix. $table;
 	$where = jibres_create_sql_where( $where );
 
-	$fdata = $wpdb->get_results( "SELECT COUNT($item) FROM $table WHERE $where" );
-	foreach ( $fdata as $key => $value ) 
+	$fdata = $wpdb->get_results( "SELECT COUNT($item) FROM $table WHERE $where", 'ARRAY_A' );
+	foreach ( $fdata[0] as $key => $value ) 
 	{
-		foreach ( $value as $key2 => $val ) 
-		{
-			$all = $val;
-		}
+		$all = $value;
 	}
 
-	$exp['a'] = $all;
-	$exp['f'] = $cat;
-	$exp['n'] = $sdata;
+	$exp['all'] = $all;
+	$exp['cat'] = $cat;
+	$exp['not_becked_up'] = $sdata;
 	
 	if ( $all != '0' ) 
 	{
 		
 		if ($sdata == '0') 
 		{
-			$exp['s'] = '<a style="color: green;">all of your '.$cat.'s backed up</a>';
+			$exp['status'] = '<a style="color: green;">all of your '.$cat.'s backed up</a>';
 		}
 		else
 		{
-			$exp['s'] = '<a style="color: #c80a5a;">'.$sdata.' not backed up</a>';
+			$exp['status'] = '<a style="color: #c80a5a;">'.$sdata.' not backed up</a>';
 		}
 		
 	}
 	else
 	{
-		$exp['s'] = 'You have not any '.$cat;
+		$exp['status'] = 'You have not any '.$cat;
 	}
 
 	return $exp;
