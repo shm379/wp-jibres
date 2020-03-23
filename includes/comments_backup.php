@@ -91,7 +91,19 @@ class jibres_comments extends jibres_backup
 				// backup this product
 				if ( $this->this_jibres_wis == 'api' )
 				{
-					$this->where_backup = '/product/' . $this->get_jibres_id( $value['comment_post_ID'], 'product' ) . '/comment/add';
+					$this_jibres_id = $this->get_jibres_id( $value['comment_post_ID'], 'product' );
+					
+					if ( $this_jibres_id != null ) 
+					{
+						$this->where_backup = '/product/' . $this_jibres_id . '/comment/add';
+					}
+					else
+					{
+						printf('<div class="updated" style="border-left-color: #c0392b;"><br>' . 
+								'Product of comment not found!'	. 
+						 		'<a href="?page=jibres" class="jibres_notif_close">close</a><br><br></div>');
+						exit();
+					}
 				}
 				
 				$get_data = jibres_wis( $this->where_backup, $changed );
