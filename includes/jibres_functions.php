@@ -364,9 +364,17 @@ function jibres_informations_b( $item, $table, $cat, $where = [] )
 		$all = $value;
 	}
 
+	$j_date = $wpdb->get_results( "SELECT time FROM $jibres_ctable WHERE type='$cat' AND wers='$wb' ORDER BY id DESC LIMIT 1", 'ARRAY_N' );
+	foreach ( $j_date[0] as $value ) 
+	{
+		$j_date = $value;
+	}
+
+
 	$exp['all'] = $all;
 	$exp['cat'] = $cat;
 	$exp['not_becked_up'] = $sdata;
+	$exp['datetime'] = $j_date;
 	
 	if ( $all != '0' ) 
 	{

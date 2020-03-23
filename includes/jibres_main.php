@@ -26,6 +26,7 @@
 		<th id="type" class="manage-column"><a><span>Type</span></a></th>
 		<th id="count" class="manage-column"><a><span>Count</span></a></th>
 		<th id="status" class="manage-column"><a><span>Status</span></a></th>
+		<th id="status" class="manage-column"><a><span>Time</span></a></th>
 		<th id="backup" class="manage-column"><a><span>Backup</span></a></th>
 		<?php if ( function_exists('csv_del') ) : ?>
 		<th id="delete" class="manage-column"><a><span>Delete</span></a></th>
@@ -38,6 +39,7 @@
 	<td><?php echo $info_b['cat']; ?></td>
 	<td><?php echo $info_b['all']; ?></td>
 	<td><?php echo $info_b['status']; ?></td>
+	<td><?php echo ( ! empty( $info_b['datetime'] ) ) ? $info_b['datetime'] : '-'; ?></td>
 	<?php if ( $info_b['all'] != '0' ) : ?>
 		<td><a href="?page=jibres&jibres=products_backup"><button class="button" style="vertical-align: unset;">Backup</button></a></td>
 	<?php else : ?>
@@ -56,6 +58,7 @@
 	<td><?php echo $info_b['cat']; ?></td>
 	<td><?php echo $info_b['all']; ?></td>
 	<td><?php echo $info_b['status']; ?></td>
+	<td><?php echo ( ! empty( $info_b['datetime'] ) ) ? $info_b['datetime'] : '-'; ?></td>
 	<?php if ( $info_b['all'] != '0' ) : ?>
 		<td><a href="?page=jibres&jibres=orders_backup"><button class="button" style="vertical-align: unset;">Backup</button></a></td>
 	<?php else : ?>
@@ -74,6 +77,7 @@
 	<td><?php echo $info_b['cat']; ?></td>
 	<td><?php echo $info_b['all']; ?></td>
 	<td><?php echo $info_b['status']; ?></td>
+	<td><?php echo ( ! empty( $info_b['datetime'] ) ) ? $info_b['datetime'] : '-'; ?></td>
 	<?php if ( $info_b['all'] != '0' ) : ?>
 		<td><a href="?page=jibres&jibres=posts_backup"><button class="button" style="vertical-align: unset;">Backup</button></a></td>
 	<?php else : ?>
@@ -104,6 +108,7 @@
 	<td><?php echo $info_b['cat']; ?></td>
 	<td><?php echo $info_b['all']; ?></td>
 	<td><?php echo $info_b['status']; ?></td>
+	<td><?php echo ( ! empty( $info_b['datetime'] ) ) ? $info_b['datetime'] : '-'; ?></td>
 	<?php if ( $info_b['all'] != '0' ) : ?>
 		<td><a href="?page=jibres&jibres=comments_backup"><button class="button" style="vertical-align: unset;">Backup</button></a></td>
 	<?php else : ?>
@@ -122,6 +127,7 @@
 	<td><?php echo $info_b['cat']; ?></td>
 	<td><?php echo $info_b['all']; ?></td>
 	<td><?php echo $info_b['status']; ?></td>
+	<td><?php echo ( ! empty( $info_b['datetime'] ) ) ? $info_b['datetime'] : '-'; ?></td>
 	<?php if ( $info_b['all'] != '0' ) : ?>
 		<td><a href="?page=jibres&jibres=categories_backup"><button class="button" style="vertical-align: unset;">Backup</button></a></td>
 	<?php else : ?>
@@ -141,6 +147,7 @@
 		<th id="type" class="manage-column"><a><span>Type</span></a></th>
 		<th id="count" class="manage-column"><a><span>Count</span></a></th>
 		<th id="status" class="manage-column"><a><span>Status</span></a></th>
+		<th id="status" class="manage-column"><a><span>Time</span></a></th>
 		<th id="backup" class="manage-column"><a><span>Backup</span></a></th>
 		<?php if ( function_exists('csv_del') ) : ?>
 		<th id="delete" class="manage-column"><a><span>Delete</span></a></th>
