@@ -95,7 +95,7 @@ class jibres_comments extends jibres_backup
 					
 					if ( $this_jibres_id != null ) 
 					{
-						$this->where_backup = '/product/' . $this_jibres_id . '/comment/add';
+						$this->where_backup = '/product/comment/add?id=' . $this_jibres_id;
 					}
 					else
 					{
