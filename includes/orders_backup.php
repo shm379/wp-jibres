@@ -86,7 +86,8 @@ class jibres_orders extends jibres_backup
 					}
 					else
 					{
-						$error = 'JIBRES ERROR: > order code: ' . $value['order_item_id'] . ' > ' . json_encode( $get_data, JSON_UNESCAPED_UNICODE ) . "\n\n";
+						$date = new DateTime("now");
+						$error = 'JIBRES ERROR: [' . $date->format('Y-m-d H:i:s') . '] > order code: ' . $value['order_item_id'] . ' > ' . json_encode( $get_data, JSON_UNESCAPED_UNICODE ) . "\n\n";
 						file_put_contents( JIBRES_DIR . 'error_log.txt', $error, FILE_APPEND );
 						
 						printf('<div class="updated" style="border-left-color: #c0392b;"><br>' . 
