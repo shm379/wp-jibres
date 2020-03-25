@@ -187,7 +187,22 @@ class jibres_products extends jibres_backup
 		}
 
 
-		$ct = implode(', ', $data);
+		if ( $this->this_jibres_wis == 'api' ) 
+		{
+			if ( $cort == 'product_tag' ) 
+			{
+				$ct = $data;
+			}
+			elseif ( $cort == 'product_cat' ) 
+			{
+				$ct = $data[0];
+			}
+		}
+		else
+		{
+			$ct = implode(', ', $data);
+		}
+
 		return $ct;
 
 	}
@@ -232,7 +247,6 @@ class jibres_products extends jibres_backup
 			foreach ( $data as $value ) 
 			{
 				$i++;
-				
 				// sort array by jibres products database design
 				$changed = $this->backup_arr_sort( $value, self::$jibres_stantard_product_array, ["onsale"=>["1"=>'available', "0"=>'unavailable']] );
 				$cat_and_tag = $this->get_product_cat_tag( $value['ID'] );

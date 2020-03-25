@@ -5,6 +5,17 @@ define( 'JIBRES_TABLE', $wpdb->prefix. 'jibres' );
 define( 'JIBRES_CTABLE', $wpdb->prefix. 'jibres_check' );
 
 
+function dump_json($_data)
+{
+  @header("Content-Type: application/json; charset=utf-8");
+  if(is_array($_data))
+  {
+    $_data = json_encode($_data, JSON_UNESCAPED_UNICODE);
+  }
+  echo $_data;
+  exit();
+}
+
 // check jibres information exist or if update argument equal to start_again delete jibres table to start plugin again (reset plugin)
 function ch_jibres_store_data( $update = null )
 {
@@ -164,13 +175,13 @@ function send_data_jibres( $where, $data = [], $token = false )
 	// send data with curl
 	$ch = curl_init();
 
-	curl_setopt($ch, CURLOPT_URL, "https://api.jibres.ir/".$store."/v2".$where);
+	curl_setopt($ch, CURLOPT_URL, "https://api.jibres.com/".$store."/v2".$where);
 	// curl_setopt($ch, CURLOPT_HEADER, TRUE);
 	curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
 	curl_setopt($ch, CURLOPT_POST, TRUE);
 	if (!empty($data)) 
 	{
-		curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
+		curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data, JSON_UNESCAPED_UNICODE));
 	}
 	//FALSE to stop cURL from verifying the peer's certificate
     curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, TRUE);
