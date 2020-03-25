@@ -269,9 +269,8 @@ class jibres_products extends jibres_backup
 					}
 					else
 					{
-						$date = new DateTime("now");
-						$error = 'JIBRES ERROR: [' . $date->format('Y-m-d H:i:s') . '] > product code: ' . $value['ID'] . ' > ' . json_encode( $get_data, JSON_UNESCAPED_UNICODE ) . "\n\n";
-						file_put_contents( JIBRES_DIR . 'error_log.txt', $error, FILE_APPEND );
+						$error = 'product code: ' . $value['ID'] . ' > ' . json_encode( $get_data, JSON_UNESCAPED_UNICODE );
+						jibres_error_log( 'product_backup', $error );
 
 						printf('<div class="updated" style="border-left-color: #c0392b;"><br>' . 
 								$get_data['msg'][0]['text'] . 

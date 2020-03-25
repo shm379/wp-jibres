@@ -16,6 +16,14 @@ function dump_json($_data)
   exit();
 }
 
+
+// jibres error logging to error_log.txt
+function jibres_error_log( $where, $er )
+{
+	$error = 'JIBRES ERROR: [' . date("Y-m-d H:i:s") . '] > ' . ' «' . $where . '» ' . $er . "\n\n";
+	file_put_contents( JIBRES_DIR . 'error_log.txt', $error, FILE_APPEND );
+}
+
 // check jibres information exist or if update argument equal to start_again delete jibres table to start plugin again (reset plugin)
 function ch_jibres_store_data( $update = null )
 {
