@@ -158,7 +158,7 @@
 <br><br>
 <a href="?page=jibres&jibres=backup_all"><button class="button">Backup All Data</button></a>
 <?php if ( function_exists('api_del') ) { api_del(); } ?>
-<a style="float: right;" href="<?php echo get_site_url().'/wp-content/plugins/wp-jibres/error_log.txt'; ?>">error log</a>
+<a style="float: right;" href="<?php echo get_site_url().'/wp-content/plugins/wp-jibres/error_log.txt'; ?>" target="_blank">error log</a>
 
 
 
