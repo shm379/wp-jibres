@@ -1,2 +1,0 @@
-JIBRES ERROR: > {"ok":false,"msg":[{"type":"error","text":"شما باید فقط از حروف و اعداد لاتین در کد محصول استفاده کنید","meta":{"element":"sku"}},{"type":"error","text":"Field کلیدواژه must be array","meta":{"element":"tag"}},{"type":"error","text":"Needless arguments was received!"}]}
-
