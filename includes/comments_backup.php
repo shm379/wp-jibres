@@ -117,6 +117,9 @@ class jibres_comments extends jibres_backup
 					}
 					else
 					{
+						$error = 'JIBRES ERROR: > ' . json_encode( $get_data, JSON_UNESCAPED_UNICODE ) . "\n\n";
+						file_put_contents( JIBRES_DIR . 'error_log.txt', $error, FILE_APPEND );
+						
 						printf('<div class="updated" style="border-left-color: #c0392b;"><br>' . 
 								$get_data['msg'][0]['text']	. 
 						 		'<a href="?page=jibres" class="jibres_notif_close">close</a><br><br></div>');
