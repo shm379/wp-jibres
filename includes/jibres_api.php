@@ -22,6 +22,7 @@ class Jibres
 		}
 		else
 		{
+			jibres_error_log( 'api_connect', json_encode( $get_data, JSON_UNESCAPED_UNICODE ) );
 			return false;
 		}
 	}
@@ -47,6 +48,7 @@ class Jibres
 		}
 		else
 		{
+			jibres_error_log( 'api_connect', json_encode( $get_data, JSON_UNESCAPED_UNICODE ) );
 			header("Refresh:0");
 		}
 	}
@@ -81,6 +83,7 @@ class Jibres
 		}
 		else
 		{
+			jibres_error_log( 'api_connect', json_encode( $get_data, JSON_UNESCAPED_UNICODE ) );
 			header("Refresh:0");
 		}
 	}
@@ -134,6 +137,11 @@ class Jibres
 
 			header("Refresh:0");
 
+		}
+		else
+		{
+			jibres_error_log( 'api_connect', json_encode( $get_data, JSON_UNESCAPED_UNICODE ) );
+			header("Refresh:0");
 		}
 	}
 }
