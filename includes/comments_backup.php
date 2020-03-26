@@ -112,7 +112,7 @@ class jibres_comments extends jibres_backup
 				{
 					if ( $get_data['ok'] == true ) 
 					{
-						// insert this product to jibres check table
+						// insert this comment to jibres check table
 						$this->insert_backup_in_jibres( [$value['comment_ID'], 'comment'] );
 					}
 					else
@@ -125,6 +125,11 @@ class jibres_comments extends jibres_backup
 						 		'<a href="?page=jibres" class="jibres_notif_close">close</a><br><br></div>');
 						exit();
 					}
+				}
+				elseif ( $get_data == true )
+				{
+					// insert this comment to jibres check table
+					$this->insert_backup_in_jibres( [$value['comment_ID'], 'comment'] );
 				}
 				
 

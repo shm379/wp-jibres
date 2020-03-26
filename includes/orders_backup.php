@@ -81,7 +81,7 @@ class jibres_orders extends jibres_backup
 				{
 					if ( $get_data['ok'] == true ) 
 					{
-						// insert this product to jibres check table
+						// insert this order to jibres check table
 						$this->insert_backup_in_jibres( [$value['order_item_id'], 'order'] );
 					}
 					else
@@ -94,6 +94,11 @@ class jibres_orders extends jibres_backup
 						 		'<a href="?page=jibres" class="jibres_notif_close">close</a><br><br></div>');
 						exit();
 					}
+				}
+				elseif ( $get_data == true )
+				{
+					// insert this order to jibres check table
+					$this->insert_backup_in_jibres( [$value['order_item_id'], 'order'] );
 				}
 				
 				// update progress bar
