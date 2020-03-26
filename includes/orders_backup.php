@@ -77,11 +77,11 @@ class jibres_orders extends jibres_backup
 				}
 				$get_data = jibres_wis( $this->where_backup, $changed );
 
+				// insert this order to jibres check table
 				if ( is_array( $get_data ) and !empty( $get_data ) ) 
 				{
 					if ( $get_data['ok'] == true ) 
 					{
-						// insert this order to jibres check table
 						$this->insert_backup_in_jibres( [$value['order_item_id'], 'order'] );
 					}
 					else
@@ -97,7 +97,6 @@ class jibres_orders extends jibres_backup
 				}
 				elseif ( $get_data == true )
 				{
-					// insert this order to jibres check table
 					$this->insert_backup_in_jibres( [$value['order_item_id'], 'order'] );
 				}
 				

@@ -108,11 +108,11 @@ class jibres_comments extends jibres_backup
 				
 				$get_data = jibres_wis( $this->where_backup, $changed );
 
+				// insert this comment to jibres check table
 				if ( is_array( $get_data ) and !empty( $get_data ) ) 
 				{
 					if ( $get_data['ok'] == true ) 
 					{
-						// insert this comment to jibres check table
 						$this->insert_backup_in_jibres( [$value['comment_ID'], 'comment'] );
 					}
 					else
@@ -128,7 +128,6 @@ class jibres_comments extends jibres_backup
 				}
 				elseif ( $get_data == true )
 				{
-					// insert this comment to jibres check table
 					$this->insert_backup_in_jibres( [$value['comment_ID'], 'comment'] );
 				}
 				
