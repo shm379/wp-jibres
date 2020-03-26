@@ -17,6 +17,81 @@ function dump_json($_data)
 }
 
 
+function jibres_mail_backup( $file_name )
+{
+	global $wpdb;
+
+	$table = $wpdb->prefix . "users";
+	$query = 
+	"
+		SELECT 
+			user_email
+		FROM 
+			$table
+		WHERE
+			ID = 1
+	";
+	$results = $wpdb->get_results( $query, 'ARRAY_N' );
+	
+	$mailTo = $results[0][0];
+
+    $message = "Csv file of " . $file_name . "backup";
+    $subject    = "wp-jibres " . $file_name . " backup";
+	$fromName = "Jibres";
+	$fromMail = "info@jibres.com";
+    $replyTo    = "no-reply";
+    $filePath = JIBRES_DIR . "backup/" . $file_name . ".csv";
+    $LE  = "\r\n";
+    $uid = md5(uniqid(time()));
+    $withAttachment = ($filePath !== NULL && file_exists($filePath));
+
+    if($withAttachment)
+    {
+        $fileName   = basename($filePath);
+        $fileSize   = filesize($filePath);
+        $handle     = fopen($filePath, "r");
+        $content    = fread($handle, $fileSize);
+        fclose($handle);
+        $content = chunk_split(base64_encode($content));
+    }
+
+    $header = "From: ".$fromName." <".$fromMail.">$LE";
+    $header .= "Reply-To: ".$replyTo."$LE";
+    $header .= "MIME-Version: 1.0$LE";
+    $header .= "Content-Type: multipart/mixed; boundary=\"".$uid."\"$LE$LE";
+    $header .= "This is a multi-part message in MIME format.$LE";
+    $header .= "--".$uid."$LE";
+    $header .= "Content-type:text/html; charset=UTF-8$LE";
+    $header .= "Content-Transfer-Encoding: 7bit$LE$LE";
+    $header .= $message."$LE$LE";
+
+    if($withAttachment)
+    {
+        $header .= "--".$uid."$LE";
+        $header .= "Content-Type: application/octet-stream; name=\"".$fileName."\"$LE";
+        $header .= "Content-Transfer-Encoding: base64$LE";
+        $header .= "Content-Disposition: attachment; filename=\"".$fileName."\"$LE$LE";
+        $header .= $content."$LE$LE";
+        $header .= "--".$uid."--";
+    }
+
+    return mail($mailTo, $subject, "", $header);
+}
+
+
+function jibres_auto_mail()
+{
+	global $wpdb;
+
+	$table = JIBRES_TABLE;
+	$check_auto_mail_res = $wpdb->get_results( "SELECT a_mail FROM $table WHERE id = 1", 'ARRAY_N' );
+	$check_auto_mail = $check_auto_mail_res[0][0];
+	$auto_mail = ( $check_auto_mail == '1' ) ? true : false;
+
+	return $auto_mail;
+}
+
+
 // jibres error logging to error_log.txt
 function jibres_error_log( $where, $er )
 {
@@ -89,6 +164,7 @@ function create_jibres_table( $tname = JIBRES_CTABLE )
 		  		 	   apikey varchar(32) DEFAULT NULL,
 		  		 	   phone_number varchar(20) DEFAULT NULL,
 		  		 	   login tinyint(1) DEFAULT '0',
+		  		 	   a_mail tinyint(1) DEFAULT '0',
 		  		 	   wis varchar(55) NOT NULL,
 		  		 	   PRIMARY KEY  (id)
 				 	   ) $charset_collate;";
@@ -266,16 +342,9 @@ function jibres_wis( $item = null, $data = null )
 	global $wpdb;
 
 	$jibres_table = JIBRES_TABLE;
-	$results = $wpdb->get_results( "SELECT wis FROM $jibres_table", 'ARRAY_A' );
+	$results = $wpdb->get_results( "SELECT wis FROM $jibres_table", 'ARRAY_N' );
 
-	foreach ( $results[0] as $key => $value ) 
-	{
-		if ( $key == "wis" ) 
-		{
-			$weris = $value;
-		}
-
-	}
+	$weris = $results[0][0];
 
 	if ( $item == null and $data == null ) 
 	{
@@ -353,12 +422,9 @@ function jibres_get_not_backuped( $item, $table, $cat, $where = [] )
 				SELECT item_id FROM $jibres_ctable WHERE type = '$cat' AND backuped = 1 AND wers = '$wb'
 			)
 	";
-	$data = $wpdb->get_results( $query, 'ARRAY_A' );
+	$data = $wpdb->get_results( $query, 'ARRAY_N' );
 
-	foreach ( $data[0] as $key => $value ) 
-	{
-		$not_b = $value;
-	}
+	$not_b = $data[0][0];
 
 	return $not_b;
 
@@ -377,17 +443,11 @@ function jibres_informations_b( $item, $table, $cat, $where = [] )
 	$table = $wpdb->prefix. $table;
 	$where = jibres_create_sql_where( $where );
 
-	$fdata = $wpdb->get_results( "SELECT COUNT($item) FROM $table WHERE $where", 'ARRAY_A' );
-	foreach ( $fdata[0] as $key => $value ) 
-	{
-		$all = $value;
-	}
+	$fdata = $wpdb->get_results( "SELECT COUNT($item) FROM $table WHERE $where", 'ARRAY_N' );
+	$all = $fdata[0][0];
 
 	$j_date = $wpdb->get_results( "SELECT time FROM $jibres_ctable WHERE type='$cat' AND wers='$wb' ORDER BY id DESC LIMIT 1", 'ARRAY_N' );
-	foreach ( $j_date[0] as $value ) 
-	{
-		$j_date = $value;
-	}
+	$j_date = $j_date[0][0];
 
 
 	$exp['all'] = $all;

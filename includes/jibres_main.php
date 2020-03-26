@@ -1,3 +1,4 @@
+<?php global $wpdb; ?>
 <?php $this_wis = jibres_wis(); ?>
 
 <?php if ( $this_wis == 'csv' ) : ?>
@@ -67,7 +68,6 @@
 	<?php 
 		if ( $this_wis != 'csv' ) 
 		{
-			global $wpdb;
 			$table = $wpdb->prefix. 'posts';
 			$cwhere = "comment_post_ID IN (SELECT ID FROM $table WHERE post_type='product')";
 		}
@@ -101,6 +101,18 @@
 <br><br>
 <a href="?page=jibres&jibres=backup_all"><button class="button">Backup All Data</button></a>
 <?php if ( function_exists('api_del') ) { api_del(); } ?>
+<?php if ( $this_wis == 'csv' ) : ?>
+	<form action="?page=jibres" method="post" style="display: inline;">
+	<?php $check_auto_mail = jibres_auto_mail(); ?>
+	<?php if ( $check_auto_mail == true ) : ?>
+		<input type="hidden" name="change_auto_mail" value="del">
+		<input type="submit" class="bt" value="I dont want to send files as mail auto">
+	<?php else : ?>
+		<input type="hidden" name="change_auto_mail" value="add">
+		<input type="submit" class="bt" value="I want to send files as mail auto">
+	<?php endif; ?>
+	</form>
+<?php endif; ?>
 <a style="float: right;" href="<?php echo get_site_url().'/wp-content/plugins/wp-jibres/error_log.txt'; ?>" target="_blank">error log</a>
 
 

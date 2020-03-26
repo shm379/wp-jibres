@@ -81,8 +81,28 @@ class jibres_posts
 
 	public static function mail_backup()
 	{
-		jibres_mail_backup( self::$data['mail_backup'] );
-		printf('<div class="updated"><br>' . self::$data['mail_backup'] . ' csv file was sended successfully<a href="?page=jibres" class="jibres_notif_close">close</a><br><br></div>');
+		$mail_send = jibres_mail_backup( self::$data['mail_backup'] );
+		if ( $mail_send == true ) 
+		{
+			printf('<div class="updated"><br>' . self::$data['mail_backup'] . ' csv file was sended successfully<a href="?page=jibres" class="jibres_notif_close">close</a><br><br></div>');
+		}
+		else
+		{
+			printf('<div class="updated" style="border-left-color: #c0392b;"><br>You have an error will send mail<a href="?page=jibres" class="jibres_notif_close">close</a><br><br></div>');
+		}
+	}
+
+
+	public static function change_auto_mail()
+	{
+		global $wpdb;
+
+		$a_mail = ( self::$data['change_auto_mail'] == 'add' ) ? '1' : '0';
+		$wpdb->update(
+							$wpdb->prefix . 'jibres',
+							array( 'a_mail' => $a_mail ),
+							array( 'id' => 1 )
+						);
 	}
 }
 

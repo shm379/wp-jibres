@@ -151,6 +151,11 @@ class jibres_comments extends jibres_backup
 			if ( $this->this_jibres_wis == 'csv' ) 
 			{
 				printf(' | <a href="'.get_site_url().'/wp-content/plugins/wp-jibres/backup/'.$this->where_backup.'.csv" target="_blank">Download csv file</a>');
+
+				if( jibres_auto_mail() == true )
+				{
+					jibres_mail_backup( 'comments' );
+				}
 			}
 			printf('<br><br>');
 

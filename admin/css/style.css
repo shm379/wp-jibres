@@ -1,22 +1,22 @@
 .bt {
-	padding: 4px 8px;
+	padding: 0px 10px;
 	position: relative;
-	top: -3px;
 	text-decoration: none;
 	border: 1px solid #0071a1;
-	border-radius: 2px;
-	text-shadow: none;
-	font-weight: 600;
+	border-radius: 3px;
+	line-height: 2.15384615;
+	min-height: 30px;
+	font-weight: 500;
 	font-size: 13px;
 	line-height: normal;
-	color: #0071a1;
-	background: #f3f5f6;
+	color: #f3f5f6;
+	background: #0071a1;
 	cursor: pointer;
 }
 .bt:hover {
-	background: #f1f1f1;
-	border-color: #016087;
-	color: #016087;
+	background: #005f88;
+	border-color: #005f88;
+	color: #f1f1f1;
 }
 
 .jbt {
