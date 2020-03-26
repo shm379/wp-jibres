@@ -278,7 +278,7 @@ class jibres_products extends jibres_backup
 						exit();
 					}
 				}
-				else
+				elseif ( $get_data == true )
 				{
 					$this->insert_backup_in_jibres( [$value['ID'], 'product'] );
 				}
