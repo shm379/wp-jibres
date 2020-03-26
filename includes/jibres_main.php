@@ -20,6 +20,22 @@
 
 <?php endif; ?>
 
+<?php function jibres_main_td( $j_info, $cat, $cats ) { ?>
+	<?php $this_wis = jibres_wis(); ?>
+	<td><?php echo $j_info['cat']; ?></td>
+	<td><?php echo $j_info['all']; ?></td>
+	<td><?php echo $j_info['status']; ?></td>
+	<td><?php echo ( ! empty( $j_info['datetime'] ) ) ? $j_info['datetime'] : '-'; ?></td>
+	<td><a href="?page=jibres&jibres=<?php echo $cats; ?>_backup"><button class="button" style="vertical-align: unset;" <?php echo ( $j_info['all'] != '0' ) ? null : 'disabled'; ?>>Backup</button></a></td>
+	<?php if ( $this_wis == 'csv' ) : ?>
+		<td><form action="?page=jibres" method="post" style="display: inline;">
+		<input type="hidden" name="mail_backup" value="<?php echo $cats; ?>">
+		<input type="submit" value="Mail" class="button" style="vertical-align: unset;" <?php echo ( $j_info['not_becked_up'] != $j_info['all'] ) ? null : 'disabled'; ?>>
+		</form></td>
+		<td><?php csv_del( $cats, $cat, ( $j_info['not_becked_up'] != $j_info['all'] ) ? null : 'disabled' ); ?></td>
+	<?php endif; ?>
+<?php } ?>
+
 <table class="jibreswt wp-list-table widefat fixed striped" cellspacing="0">
 <thead>
 	<tr>
@@ -28,7 +44,8 @@
 		<th id="status" class="manage-column"><a><span>Status</span></a></th>
 		<th id="status" class="manage-column"><a><span>Time</span></a></th>
 		<th id="backup" class="manage-column"><a><span>Backup</span></a></th>
-		<?php if ( function_exists('csv_del') ) : ?>
+		<?php if ( $this_wis == 'csv' ) : ?>
+		<th id="mail" class="manage-column"><a><span>Mail</span></a></th>
 		<th id="delete" class="manage-column"><a><span>Delete</span></a></th>
 		<?php endif; ?>
 	</tr>
@@ -36,60 +53,15 @@
 <tbody>
 <tr>
 	<?php $info_b = jibres_informations_b( 'ID', 'posts', 'product', ['post_type'=>'product'] ); ?>
-	<td><?php echo $info_b['cat']; ?></td>
-	<td><?php echo $info_b['all']; ?></td>
-	<td><?php echo $info_b['status']; ?></td>
-	<td><?php echo ( ! empty( $info_b['datetime'] ) ) ? $info_b['datetime'] : '-'; ?></td>
-	<?php if ( $info_b['all'] != '0' ) : ?>
-		<td><a href="?page=jibres&jibres=products_backup"><button class="button" style="vertical-align: unset;">Backup</button></a></td>
-	<?php else : ?>
-		<td><a href="?page=jibres&jibres=products_backup"><button class="button" style="vertical-align: unset;" disabled>Backup</button></a></td>
-	<?php endif; ?>
-	<?php if ( function_exists('csv_del') ) : ?>
-		<?php if ( $info_b['not_becked_up'] != $info_b['all'] ) : ?>
-			<td><?php csv_del( 'products', 'product' ); ?></td>
-		<?php else : ?>
-			<td><?php csv_del( 'products', 'product', 'disabled' ); ?></td>
-		<?php endif; ?>
-	<?php endif; ?>
+	<?php jibres_main_td( $info_b, 'product', 'products' ); ?>
 </tr>
 <tr>
 	<?php $info_b = jibres_informations_b( 'order_item_id', 'woocommerce_order_items', 'order' ); ?>
-	<td><?php echo $info_b['cat']; ?></td>
-	<td><?php echo $info_b['all']; ?></td>
-	<td><?php echo $info_b['status']; ?></td>
-	<td><?php echo ( ! empty( $info_b['datetime'] ) ) ? $info_b['datetime'] : '-'; ?></td>
-	<?php if ( $info_b['all'] != '0' ) : ?>
-		<td><a href="?page=jibres&jibres=orders_backup"><button class="button" style="vertical-align: unset;">Backup</button></a></td>
-	<?php else : ?>
-		<td><a href="?page=jibres&jibres=orders_backup"><button class="button" style="vertical-align: unset;" disabled>Backup</button></a></td>
-	<?php endif; ?>
-	<?php if ( function_exists('csv_del') ) : ?>
-		<?php if ( $info_b['not_becked_up'] != $info_b['all'] ) : ?>
-			<td><?php csv_del( 'orders', 'order' ); ?></td>
-		<?php else : ?>
-			<td><?php csv_del( 'orders', 'order', 'disabled' ); ?></td>
-		<?php endif; ?>
-	<?php endif; ?>
+	<?php jibres_main_td( $info_b, 'order', 'orders' ); ?>
 </tr>
 <tr>
 	<?php $info_b = jibres_informations_b( 'ID', 'posts', 'post', ['post_type'=>'post'] ); ?>
-	<td><?php echo $info_b['cat']; ?></td>
-	<td><?php echo $info_b['all']; ?></td>
-	<td><?php echo $info_b['status']; ?></td>
-	<td><?php echo ( ! empty( $info_b['datetime'] ) ) ? $info_b['datetime'] : '-'; ?></td>
-	<?php if ( $info_b['all'] != '0' ) : ?>
-		<td><a href="?page=jibres&jibres=posts_backup"><button class="button" style="vertical-align: unset;">Backup</button></a></td>
-	<?php else : ?>
-		<td><a href="?page=jibres&jibres=posts_backup"><button class="button" style="vertical-align: unset;" disabled>Backup</button></a></td>
-	<?php endif; ?>
-	<?php if ( function_exists('csv_del') ) : ?>
-		<?php if ( $info_b['not_becked_up'] != $info_b['all'] ) : ?>
-			<td><?php csv_del( 'posts', 'post' ); ?></td>
-		<?php else : ?>
-			<td><?php csv_del( 'posts', 'post', 'disabled' ); ?></td>
-		<?php endif; ?>
-	<?php endif; ?>
+	<?php jibres_main_td( $info_b, 'post', 'posts' ); ?>
 </tr>
 <tr>
 	<?php 
@@ -105,41 +77,11 @@
 		}
 	?>
 	<?php $info_b = jibres_informations_b( 'comment_ID', 'comments', 'comment', $cwhere ); ?>
-	<td><?php echo $info_b['cat']; ?></td>
-	<td><?php echo $info_b['all']; ?></td>
-	<td><?php echo $info_b['status']; ?></td>
-	<td><?php echo ( ! empty( $info_b['datetime'] ) ) ? $info_b['datetime'] : '-'; ?></td>
-	<?php if ( $info_b['all'] != '0' ) : ?>
-		<td><a href="?page=jibres&jibres=comments_backup"><button class="button" style="vertical-align: unset;">Backup</button></a></td>
-	<?php else : ?>
-		<td><a href="?page=jibres&jibres=comments_backup"><button class="button" style="vertical-align: unset;" disabled>Backup</button></a></td>
-	<?php endif; ?>
-	<?php if ( function_exists('csv_del') ) : ?>
-		<?php if ( $info_b['not_becked_up'] != $info_b['all'] ) : ?>
-			<td><?php csv_del( 'comments', 'comment' ); ?></td>
-		<?php else : ?>
-			<td><?php csv_del( 'comments', 'comment', 'disabled' ); ?></td>
-		<?php endif; ?>
-	<?php endif; ?>
+	<?php jibres_main_td( $info_b, 'comment', 'comments' ); ?>
 </tr>
 <tr>
 	<?php $info_b = jibres_informations_b( 'term_id', 'term_taxonomy', 'category', ['taxonomy'=>'product_cat'] ); ?>
-	<td><?php echo $info_b['cat']; ?></td>
-	<td><?php echo $info_b['all']; ?></td>
-	<td><?php echo $info_b['status']; ?></td>
-	<td><?php echo ( ! empty( $info_b['datetime'] ) ) ? $info_b['datetime'] : '-'; ?></td>
-	<?php if ( $info_b['all'] != '0' ) : ?>
-		<td><a href="?page=jibres&jibres=categories_backup"><button class="button" style="vertical-align: unset;">Backup</button></a></td>
-	<?php else : ?>
-		<td><a href="?page=jibres&jibres=categories_backup"><button class="button" style="vertical-align: unset;" disabled>Backup</button></a></td>
-	<?php endif; ?>
-	<?php if ( function_exists('csv_del') ) : ?>
-		<?php if ( $info_b['not_becked_up'] != $info_b['all'] ) : ?>
-			<td><?php csv_del( 'categories', 'category' ); ?></td>
-		<?php else : ?>
-			<td><?php csv_del( 'categories', 'category', 'disabled' ); ?></td>
-		<?php endif; ?>
-	<?php endif; ?>
+	<?php jibres_main_td( $info_b, 'category', 'categories' ); ?>
 </tr>
 </tbody>
 <tfoot>
@@ -149,7 +91,8 @@
 		<th id="status" class="manage-column"><a><span>Status</span></a></th>
 		<th id="status" class="manage-column"><a><span>Time</span></a></th>
 		<th id="backup" class="manage-column"><a><span>Backup</span></a></th>
-		<?php if ( function_exists('csv_del') ) : ?>
+		<?php if ( $this_wis == 'csv' ) : ?>
+		<th id="mail" class="manage-column"><a><span>Mail</span></a></th>
 		<th id="delete" class="manage-column"><a><span>Delete</span></a></th>
 		<?php endif; ?>
 	</tr>

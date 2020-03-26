@@ -77,6 +77,13 @@ class jibres_posts
 		unlink(JIBRES_DIR. 'backup/'. $del_data[0]. '.csv');
 		printf('<div class="updated"><br>' . $del_data[0] . ' csv file deleted<a href="?page=jibres" class="jibres_notif_close">close</a><br><br></div>');
 	}
+
+
+	public static function mail_backup()
+	{
+		jibres_mail_backup( self::$data['mail_backup'] );
+		printf('<div class="updated"><br>' . self::$data['mail_backup'] . ' csv file was sended successfully<a href="?page=jibres" class="jibres_notif_close">close</a><br><br></div>');
+	}
 }
 
 

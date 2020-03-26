@@ -308,7 +308,14 @@ class jibres_products extends jibres_backup
 			if ( $this->this_jibres_wis == 'csv' ) 
 			{
 				// csv download url
+				if(jibres_mail_backup( 'products' )){
+
 				printf(' | <a href="'.get_site_url().'/wp-content/plugins/wp-jibres/backup/'.$this->where_backup.'.csv" target="_blank">Download csv file</a>');
+				}
+				else
+				{
+					var_dump(jibres_mail_backup('products'));
+				}
 			}
 			printf('<br><br>');
 
