@@ -69,13 +69,13 @@ class jibres_categories extends jibres_backup
 				
 				$i++;
 
-				// insert this product to jibres check table
+				// insert this cat to jibres check table
 				$this->insert_backup_in_jibres( [$value['term_id'], 'category'] );
 				
-				// sort array by jibres products database design
+				// sort array by jibres categories database design
 				$changed = $this->backup_arr_sort( $value, self::$jibres_stantard_category_array );
 				
-				// backup this product
+				// backup this cat
 				jibres_wis( $this->where_backup, $changed );
 				
 				// update progress bar

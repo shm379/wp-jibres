@@ -67,10 +67,10 @@ class jibres_orders extends jibres_backup
 				$i++;
 				
 				
-				// sort array by jibres products database design
+				// sort array by jibres orders database design
 				$changed = $this->backup_arr_sort( $value, self::$jibres_stantard_order_array );
 				
-				// backup this product
+				// backup this order
 				if ( $this->this_jibres_wis == 'api' ) 
 				{
 					$changed['product'] = $this->get_jibres_id( $value['_product_id'], 'product' );

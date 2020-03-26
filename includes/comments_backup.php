@@ -85,10 +85,10 @@ class jibres_comments extends jibres_backup
 
 
 				
-				// sort array by jibres products database design
+				// sort array by jibres comments database design
 				$changed = $this->backup_arr_sort( $value, self::$jibres_stantard_comments_array );
 				
-				// backup this product
+				// backup this comment
 				if ( $this->this_jibres_wis == 'api' )
 				{
 					$this_jibres_id = $this->get_jibres_id( $value['comment_post_ID'], 'product' );
