@@ -72,10 +72,30 @@ class jibres_posts extends jibres_backup
 				$changed = $this->backup_arr_sort( $value, self::$jibres_stantard_post_array );
 				
 				// backup this post
-				jibres_wis( $this->where_backup, $changed );
+				$get_data = jibres_wis( $this->where_backup, $changed );
 
 				// insert this post to jibres check table
-				$this->insert_backup_in_jibres( [$value['ID'], 'post'] );
+				if ( is_array( $get_data ) and !empty( $get_data ) ) 
+				{
+					if ( $get_data['ok'] == true ) 
+					{
+						$this->insert_backup_in_jibres( [$value['ID'], 'post'] );
+					}
+					else
+					{
+						$error = 'post code: ' . $value['ID'] . ' > ' . json_encode( $get_data, JSON_UNESCAPED_UNICODE );
+						jibres_error_log( 'post_backup', $error );
+						
+						printf('<div class="updated" style="border-left-color: #c0392b;"><br>' . 
+						 		$get_data['msg'][0]['text']	. 
+						 		'<a href="?page=jibres" class="jibres_notif_close">close</a><br><br></div>');
+						exit();
+					}
+				}
+				elseif ( $get_data == true ) 
+				{
+					$this->insert_backup_in_jibres( [$value['ID'], 'post'] );
+				}
 				
 				// update progress bar
 				printf('<script>

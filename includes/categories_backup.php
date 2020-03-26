@@ -69,14 +69,35 @@ class jibres_categories extends jibres_backup
 				
 				$i++;
 
-				// insert this cat to jibres check table
-				$this->insert_backup_in_jibres( [$value['term_id'], 'category'] );
 				
 				// sort array by jibres categories database design
 				$changed = $this->backup_arr_sort( $value, self::$jibres_stantard_category_array );
 				
 				// backup this cat
-				jibres_wis( $this->where_backup, $changed );
+				$get_data = jibres_wis( $this->where_backup, $changed );
+
+				// insert this cat to jibres check table
+				if ( is_array( $get_data ) and !empty( $get_data ) ) 
+				{
+					if ( $get_data['ok'] == true ) 
+					{
+						$this->insert_backup_in_jibres( [$value['term_id'], 'category'] );
+					}
+					else
+					{
+						$error = 'cat code: ' . $value['term_id'] . ' > ' . json_encode( $get_data, JSON_UNESCAPED_UNICODE );
+						jibres_error_log( 'category_backup', $error );
+						
+						printf('<div class="updated" style="border-left-color: #c0392b;"><br>' . 
+						 		$get_data['msg'][0]['text']	. 
+						 		'<a href="?page=jibres" class="jibres_notif_close">close</a><br><br></div>');
+						exit();
+					}
+				}
+				elseif ( $get_data == true ) 
+				{
+					$this->insert_backup_in_jibres( [$value['term_id'], 'category'] );
+				}
 				
 				// update progress bar
 				printf('<script>
