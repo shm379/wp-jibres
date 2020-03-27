@@ -26,7 +26,7 @@ function jibres_mail_backup( $file_name )
 	
 	$mailTo = $results[0][0];
 
-    $message = "Csv file of " . $file_name . "backup";
+    $message = "Csv file of " . $file_name . " backup";
     $subject    = "wp-jibres " . $file_name . " backup";
 	$fromName = "Jibres";
 	$fromMail = "info@jibres.com";
