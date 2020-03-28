@@ -9,7 +9,7 @@ class run_jibres
 	function __construct()
 	{
 
-		if (create_jibres_table(JIBRES_TABLE) === true) 
+		if ( create_jibres_table(JIBRES_TABLE) === true ) 
 		{
 			$this->jibres_power_on();
 		}
@@ -22,18 +22,18 @@ class run_jibres
 	{
 		$check = $this->jibres_check_login();
 
-		if ( $check === 3 ) 
+		if ( $check['first'] == true ) 
 		{
 			require_once JIBRES_INC. 'jibres_first.php';
 			exit();
 		}
 
 		
-		if ( $check === 1 ) 
+		if ( $check['login'] == true ) 
 		{
 			$this->start_jibres();
 		}
-		elseif ( $check === 2 )
+		elseif ( $check['login'] == false )
 		{
 			ch_jibres_store_data('start_again');
 			header("Refresh:0");
@@ -45,6 +45,9 @@ class run_jibres
 	private function jibres_check_login()
 	{
 		global $wpdb;
+
+		$login = false;
+		$first = false;
 
 		$table = JIBRES_TABLE;
 		$check_jibres_table = $wpdb->get_results( "SELECT * FROM $table WHERE id = '1'", 'ARRAY_A' );
@@ -63,25 +66,24 @@ class run_jibres
 			{
 				if ( $jibres_v['login'] == '1' ) 
 				{
-					$login = 1;
-				}
-				else
-				{
-					$login = 2;
+					$login = true;
 				}
 			}
 			elseif ( $jibres_v['wis'] == 'csv' ) 
 			{
-				$login = 1;
+				$login = true;
 			}
 			
 		}
 		else
 		{
-			$login = 3;
+			$first = true;
 		}
 		
-		return $login;
+		$check['login'] = $login;
+		$check['first'] = $first;
+
+		return $check;
 	}
 
 
