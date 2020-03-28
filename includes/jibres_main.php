@@ -59,17 +59,7 @@
 	<?php jibres_main_td( $info_b, 'post', 'posts' ); ?>
 </tr>
 <tr>
-	<?php 
-		if ( $this_wis != 'csv' ) 
-		{
-			$table = $wpdb->prefix. 'posts';
-			$cwhere = "comment_post_ID IN (SELECT ID FROM $table WHERE post_type='product')";
-		}
-		else
-		{
-			$cwhere = [];
-		}
-	?>
+	<?php $cwhere = ( $this_wis != 'csv' ) ? "comment_post_ID IN (SELECT ID FROM {$wpdb->prefix}posts WHERE post_type='product')" : []; ?>
 	<?php $info_b = jibres_informations_b( 'comment_ID', 'comments', 'comment', $cwhere ); ?>
 	<?php jibres_main_td( $info_b, 'comment', 'comments' ); ?>
 </tr>
