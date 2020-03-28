@@ -50,6 +50,7 @@ class Jibres
 		{
 			jibres_error_log( 'api_connect', json_encode( $get_data, JSON_UNESCAPED_UNICODE ) );
 			header("Refresh:0");
+			exit();
 		}
 	}
 
@@ -85,6 +86,7 @@ class Jibres
 		{
 			jibres_error_log( 'api_connect', json_encode( $get_data, JSON_UNESCAPED_UNICODE ) );
 			header("Refresh:0");
+			exit();
 		}
 	}
 
@@ -103,6 +105,7 @@ class Jibres
 		else
 		{
 			header("Refresh:0");
+			exit();
 		}
 	}
 
@@ -142,6 +145,7 @@ class Jibres
 		{
 			jibres_error_log( 'api_connect', json_encode( $get_data, JSON_UNESCAPED_UNICODE ) );
 			header("Refresh:0");
+			exit();
 		}
 	}
 }

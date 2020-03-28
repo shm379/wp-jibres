@@ -29,7 +29,6 @@ class jibres_posts
 						);
 			header( "Refresh:0" );
 		}
-		exit();
 	}
 
 
@@ -53,16 +52,15 @@ class jibres_posts
 			$data_posted = array('wis' => 'csv');
 			insert_in_jibres( $data_posted, JIBRES_TABLE );
 			header( "Refresh:0" );
+			exit();
 		}
 		
-		exit();
 	}
 
 	public static function jibresverifycode()
 	{
 		require_once JIBRES_INC. 'jibres_api.php';
 		Jibres::jibres_verify( self::$data['jibresverifycode'] );
-		exit();
 	}
 
 
