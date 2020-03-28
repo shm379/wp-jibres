@@ -11,9 +11,34 @@ class run_jibres
 
 		if (create_jibres_table(JIBRES_TABLE) === true) 
 		{
-			$this->jibres_check_login();
+			$this->jibres_power_on();
 		}
 
+	}
+
+
+
+	private function jibres_power_on()
+	{
+		$check = $this->jibres_check_login();
+
+		if ( $check === 3 ) 
+		{
+			require_once JIBRES_INC. 'jibres_first.php';
+			exit();
+		}
+
+		
+		if ( $check === 1 ) 
+		{
+			$this->start_jibres();
+		}
+		elseif ( $check === 2 )
+		{
+			ch_jibres_store_data('start_again');
+			header("Refresh:0");
+		}
+		
 	}
 
 
@@ -38,32 +63,25 @@ class run_jibres
 			{
 				if ( $jibres_v['login'] == '1' ) 
 				{
-					$login = true;
+					$login = 1;
 				}
 				else
 				{
-					$login = false;
+					$login = 2;
 				}
 			}
 			elseif ( $jibres_v['wis'] == 'csv' ) 
 			{
-				$login = true;
+				$login = 1;
 			}
 			
-			if ( $login == true ) 
-			{
-				$this->start_jibres();
-			}
-			else
-			{
-				ch_jibres_store_data('start_again');
-				header("Refresh:0");
-			}
 		}
 		else
 		{
-			require_once JIBRES_INC. 'jibres_first.php';
+			$login = 3;
 		}
+		
+		return $login;
 	}
 
 
