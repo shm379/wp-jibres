@@ -24,7 +24,14 @@ class run_jibres
 
 		if ( $check['first'] == true ) 
 		{
-			require_once JIBRES_INC. 'jibres_first.php';
+			require_once JIBRES_INC . 'jibres_first.php';
+			exit();
+		}
+
+		if ( $check['login'] == false ) 
+		{
+			ch_jibres_store_data('start_again');
+			header("Refresh:0");
 			exit();
 		}
 
@@ -32,11 +39,6 @@ class run_jibres
 		if ( $check['login'] == true ) 
 		{
 			$this->start_jibres();
-		}
-		elseif ( $check['login'] == false )
-		{
-			ch_jibres_store_data('start_again');
-			header("Refresh:0");
 		}
 		
 	}
