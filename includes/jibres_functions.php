@@ -21,8 +21,7 @@ function jibres_mail_backup( $file_name )
 {
 	global $wpdb;
 
-	$table = $wpdb->prefix . "users";
-	$results = $wpdb->get_results( "SELECT user_email FROM $table WHERE ID = 1", 'ARRAY_N' );
+	$results = $wpdb->get_results( "SELECT user_email FROM {$wpdb->prefix}users WHERE ID = 1", 'ARRAY_N' );
 	
 	$mailTo = $results[0][0];
 
@@ -86,7 +85,7 @@ function jibres_auto_mail()
 // jibres error logging to error_log.txt
 function jibres_error_log( $where, $er )
 {
-	$error = 'JIBRES ERROR: [' . date("Y-m-d H:i:s") . '] > ' . ' «' . $where . '» ' . $er . "\n";
+	$error = 'JIBRES ERROR: [' . date("Y-m-d H:i:s") . '] > ' . ' __' . $where . '__ ' . $er . "\n";
 	file_put_contents( JIBRES_DIR . 'error_log.txt', $error, FILE_APPEND );
 }
 
