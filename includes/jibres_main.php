@@ -82,10 +82,10 @@
 	<?php $check_auto_mail = jibres_auto_mail(); ?>
 	<?php if ( $check_auto_mail == true ) : ?>
 		<input type="hidden" name="change_auto_mail" value="del">
-		<input type="submit" class="bt" value="I dont want to send files as mail auto">
+		<input type="submit" class="bt" value="I dont want to send backup files to my email auto">
 	<?php else : ?>
 		<input type="hidden" name="change_auto_mail" value="add">
-		<input type="submit" class="bt" value="I want to send files as mail auto">
+		<input type="submit" class="bt" value="I want to send backup files to my email auto">
 	<?php endif; ?>
 	</form>
 <?php endif; ?>
