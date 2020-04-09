@@ -47,25 +47,20 @@
 </thead>
 <tbody>
 <tr>
-	<?php $info_b = jibres_informations_b( 'ID', 'posts', 'product', ['post_type'=>'product'] ); ?>
-	<?php jibres_main_td( $info_b, 'product', 'products' ); ?>
+	<?php $info_b = jibres_informations_b( 'ID', 'posts', 'product', ['post_type'=>'product'] ); jibres_main_td( $info_b, 'product', 'products' ); ?>
 </tr>
 <tr>
-	<?php $info_b = jibres_informations_b( 'order_item_id', 'woocommerce_order_items', 'order' ); ?>
-	<?php jibres_main_td( $info_b, 'order', 'orders' ); ?>
+	<?php $info_b = jibres_informations_b( 'order_item_id', 'woocommerce_order_items', 'order' ); jibres_main_td( $info_b, 'order', 'orders' ); ?>
 </tr>
 <tr>
-	<?php $info_b = jibres_informations_b( 'ID', 'posts', 'post', ['post_type'=>'post'] ); ?>
-	<?php jibres_main_td( $info_b, 'post', 'posts' ); ?>
+	<?php $info_b = jibres_informations_b( 'ID', 'posts', 'post', ['post_type'=>'post'] ); jibres_main_td( $info_b, 'post', 'posts' ); ?>
 </tr>
 <tr>
 	<?php $cwhere = ( $this_wis != 'csv' ) ? "comment_post_ID IN (SELECT ID FROM {$wpdb->prefix}posts WHERE post_type='product')" : []; ?>
-	<?php $info_b = jibres_informations_b( 'comment_ID', 'comments', 'comment', $cwhere ); ?>
-	<?php jibres_main_td( $info_b, 'comment', 'comments' ); ?>
+	<?php $info_b = jibres_informations_b( 'comment_ID', 'comments', 'comment', $cwhere ); jibres_main_td( $info_b, 'comment', 'comments' ); ?>
 </tr>
 <tr>
-	<?php $info_b = jibres_informations_b( 'term_id', 'term_taxonomy', 'category', ['taxonomy'=>'product_cat'] ); ?>
-	<?php jibres_main_td( $info_b, 'category', 'categories' ); ?>
+	<?php $info_b = jibres_informations_b( 'term_id', 'term_taxonomy', 'category', ['taxonomy'=>'product_cat'] ); jibres_main_td( $info_b, 'category', 'categories' ); ?>
 </tr>
 </tbody>
 <tfoot>
@@ -95,6 +90,3 @@
 	</form>
 <?php endif; ?>
 <a style="float: right;" href="<?php echo get_site_url().'/wp-content/plugins/wp-jibres/error_log.txt'; ?>" target="_blank">error log</a>
-
-
-

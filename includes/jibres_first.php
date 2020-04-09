@@ -14,9 +14,9 @@
 	<label for="api">your jibres store with api</label><br><br>
 	<div id="j_box" style="display: none;">
 		<label style="font-weight: bold;">Please Insert Your Jibres Informations: </label><br><br>
-		<input type="text" name="store" placeholder="store"><br><br>
-		<input type="text" name="appkey" placeholder="appkey"><br><br>
-		<input type="tel" name="phone" placeholder="Mobile like: 989121234657"><br><br>
+		<input type="text" name="store" placeholder="store" autocomplete="off"><br><br>
+		<input type="text" name="appkey" placeholder="appkey" autocomplete="off"><br><br>
+		<input type="tel" name="phone" placeholder="Mobile like: 989121234657" autocomplete="off"><br><br>
 	</div>
 	<input type="submit" value="submit" class="button" style="vertical-align: unset;">
 </form>
